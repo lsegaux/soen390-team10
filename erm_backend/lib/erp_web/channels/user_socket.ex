@@ -1,8 +1,8 @@
-defmodule ErmWeb.UserSocket do
+defmodule ErpWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ErmWeb.RoomChannel
+  # channel "room:*", ErpWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -24,10 +24,10 @@ defmodule ErmWeb.UserSocket do
   #
   #     def id(socket), do: "user_socket:#{socket.assigns.user_id}"
   #
-  # Would allow you to broadcast a "disconnect" event and terminate
+  # Would allow you to broadcast a "disconnect" event and terpinate
   # all active sockets and channels for a given user:
   #
-  #     ErmWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     ErpWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true

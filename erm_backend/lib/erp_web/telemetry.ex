@@ -1,4 +1,4 @@
-defmodule ErmWeb.Telemetry do
+defmodule ErpWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -31,11 +31,11 @@ defmodule ErmWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("erm.repo.query.total_time", unit: {:native, :millisecond}),
-      summary("erm.repo.query.decode_time", unit: {:native, :millisecond}),
-      summary("erm.repo.query.query_time", unit: {:native, :millisecond}),
-      summary("erm.repo.query.queue_time", unit: {:native, :millisecond}),
-      summary("erm.repo.query.idle_time", unit: {:native, :millisecond}),
+      summary("erp.repo.query.total_time", unit: {:native, :millisecond}),
+      summary("erp.repo.query.decode_time", unit: {:native, :millisecond}),
+      summary("erp.repo.query.query_time", unit: {:native, :millisecond}),
+      summary("erp.repo.query.queue_time", unit: {:native, :millisecond}),
+      summary("erp.repo.query.idle_time", unit: {:native, :millisecond}),
 
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
@@ -49,7 +49,7 @@ defmodule ErmWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ErmWeb, :count_users, []}
+      # {ErpWeb, :count_users, []}
     ]
   end
 end

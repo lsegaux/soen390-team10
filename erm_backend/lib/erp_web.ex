@@ -1,12 +1,12 @@
-defmodule ErmWeb do
+defmodule ErpWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use ErmWeb, :controller
-      use ErmWeb, :view
+      use ErpWeb, :controller
+      use ErpWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule ErmWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ErmWeb
+      use Phoenix.Controller, namespace: ErpWeb
 
       import Plug.Conn
-      import ErmWeb.Gettext
-      alias ErmWeb.Router.Helpers, as: Routes
+      import ErpWeb.Gettext
+      alias ErpWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/erm_web/templates",
-        namespace: ErmWeb
+        root: "lib/erp_web/templates",
+        namespace: ErpWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -54,7 +54,7 @@ defmodule ErmWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import ErmWeb.Gettext
+      import ErpWeb.Gettext
     end
   end
 
@@ -66,9 +66,9 @@ defmodule ErmWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import ErmWeb.ErrorHelpers
-      import ErmWeb.Gettext
-      alias ErmWeb.Router.Helpers, as: Routes
+      import ErpWeb.ErrorHelpers
+      import ErpWeb.Gettext
+      alias ErpWeb.Router.Helpers, as: Routes
     end
   end
 

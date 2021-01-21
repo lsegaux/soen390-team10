@@ -1,4 +1,4 @@
-# Erm
+# Erp
 
 To start your Phoenix server:
 

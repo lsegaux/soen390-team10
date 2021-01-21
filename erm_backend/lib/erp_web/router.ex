@@ -1,5 +1,5 @@
-defmodule ErmWeb.Router do
-  use ErmWeb, :router
+defmodule ErpWeb.Router do
+  use ErpWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule ErmWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ErmWeb do
+  scope "/", ErpWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ErmWeb do
+  # scope "/api", ErpWeb do
   #   pipe_through :api
   # end
 
@@ -36,7 +36,7 @@ defmodule ErmWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: ErmWeb.Telemetry
+      live_dashboard "/dashboard", metrics: ErpWeb.Telemetry
     end
   end
 end

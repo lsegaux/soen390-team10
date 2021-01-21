@@ -1,5 +1,5 @@
-defmodule ErmWeb.ErrorView do
-  use ErmWeb, :view
+defmodule ErpWeb.ErrorView do
+  use ErpWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

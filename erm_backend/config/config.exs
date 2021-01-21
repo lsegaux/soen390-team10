@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :erm,
-  ecto_repos: [Erm.Repo]
+config :erp,
+  ecto_repos: [Erp.Repo]
 
 # Configures the endpoint
-config :erm, ErmWeb.Endpoint,
+config :erp, ErpWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "wFmwpkr+tDz2942SMsbNUrWTcsHY83aCPd5uxfY3op3EKPBfNZQMNCweqxApdEN2",
-  render_errors: [view: ErmWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Erm.PubSub,
+  render_errors: [view: ErpWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Erp.PubSub,
   live_view: [signing_salt: "gNetU91v"]
 
 # Configures Elixir's Logger
