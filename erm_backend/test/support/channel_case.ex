@@ -1,4 +1,4 @@
-defmodule ErmWeb.ChannelCase do
+defmodule ErpWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule ErmWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ErmWeb.ChannelCase, async: true`, although
+  by setting `use ErpWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,18 +21,18 @@ defmodule ErmWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import ErmWeb.ChannelCase
+      import ErpWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint ErmWeb.Endpoint
+      @endpoint ErpWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Erm.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Erp.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Erm.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Erp.Repo, {:shared, self()})
     end
 
     :ok

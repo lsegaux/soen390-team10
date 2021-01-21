@@ -1,3 +1,3 @@
-defmodule ErmWeb.PageViewTest do
-  use ErmWeb.ConnCase, async: true
+defmodule ErpWeb.PageViewTest do
+  use ErpWeb.ConnCase, async: true
 end

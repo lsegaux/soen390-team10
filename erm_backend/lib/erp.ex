@@ -1,6 +1,6 @@
-defmodule Erm do
+defmodule Erp do
   @moduledoc """
-  Erm keeps the contexts that define your domain
+  Erp keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

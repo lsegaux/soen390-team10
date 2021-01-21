@@ -1,5 +1,5 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to our %{name}!", name: "ERM" %></h1>
+  <h1><%= gettext "Welcome to our %{name}!", name: "ERP" %></h1>
   <p>This is just a placeholder page.</p>
 </section>
 

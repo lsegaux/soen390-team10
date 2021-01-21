@@ -1,10 +1,10 @@
 use Mix.Config
 
 # Configure your database
-config :erm, Erm.Repo,
+config :erp, Erp.Repo,
   username: "postgres",
   password: "postgres",
-  database: "erm_dev",
+  database: "erp_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -15,7 +15,7 @@ config :erm, Erm.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :erm, ErmWeb.Endpoint,
+config :erp, ErpWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -55,13 +55,13 @@ config :erm, ErmWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :erm, ErmWeb.Endpoint,
+config :erp, ErpWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/erm_web/(live|views)/.*(ex)$",
-      ~r"lib/erm_web/templates/.*(eex)$"
+      ~r"lib/erp_web/(live|views)/.*(ex)$",
+      ~r"lib/erp_web/templates/.*(eex)$"
     ]
   ]
 

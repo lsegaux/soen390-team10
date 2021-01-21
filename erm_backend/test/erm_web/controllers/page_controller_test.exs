@@ -1,5 +1,5 @@
-defmodule ErmWeb.PageControllerTest do
-  use ErmWeb.ConnCase
+defmodule ErpWeb.PageControllerTest do
+  use ErpWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
