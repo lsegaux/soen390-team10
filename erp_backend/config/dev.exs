@@ -4,7 +4,7 @@ use Mix.Config
 config :erp, Erp.Repo,
   username: "postgres",
   password: "postgres",
-  database: "erp_dev",
+  database: "postgres",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -26,7 +26,7 @@ config :erp, ErpWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      cd: Path.expand("../../erp_frontend/", __DIR__)
     ]
   ]
 
@@ -74,3 +74,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Override above config with gitignored credentials
+import_config "dev.secret.exs"

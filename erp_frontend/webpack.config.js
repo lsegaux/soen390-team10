@@ -17,18 +17,17 @@ module.exports = (env, options) => {
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+      'app': './app.tsx'
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(__dirname, '../priv/static/js'),
-      publicPath: '/js/'
+      path: path.resolve(__dirname, '../erp_backend/priv/static/js'),
     },
     devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader'
@@ -45,9 +44,12 @@ module.exports = (env, options) => {
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+      new MiniCssExtractPlugin({ filename: 'css/app.css' }),
       new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
     ]
-    .concat(devMode ? [new HardSourceWebpackPlugin()] : [])
+    .concat(devMode ? [new HardSourceWebpackPlugin()] : []),
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    }
   }
 };
