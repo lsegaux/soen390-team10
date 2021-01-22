@@ -26,7 +26,7 @@ config :erp, ErpWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      cd: Path.expand("../../erp_frontend/", __DIR__)
     ]
   ]
 

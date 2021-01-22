@@ -1,5 +1,10 @@
-/* This file is for your main application css. */
-@import "./phoenix.css";
+h1{
+  font-size: large;
+}
+
+p{
+  font-size: large;
+}
 
 /* Alerts and form errors */
 .alert {
