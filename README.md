@@ -18,7 +18,9 @@ config :erp, Erp.Repo,
   password: "custom_password",
   database: "custom_db_name"
 ```
-Obviously, change the strings to the proper values, and remove the ones you don't need to override.
+Obviously, change the strings to the proper values, and remove the ones you don't need to override. 
+
+Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.exs` to ignore future changes to that file.
 - Create and migrate your database with `mix ecto.setup`
 - Start the Phoenix endpoint with `mix phx.server`
 - Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
