@@ -14,6 +14,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "evergreen-ui": "^5.1.2",
     "phoenix": "file:../erp_backend/deps/phoenix",
     "phoenix_html": "file:../erp_backend/deps/phoenix_html",
     "react": "^17.0.1",
