@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-
-import HomePage from './components/homepage'
+import AdminPage from './components/adminview';
+import HomePage from './components/homepage';
 
 const Router = () => {
     return (
@@ -9,10 +9,11 @@ const Router = () => {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route path="/adminview" component={AdminPage} />
           </Switch>
         </BrowserRouter>
       </>
-    )
+    );
 }
 
 export default Router;
