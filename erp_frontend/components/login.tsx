@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Redirect } from "react-router-dom";
 
 export default function Login() {
-  
+  const url = 'http://localhost:4000';
   const [email, setEmail] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [password, setPassword] = useState("");
@@ -13,23 +13,26 @@ export default function Login() {
     return email.length > 0 && password.length > 0;
   }
 
+  function redirectToMain(){
+    window.location.href=url;
+  }
+
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const loginData = {
       email: email,
       password: password
     };
-
         axios({
         method: 'post',
-        url: 'http://localhost:4000/api/v1/sign_in',
+        url: `${url}/api/v1/sign_in`,
         headers: { "Content-Type": "application/json" }, 
         data: loginData
         }).then(res => { 
           if (res.status === 200) {
             console.log(res);
-            localStorage.setItem("jwt", res.data.jwt)
-            window.location.href='http://localhost:4000'
+            localStorage.setItem("jwt", res.data.jwt);
+            redirectToMain();
           }
         }).catch(err => { 
             setLoginError(true);
@@ -41,7 +44,8 @@ export default function Login() {
     <div style={{
       position: 'absolute', left: '50%', top: '50%',
       transform: 'translate(-50%, -50%)'
-  }}>
+    }}>
+      {localStorage.getItem('jwt') &&  redirectToMain()}
         <Pane
         elevation={4}
         paddingTop={40}
