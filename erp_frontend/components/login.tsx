@@ -1,9 +1,9 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Button, FormField, TextInput, Pane } from 'evergreen-ui'
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 
-export default function Login() {
+export default function Login(this: any) {
   const url = 'http://localhost:4000';
   const [email, setEmail] = useState("");
   const [loginError, setLoginError] = useState(false);
@@ -45,7 +45,7 @@ export default function Login() {
       position: 'absolute', left: '50%', top: '50%',
       transform: 'translate(-50%, -50%)'
     }}>
-      {localStorage.getItem('jwt') &&  redirectToMain()}
+      {/* {localStorage.getItem('jwt') &&  redirectToMain()} */}
         <Pane
         elevation={4}
         paddingTop={40}
@@ -76,6 +76,7 @@ export default function Login() {
                 {loginError &&  <FormField validationMessage='Username or password is incorrect' />}
             </div>
             <Button disabled={!validateForm()} type='submit'  onClick={handleSubmit}>Login</Button>
+            <a onClick={event =>  window.location.href=`${url}/signup`}><br/><br/>Create an account.</a>
           </FormField>
       </Pane>
     </div>
