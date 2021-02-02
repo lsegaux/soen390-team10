@@ -31,9 +31,9 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route exact path="/" component={EmployeeDashboard} />
 
           <PrivateRoute path="/">
+            <Route exact path="/" component={EmployeeDashboard} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
             <Route exact path={"/materialmanager"} component={MaterialManager}/>
             <Route exact path={"/materialmanager/create"} component={CreateParts}/>
