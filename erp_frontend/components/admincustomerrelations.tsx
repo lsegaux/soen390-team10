@@ -14,6 +14,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
+import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,6 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { url } from "inspector";
 // @ts-ignore
 import TimeLine from "react-gantt-timeline";
+
 
 const css = `
 
@@ -65,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   }
 
 
-const AdminPlanning = () => {
+const AdminCustomerRelations = () => {
 
     const classes = useStyles();
     const [dense, setDense] = React.useState(false);
@@ -85,10 +87,10 @@ const AdminPlanning = () => {
                 <Grid item xs={12} lg={12}>
                 <Typography variant="h6" className={classes.title}>
                     <br/>
-                &nbsp;Tasks
+                    &nbsp;Product Defect List
                     <IconButton>
                     <AddIcon />
-                    </IconButton>
+                </IconButton>
                 </Typography>
                 <div className={classes.demo}>
                     <List dense={dense}>
@@ -100,8 +102,8 @@ const AdminPlanning = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="task"
-                            secondary={secondary ? 'Secondary text' : "deadline: feb 3rd"}
+                            primary="Product"
+                            secondary={secondary ? 'Secondary text' : "punctured tire"}
                         />
                         <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit">
@@ -117,26 +119,45 @@ const AdminPlanning = () => {
                 </div>
                 </Grid>
             </div>
-            <div className = {classes.title}>
+            <div className="tasksTable">
+                <Grid item xs={12} lg={12}>
                 <Typography variant="h6" className={classes.title}>
-                &nbsp;Schedule New Meeting
-                   <IconButton>
+                &nbsp;Customer Feedback
+                    <IconButton>
                     <AddIcon />
-                 </IconButton>
+                </IconButton>
                 </Typography>
-                <Typography variant="h6" className={classes.title}>
-                &nbsp;Gantt Chart
-                </Typography>
-            </div>
-            
-            <div>
-            <TimeLine data={data} links={links} />
-                <br/>
-                <br/>
+                <div className={classes.demo}>
+                    <List dense={dense}>
+                    {generate(
+                        <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                            <FolderIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary="Some bike shop"
+                            secondary={secondary ? 'Secondary text' : "horrible service"}
+                        />
+                        <ListItemSecondaryAction>
+                        <Rating name="read only" value={2} readOnly />
+                        <IconButton edge="end" aria-label="edit">
+                            <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete">
+                            <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                        </ListItem>,
+                    )}
+                    </List>
+                </div>
+                </Grid>
             </div>
         </div>
     </>
   );
 };
 
-export default AdminPlanning;
+export default AdminCustomerRelations;

@@ -12,6 +12,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import AdminFinancials from './adminfinancials'
 import AdminPlanning from './adminplanning'
+import AdminVendorsProcurement from './adminvendorsprocurement'
+import AdminCustomerRelations from '../admincustomerrelations'
 
 const css = `
 .drawerLeft {
@@ -71,12 +73,12 @@ const VerticalNavbar = () => {
                     <ListItemText primary={"Vendors/Procurement"}/>
                 </ListItem>
                 </Link>
-                <Link to={'/adminview/production'} className = "link">
+                <Link to={'/adminview/customerrelations'} className = "link">
                 <ListItem button>
                     <ListItemIcon>
                         <ListAltIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Production"}/>
+                    <ListItemText primary={"Customer Relations"}/>
                 </ListItem>
                 </Link>
                 <Link to={'/adminview/financials'} className = "link">
@@ -102,12 +104,12 @@ const VerticalNavbar = () => {
             </Route>
             <Route exact path="/adminview/vendors-procurement">
                 <Container>
-                    Vendors - Procurement
+                    <AdminVendorsProcurement />
                 </Container>
             </Route>
-            <Route exact path="/adminview/production">
+            <Route exact path="/adminview/customerrelations">
                 <Container>
-                    Production
+                    <AdminCustomerRelations />
                 </Container>
             </Route>
             <Route exact path="/adminview/financials-sales">
