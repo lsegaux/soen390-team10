@@ -13,7 +13,7 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    color: blue;
+    color: black;
     height: 100%;
     width: 100%;
     margin: 0;

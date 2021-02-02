@@ -22,6 +22,7 @@
     "phoenix_html": "file:../erp_backend/deps/phoenix_html",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-gantt-timeline": "^0.4.3",
     "react-router-dom": "^5.2.0",
     "typescript": "^4.1.3"
   },

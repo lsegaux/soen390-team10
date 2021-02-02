@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import { Pane, Button, Heading, Popover, Menu } from "evergreen-ui";
-import {Drawer, List, ListItem, ListItemIcon, ListItemText, Container, Typography, IconButton} from "@material-ui/core";
+import {Drawer, List, ListItem, ListItemIcon, ListItemText, Container, Typography, IconButton, Toolbar, Menu, AppBar, Button} from "@material-ui/core";
 import {BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -12,39 +11,41 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import AdminFinancials from './adminfinancials'
+import AdminPlanning from './adminplanning'
 
 const css = `
-
 .drawerLeft {
     width: '240px';
 }
 .link { 
     color: black; 
 }
-.topLeftMenuButton{
-    margin-top: 1px;
-    margin-right: 2px;
-    position:absolute;
-    top:0;
-    left:0;
+.menuButton{
+    color: white;
 }
 `
 
 const VerticalNavbar = () => {
-    const [open, setOpen] = useState(false);
 
-    const handleDrawer = () => {
-        setOpen(true)
+    const [state, setState] = React.useState(true);
+
+    const toggleDrawer = (open:boolean) => (event:any) => {
+        setState(open)
     }
+    
 
   return (
       <>
       <style>
           {css}
       </style>
-      <IconButton className = "topLeftMenuButton" onClick={handleDrawer} color= "inherit" edge="start" aria-label="menu"></IconButton>
+        <Toolbar>
+            <IconButton className = "menuButton" onClick={toggleDrawer(true)} color= "inherit" edge="start" aria-label="menu">
+                <MenuIcon />
+                </IconButton>
+            </Toolbar>
       <Router>
-        <Drawer className="drawerLeft" variant = "persistent" anchor ="left" open={open} onClose={() => setOpen(false)}>
+        <Drawer className="drawerLeft" anchor ="left" open={state} onClose={toggleDrawer(false)}>
             <List>
             <Link to={'/adminview'} className = "link">
                 <ListItem button>
@@ -104,7 +105,7 @@ const VerticalNavbar = () => {
             </Route>
             <Route path="/adminview/planning">
                 <Container>
-                    Planning
+                    <AdminPlanning />
                 </Container>
             </Route>
             <Route exact path="/adminview/scheduling">
@@ -122,7 +123,12 @@ const VerticalNavbar = () => {
                     Production
                 </Container>
             </Route>
-            <Route exact path="/adminview/financials">
+            <Route exact path="/adminview/financials-sales">
+                <Container>
+                    <AdminFinancials />
+                </Container>
+            </Route>
+            <Route exact path="/adminview/packaging-transport">
                 <Container>
                     <AdminFinancials />
                 </Container>
