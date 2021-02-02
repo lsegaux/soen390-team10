@@ -23,7 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { url } from "inspector";
 // @ts-ignore
 import TimeLine from "react-gantt-timeline";
-
+import PrintIcon from '@material-ui/icons/Print';
 
 const css = `
 
@@ -72,22 +72,17 @@ const AdminCustomerRelations = () => {
     const classes = useStyles();
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
-    let data=[ {id:1,start:new Date(), end:Date.now()+1 ,name:'Task 1'},
-            {id:2,start:new Date(), end:Date.now()+1 ,name:'Task 2'}, {id:2,start:new Date(), end:Date.now()+1 ,name:'Task 3'}]
-            
-    let links=[ {id:1,start:1, end:2},
-                {id:2,start:1, end:3}]
   return (
     <>
     <style>
         {css}
     </style>
         <div className="horizontalSpace">
-            <div className="tasksTable">
+        <div className="tasksTable">
                 <Grid item xs={12} lg={12}>
                 <Typography variant="h6" className={classes.title}>
-                    <br/>
-                    &nbsp;Product Defect List
+                <br/>
+                &nbsp;Orders List
                     <IconButton>
                     <AddIcon />
                 </IconButton>
@@ -102,8 +97,8 @@ const AdminCustomerRelations = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="Product"
-                            secondary={secondary ? 'Secondary text' : "punctured tire"}
+                            primary="Bike X"
+                            secondary={secondary ? 'Secondary text' : "Materials : ..........."}
                         />
                         <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit">
@@ -119,6 +114,11 @@ const AdminCustomerRelations = () => {
                 </div>
                 </Grid>
             </div>
+            <div><Typography variant="h6" className={classes.title}>&nbsp;Export Sales
+                <IconButton>
+                    <PrintIcon />
+                </IconButton>
+                </Typography></div>
             <div className="tasksTable">
                 <Grid item xs={12} lg={12}>
                 <Typography variant="h6" className={classes.title}>
@@ -142,6 +142,41 @@ const AdminCustomerRelations = () => {
                         />
                         <ListItemSecondaryAction>
                         <Rating name="read only" value={2} readOnly />
+                        <IconButton edge="end" aria-label="edit">
+                            <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete">
+                            <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                        </ListItem>,
+                    )}
+                    </List>
+                </div>
+                </Grid>
+            </div>
+            <div className="tasksTable">
+                <Grid item xs={12} lg={12}>
+                <Typography variant="h6" className={classes.title}>
+                    &nbsp;Product Defect List
+                    <IconButton>
+                    <AddIcon />
+                </IconButton>
+                </Typography>
+                <div className={classes.demo}>
+                    <List dense={dense}>
+                    {generate(
+                        <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                            <FolderIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary="Product"
+                            secondary={secondary ? 'Secondary text' : "punctured tire"}
+                        />
+                        <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit">
                             <EditIcon />
                             </IconButton>

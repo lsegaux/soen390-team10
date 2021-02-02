@@ -18,6 +18,13 @@ body, html {
     width: 100%;
     margin: 0;
   }
+  .horizontalSpace {
+    text-align: center;
+    allignSelf: 'center';
+    background-color: rgba(246, 215, 143, 0.5);
+    height 100%;
+    fontFamily: serif;
+}
 
 .left-page menu {
     
@@ -32,7 +39,7 @@ function AdminPage() {
                 {css}
             </style>
             <div className="admin-page">
-                <VerticalNavbar />
+                <div><VerticalNavbar /></div>
             </div>
         </div>
     )

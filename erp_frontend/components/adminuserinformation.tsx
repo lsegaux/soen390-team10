@@ -61,16 +61,11 @@ const useStyles = makeStyles((theme) => ({
   }
 
 
-const AdminPackaging = () => {
+const AdminUserInformation = () => {
 
     const classes = useStyles();
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
-    let data=[ {id:1,start:new Date(), end:Date.now()+1 ,name:'Task 1'},
-            {id:2,start:new Date(), end:Date.now()+1 ,name:'Task 2'}, {id:2,start:new Date(), end:Date.now()+1 ,name:'Task 3'}]
-            
-    let links=[ {id:1,start:1, end:2},
-                {id:2,start:1, end:3}]
   return (
     <>
     <style>
@@ -81,10 +76,7 @@ const AdminPackaging = () => {
                 <Grid item xs={12} lg={12}>
                 <Typography variant="h6" className={classes.title}>
                     <br/>
-                    &nbsp;Shipments
-                    <IconButton>
-                    <AddIcon />
-                </IconButton>
+                &nbsp;User Information
                 </Typography>
                 <div className={classes.demo}>
                     <List dense={dense}>
@@ -96,51 +88,12 @@ const AdminPackaging = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="Shipment"
-                            secondary={secondary ? 'Secondary text' : "Order Number 12345"}
-                        />
-                        <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="edit">
-                        <Typography>ETA: Feb 3rd&nbsp;</Typography>
-                            <EditIcon />
-                            </IconButton>
-                            <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                        </ListItem>,
-                    )}
-                    </List>
-                </div>
-                </Grid>
-            </div>
-            <div className="tasksTable">
-                <Grid item xs={12} lg={12}>
-                <Typography variant="h6" className={classes.title}>
-                &nbsp;Shipping Company Contact Information
-                    <IconButton>
-                    <AddIcon />
-                </IconButton>
-                </Typography>
-                <div className={classes.demo}>
-                    <List dense={dense}>
-                    {generate(
-                        <ListItem>
-                        <ListItemAvatar>
-                            <Avatar>
-                            <FolderIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary="Shipment Company"
-                            secondary={secondary ? 'Secondary text' : "514-123-4567"}
+                            primary="Example"
+                            secondary={secondary ? 'Secondary text' : ""}
                         />
                         <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit">
                             <EditIcon />
-                            </IconButton>
-                            <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
                         </ListItem>,
@@ -154,4 +107,4 @@ const AdminPackaging = () => {
   );
 };
 
-export default AdminPackaging;
+export default AdminUserInformation;
