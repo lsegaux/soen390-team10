@@ -3,7 +3,6 @@ import {Drawer, List, ListItem, ListItemIcon, ListItemText, Container, Typograph
 import {BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import ListAltIcon from '@material-ui/icons/ListAlt';
@@ -92,12 +91,12 @@ const VerticalNavbar = () => {
                     <ListItemText primary={"Packaging/Transport"}/>
                 </ListItem>
                 </Link>
-                <Link to={'/adminview/financials'} className = "link">
+                <Link to={'/adminview/accounting'} className = "link">
                 <ListItem button>
                     <ListItemIcon>
                         <AccountBalanceIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Financials"}/>
+                    <ListItemText primary={"Accounting"}/>
                 </ListItem>
                 </Link>
             </List>
@@ -123,7 +122,7 @@ const VerticalNavbar = () => {
                     <AdminCustomerRelations />
                 </Container>
             </Route>
-            <Route exact path="/adminview/financials-sales">
+            <Route exact path="/adminview/accounting">
                 <Container>
                     <AdminFinancials />
                 </Container>

@@ -1,11 +1,5 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
-import { Button } from 'evergreen-ui'
-import AdminNavbar from './adminnavbar'
 import VerticalNavbar from './adminverticalnavbar'
-
-import {AnimateSharedLayout} from "framer-motion"
-import { CssBaseline, makeStyles } from '@material-ui/core'
 
 const css = `
 body, html {
