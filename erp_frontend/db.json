@@ -1,0 +1,52 @@
+{
+  "parts": [
+    {
+      "id": 1,
+      "name": "wheel",
+      "types": ["road", "mountain"],
+      "materials": ["carbon", "aluminum"]
+    },
+    {
+      "id": 2,
+      "name": "handlebar",
+      "types": ["road", "mountain"],
+      "materials": ["aluminum", "carbon", "alloy", "steel"]
+    },
+    {
+      "id": 3,
+      "name": "brake",
+      "types": ["disc", "rim"],
+      "materials": ["steel", "aluminum"]
+    },
+    {
+      "id": 4,
+      "name": "tire",
+      "types": ["road", "mountain", "commuting"],
+      "materials": ["rubber"]
+    },
+    {
+      "id": 5,
+      "name": "seat",
+      "types": ["cruiser", "race", "moutain"],
+      "materials": ["cloth", "leather"]
+    },
+    {
+      "id": 6,
+      "name": "shock",
+      "types": ["standard", "dual crown", "springer"],
+      "materials": ["steel", "aluminum", "titanium"]
+    },
+    {
+      "id": 7,
+      "name": "frame",
+      "types": ["road", "mountain"],
+      "materials": ["steel", "aluminum", "titanium"]
+    },
+    {
+      "id": 8,
+      "name": "pedal",
+      "types": ["road", "mountain"],
+      "materials": ["plastic", "aluminum"]
+    }
+  ]
+}
