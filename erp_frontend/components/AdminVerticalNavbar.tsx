@@ -63,14 +63,6 @@ const VerticalNavbar = () => {
                     <ListItemText primary={"Planning"}/>
                 </ListItem>
                 </Link>
-                <Link to={'/adminview/scheduling'} className = "link">
-                <ListItem button>
-                    <ListItemIcon>
-                        <ScheduleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Scheduling"}/>
-                </ListItem>
-                </Link>
                 <Link to={'/adminview/vendors-procurement'} className = "link">
                 <ListItem button>
                     <ListItemIcon>
@@ -106,11 +98,6 @@ const VerticalNavbar = () => {
             <Route path="/adminview/planning">
                 <Container>
                     <AdminPlanning />
-                </Container>
-            </Route>
-            <Route exact path="/adminview/scheduling">
-                <Container>
-                    Scheduling
                 </Container>
             </Route>
             <Route exact path="/adminview/vendors-procurement">

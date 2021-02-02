@@ -20,13 +20,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import { url } from "inspector";
+// @ts-ignore
 import TimeLine from "react-gantt-timeline";
 
 const css = `
 
 .horizontalSpace {
     allignSelf: 'center';
-    background-color: AntiqueWhite;
+    background-color: rgba(246, 215, 143, 0.9);
     height 100%;
 }
 .tasksTable{
@@ -115,11 +116,17 @@ const AdminPlanning = () => {
                 </div>
                 </Grid>
             </div>
-            <div>
+            <div className = {classes.title}>
                 <br/>
-                <br/>
-                <br/>
-                <h4>Gantt Chart</h4>
+                <Typography variant="h6" className={classes.title}>
+                   Schedule New Meeting
+                   <IconButton>
+                    <AddIcon />
+                 </IconButton>
+                </Typography>
+                <Typography variant="h6" className={classes.title}>
+                    Gantt Chart
+                </Typography>
             </div>
             
             <div>
