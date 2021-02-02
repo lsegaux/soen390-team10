@@ -24,39 +24,21 @@ function PrivateRoute({ children, ...rest } : {children : any, path: string}) {
 }
 
 
-const Router = () => {
+export default () => {
   return (
     <>
       <BrowserRouter>
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={EmployeeDashboard} />
 
-          <PrivateRoute path="/materialmanager">
-            <Route exact path={"/"} component={MaterialManager} />
+          <PrivateRoute path="/">
+            <Route exact path={"/dashboard"} component={EmployeeDashboard} />
+            <Route exact path={"/materialmanager"} component={MaterialManager}/>
+            <Route exact path={"/materialmanager/create"} component={CreateParts}/>
+            <Route path={"/materialmanager/edit/:id"} component={EditParts} />
           </PrivateRoute>
-
-          <PrivateRoute path="/dashboard">
-            <Route exact path={"/"} component={EmployeeDashboard} />
-          </PrivateRoute>
-          
-          <PrivateRoute path="/materialmanager/create">
-            <Route
-              exact
-              path={"/"}
-              component={CreateParts}
-            />
-          </PrivateRoute>
-          
-          <PrivateRoute path="/materialmanager/edit/:id">
-            <Route
-              exact
-              path={"/"}
-              component={EditParts}
-            />
-          </PrivateRoute>
-
           
         </Switch>
       </BrowserRouter>
