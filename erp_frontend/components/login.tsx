@@ -45,7 +45,7 @@ export default function Login(this: any) {
       position: 'absolute', left: '50%', top: '50%',
       transform: 'translate(-50%, -50%)'
     }}>
-      {/* {localStorage.getItem('jwt') &&  redirectToMain()} */}
+      {localStorage.getItem('jwt') &&  redirectToMain()}
         <Pane
         elevation={4}
         paddingTop={40}
