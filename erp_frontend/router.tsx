@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import AdminPage from './components/adminview';
+import AdminPage from './components/adminfolder/adminview';
 import HomePage from './components/homepage';
 
 const Router = () => {
