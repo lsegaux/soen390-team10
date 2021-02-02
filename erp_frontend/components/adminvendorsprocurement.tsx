@@ -8,13 +8,13 @@ const css = `
 }
 `
 
-const AdminNavbar = () => {
+const AdminVendorsProcurement = () => {
   return (
     <>
     <style>
         {css}
     </style>
-      <Pane display="flex" padding={16} background="tint2" borderRadius={3}>
+      <Pane display="flex" padding={16} background="black" borderRadius={3}>
         <Pane flex={1} alignItems="center" display="flex">
           <Heading size={600}>Adrenaline ERP</Heading>
         </Pane>
@@ -23,4 +23,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default AdminVendorsProcurement;

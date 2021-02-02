@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import { Button } from 'evergreen-ui'
-import Navbar from './navbar'
-import VerticalNavbar from './AdminVerticalNavbar'
+import AdminNavbar from './adminnavbar'
+import VerticalNavbar from './adminverticalnavbar'
 
 import {AnimateSharedLayout} from "framer-motion"
 import { CssBaseline, makeStyles } from '@material-ui/core'
@@ -32,7 +32,6 @@ function AdminPage() {
                 {css}
             </style>
             <div className="admin-page">
-                <Navbar />
                 <VerticalNavbar />
             </div>
         </div>
