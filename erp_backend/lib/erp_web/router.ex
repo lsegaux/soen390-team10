@@ -36,5 +36,6 @@ defmodule ErpWeb.Router do
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
+    get "/production", ProductionController, :get_production_info
   end
 end
