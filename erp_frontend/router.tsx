@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import HomePage from "./components/homepage";
@@ -8,22 +8,28 @@ import MaterialManager from "./components/employee/materialmanagement/materialma
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
 import ClientDashboard from "./components/client/dashboard/dashboard.component";
-import AdminView from "./components/adminfolder/adminview"
-import {Auth} from './Auth'
+import AdminView from "./components/adminfolder/adminview";
+import { Auth } from "./Auth";
 
-function PrivateRoute({ children, ...rest } : {children : any, path: string}) {
+function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
-    <Route {...rest} render={({ location }) => {
-      return Auth.isAuthenticated()
-        ? children
-        : <Redirect to={{
-            pathname: '/login',
-            state: { from: location }
-          }} />
-    }} />
-  )
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return Auth.isAuthenticated() ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        );
+      }}
+    />
+  );
 }
-
 
 export default () => {
   return (
@@ -34,9 +40,9 @@ export default () => {
           <Route path="/login" component={Login} />
         
           <PrivateRoute path="/">
-            <Route exact path="/" component={EmployeeDashboard} />
+            <Route exact path="/" component={HomePage} />
+            <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
-            <Route exact path={"/adminview"} component = {AdminView}/>
             <Route exact path={"/client"} component={ClientDashboard} />
             <Route exact path={"/materialmanager"} component={MaterialManager}/>
             <Route exact path={"/materialmanager/create"} component={CreateParts}/>
