@@ -27,6 +27,8 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 
+import {Auth} from "../../../Auth"
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -165,6 +167,9 @@ export default function Dashboard() {
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
+          </IconButton>
+          <IconButton color="inherit" onClick={() => {Auth.logout()}}>
+            <Typography>Logout</Typography>
           </IconButton>
         </Toolbar>
       </AppBar>
