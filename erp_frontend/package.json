@@ -30,6 +30,7 @@
     "react-dom": "^16.8",
     "react-gantt-timeline": "^0.3.8",
     "react-router-dom": "^5.2.0",
+    "react-sizeme": "^2.6.12",
     "recharts": "^2.0.4",
     "typescript": "^4.1.3"
   },
