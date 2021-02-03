@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TypeQuantityTable from "./typeQuantityTable";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,7 +52,23 @@ export default function Inventory(this: any) {
     const obj = { "plants": [plant1, plant2, plant3] }
 
 
-    const [inventoryObj, setInventoryObj] = useState(obj["plants"]);
+    const [inventoryObj, setInventoryObj] = useState(obj['plants']);
+
+    const url = 'http://localhost:4000';
+
+    // useEffect(() => {
+    //     axios({
+    //         method: 'get',
+    //         url: `${url}/api/v1/production`,
+    //         headers: { "Content-Type": "application/json" },
+    //     }).then(res => {
+    //         if (res.status === 200) {
+    //             setInventoryObj(res.data["plants"])
+    //         }
+    //     }).catch(err => {
+    //         console.error(err);
+    //     });
+    // });
 
     const classes = useStyles();
 
