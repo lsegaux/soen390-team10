@@ -4,6 +4,7 @@ defmodule Erp.Repo.Migrations.CreateMaterials do
   def change do
     create table(:materials) do
       add :material_id, :integer
+      add :name, :string
       add :quantity, :integer
       add :plant_id, references(:plants, on_delete: :nothing)
 

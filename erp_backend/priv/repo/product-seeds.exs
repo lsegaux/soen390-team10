@@ -20,7 +20,8 @@ data = [
     "ID" => 1,
     "name" => "P800 Road Bike",
     "quantity" => 5,
-    "plantID" => 0
+    "plantID" => 0,
+    "time" => ~N[2021-02-01 23:00:07]
   },
   %{
     "ID" => 2,
