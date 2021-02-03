@@ -7,6 +7,7 @@ import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
+import ClientDashboard from "./components/client/dashboard/dashboard.component";
 const Router = () => {
   return (
     <>
@@ -27,6 +28,7 @@ const Router = () => {
             path={"/materialmanager/edit/:id"}
             component={EditParts}
           />
+          <Route exact path={"/client"} component={ClientDashboard} />
         </Switch>
       </BrowserRouter>
     </>
