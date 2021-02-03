@@ -7,7 +7,7 @@ import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
-
+import AdminView from "./components/adminfolder/adminview"
 import {Auth} from './Auth'
 
 function PrivateRoute({ children, ...rest } : {children : any, path: string}) {
@@ -31,7 +31,9 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-
+          <Route exact path={"/dashboard"} component={EmployeeDashboard} />
+          <Route exact path={"/adminview"} component = {AdminView}/>
+          
           <PrivateRoute path="/">
             <Route exact path="/" component={EmployeeDashboard} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
