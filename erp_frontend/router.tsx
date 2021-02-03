@@ -7,6 +7,7 @@ import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
+import ClientDashboard from "./components/client/dashboard/dashboard.component";
 import AdminView from "./components/adminfolder/adminview";
 import { Auth } from "./Auth";
 import Inventory from "./components/production/inventory";
@@ -38,22 +39,15 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-
+        
           <PrivateRoute path="/">
             <Route exact path="/inventory" component={Inventory} />
             <Route exact path="/" component={HomePage} />
             <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
-            <Route
-              exact
-              path={"/materialmanager"}
-              component={MaterialManager}
-            />
-            <Route
-              exact
-              path={"/materialmanager/create"}
-              component={CreateParts}
-            />
+            <Route exact path={"/client"} component={ClientDashboard} />
+            <Route exact path={"/materialmanager"} component={MaterialManager}/>
+            <Route exact path={"/materialmanager/create"} component={CreateParts}/>
             <Route path={"/materialmanager/edit/:id"} component={EditParts} />
           </PrivateRoute>
         </Switch>
