@@ -1,4 +1,4 @@
-defmodule Erp.Materialmap do
+defmodule Erp.Production.Materialmap do
   use Ecto.Schema
   import Ecto.Changeset
 

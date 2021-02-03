@@ -10,6 +10,7 @@ import EditParts from "./components/employee/materialmanagement/editpart";
 import ClientDashboard from "./components/client/dashboard/dashboard.component";
 import AdminView from "./components/adminfolder/adminview";
 import { Auth } from "./Auth";
+import Inventory from "./components/production/inventory";
 
 function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
@@ -19,13 +20,13 @@ function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
         return Auth.isAuthenticated() ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        );
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location },
+              }}
+            />
+          );
       }}
     />
   );
@@ -40,6 +41,7 @@ export default () => {
           <Route path="/login" component={Login} />
         
           <PrivateRoute path="/">
+            <Route exact path="/inventory" component={Inventory} />
             <Route exact path="/" component={HomePage} />
             <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
