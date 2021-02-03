@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import HomePage from "./components/homepage";
@@ -7,22 +7,29 @@ import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
-import AdminView from "./components/adminfolder/adminview"
-import {Auth} from './Auth'
+import AdminView from "./components/adminfolder/adminview";
+import { Auth } from "./Auth";
+import Inventory from "./components/production/inventory";
 
-function PrivateRoute({ children, ...rest } : {children : any, path: string}) {
+function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
-    <Route {...rest} render={({ location }) => {
-      return Auth.isAuthenticated()
-        ? children
-        : <Redirect to={{
-            pathname: '/login',
-            state: { from: location }
-          }} />
-    }} />
-  )
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return Auth.isAuthenticated() ? (
+          children
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location },
+              }}
+            />
+          );
+      }}
+    />
+  );
 }
-
 
 export default () => {
   return (
@@ -31,17 +38,25 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route exact path={"/dashboard"} component={EmployeeDashboard} />
-          <Route exact path={"/adminview"} component = {AdminView}/>
-          
+          <Route path="/inventory" component={Inventory} />
+
           <PrivateRoute path="/">
-            <Route exact path="/" component={EmployeeDashboard} />
+            {/* <Route exact path="/inventory" component={Inventory} /> */}
+            <Route exact path="/" component={HomePage} />
+            <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
-            <Route exact path={"/materialmanager"} component={MaterialManager}/>
-            <Route exact path={"/materialmanager/create"} component={CreateParts}/>
+            <Route
+              exact
+              path={"/materialmanager"}
+              component={MaterialManager}
+            />
+            <Route
+              exact
+              path={"/materialmanager/create"}
+              component={CreateParts}
+            />
             <Route path={"/materialmanager/edit/:id"} component={EditParts} />
           </PrivateRoute>
-          
         </Switch>
       </BrowserRouter>
     </>
