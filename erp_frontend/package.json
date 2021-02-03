@@ -24,6 +24,7 @@
     "evergreen-ui": "^2.0.1",
     "fontsource-roboto": "^4.0.0",
     "framer-motion": "^3.2.2-rc.1",
+    "moment": "^2.29.1",
     "phoenix": "file:../erp_backend/deps/phoenix",
     "phoenix_html": "file:../erp_backend/deps/phoenix_html",
     "react": "^16.8 ",
