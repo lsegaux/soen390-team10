@@ -7,7 +7,7 @@ defmodule Erp.Accounts.User do
 
   schema "users" do
     field :email, :string
-      field :is_admin, :boolean, default: false
+    field :is_admin, :boolean, default: false
     field :name, :string
     field :org_name, :string
     field :password_hash, :string

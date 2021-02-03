@@ -24,13 +24,7 @@ defmodule ErpWeb.Router do
 
     get "/my_user", UserController, :show
   end
-
-  scope "/", ErpWeb do
-    pipe_through :browser
-
-    get "/*path", PageController, :index
-  end
-
+  
   scope "/api/v1", ErpWeb do
     pipe_through :api
 
@@ -38,4 +32,11 @@ defmodule ErpWeb.Router do
     post "/sign_in", UserController, :sign_in
     get "/production", ProductionController, :get_production_info
   end
+
+  scope "/", ErpWeb do
+    pipe_through :browser
+
+    get "/*path", PageController, :index
+  end
+
 end
