@@ -1,1 +1,36 @@
+
 Keeping track of the top 10 risks throughout our sprints
+
+Sprint 1:
+1. 
+    PROBLEM: Poor understanding of high-level project requirements. 
+    SOL: Further discuss requirements with Product Owner, such as how clients will purchase products (bikes).
+
+2.  PROBLEM: Using potentially outdated architecture client-side (class components vs functional). 
+    SOL: Identify best practices using React documentation, and identify the optimal solution based on selected UI Framework.
+
+3.  PROBLEM: Slow request-response times with respect to communication between client (React) and server (Phoenix).
+    SOL: Determine which component is causing the bottleneck and eliminate any inefficiencies.
+
+4.  PROBLEM: Issues with authentication feature.
+    SOL: Need to identify if the issue is a result of improper form validation or if it is server-side.
+
+5.  PROBLEM: Scheduling conflicts with respect to other courses. Difficult to meet with teams and keep an open dialogue.
+    SOL: Create team meetings at the beginning of each sprint and set dates in advance.
+
+6.  PROBLEM: Getting up to speed on Elixir while respecting project time constraints.
+    SOL: Time management and extreme programming.
+    
+7.  PROBLEM: Potential issues with respect to bad time estimation. 
+    SOL: Re-evaluate user story point assignment for issues.
+
+8.  PROBLEM: Creating multiple prototypes as per project requirements. More difficult than anticipated (scope creep).
+    SOL: Create prototypes that will be relevant to the project moving forward (can recycle work).
+
+9.  PROBLEM: Insufficient planning with respect to testing for the front-end. 
+    SOL: Find a React testing framework and begin unit testing.
+
+10. PROBLEM: Project architecture and testing document deadlines approaching.
+    SOL: Finish them!
+
+    

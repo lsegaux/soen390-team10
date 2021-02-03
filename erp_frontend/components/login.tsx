@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Button, FormField, TextInput, Pane } from 'evergreen-ui'
+import { Button, FormField, TextInput, Pane, Heading } from 'evergreen-ui'
 import axios from 'axios';
-import { Redirect } from "react-router-dom";
+import {loginPost} from "../utils/datafetcher"
+import { Auth } from "../Auth";
+
 
 export default function Login(this: any) {
   
-  const url = 'http://localhost:4000';
-
   const [email, setEmail] = useState("");
   const [loginError, setLoginError] = useState(false);
-  const [homeRedirect, setHomeRedirect] = useState(false);
-  const [signUpRedirect, setSignUpRedirect] = useState(false);
   const [password, setPassword] = useState("");
   
   function validateForm() {
@@ -19,43 +17,44 @@ export default function Login(this: any) {
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    const loginData = {
-      email: email,
-      password: password
-    };
-        axios({
-        method: 'post',
-        url: `${url}/api/v1/sign_in`,
-        headers: { "Content-Type": "application/json" }, 
-        data: loginData
-        }).then(res => { 
-          if (res.status === 200) {
-            console.log(res);
-            localStorage.setItem("jwt", res.data.jwt);
-            setHomeRedirect(true)
-            }
-        }).catch(err => { 
-            setLoginError(true);
-            console.error(err);
-        });
+
+    loginPost(email, password)
+    .then(res => { 
+      if (res.status === 200) {
+        console.log(res);
+        localStorage.setItem("jwt", res.data.jwt);
+        window.location.href = "/dashboard"
+        return
+      }
+      setLoginError(true);
+    })
+    .catch(err => { 
+        setLoginError(true);
+        console.error(err);
+    });
+  }
+
+  if(Auth.isAuthenticated()) {
+    window.location.href = "/dashboard"
   }
 
   return (
-    <div style={{
-      position: 'absolute', left: '50%', top: '50%',
-      transform: 'translate(-50%, -50%)'
-    }}>
-      {/* {localStorage.getItem('jwt') &&  <Redirect to = {{ pathname: "/" }} />} */}
-      { homeRedirect &&  <Redirect to = {{ pathname: "/" }} />}
+    <Pane 
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    paddingTop={300}
+    >
         <Pane
         elevation={4}
-        paddingTop={40}
-        width={400}
-        height={300}
+        padding={20}
+        paddingTop={50}
+        paddingBottom={50}
         alignItems="center"
         background ="blueTint">
 
-          <FormField label = 'Login' textAlign='center'>
+          <FormField textAlign='center'>
+            <Heading marginTop={15} marginBottom={15} size={700}>Login</Heading>
               <div style={{paddingTop: '20px'}}>
                 <TextInput
                   name="Email"
@@ -76,11 +75,11 @@ export default function Login(this: any) {
               />
                 {loginError &&  <FormField label='' validationMessage='Username or password is incorrect' />}
             </div>
-            <Button disabled={!validateForm()} type='submit'  onClick={handleSubmit}>Login</Button>
-            <a onClick={event =>  setSignUpRedirect(true)}><br/><br/>Create an account.</a>
-            { signUpRedirect &&  <Redirect to = {{ pathname: "/signup" }} />}
+            <Button disabled={!validateForm()} type='submit' appearance="primary" onClick={handleSubmit}>Login</Button>
+            <Button type='submit' marginLeft={15} onClick={ () => {window.location.href = "/signup"}}>Sign Up</Button>
+            <Pane marginBottom={15}></Pane>
           </FormField>
       </Pane>
-    </div>
+    </Pane>
   );
 }
