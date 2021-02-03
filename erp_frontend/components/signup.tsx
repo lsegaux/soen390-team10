@@ -79,7 +79,7 @@ export default function Signup(this: any) {
                     {signupError &&  <FormField label='' validationMessage='Email already taken.' />}
                 </Pane>
                 <Button disabled={!validateForm()} type='submit' appearance="primary" onClick={handleSubmit}>Sign Up</Button>
-                <Button disabled={!validateForm()} type='submit' marginLeft={15} onClick={ () => {window.location.href = "/login"}}>Go to Login</Button>
+                <Button type='submit' marginLeft={15} onClick={ () => {window.location.href = "/login"}}>Go to Login</Button>
                 <Pane marginBottom={15}></Pane>
             </FormField>
         </Pane>

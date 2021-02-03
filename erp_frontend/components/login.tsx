@@ -76,7 +76,7 @@ export default function Login(this: any) {
                 {loginError &&  <FormField label='' validationMessage='Username or password is incorrect' />}
             </div>
             <Button disabled={!validateForm()} type='submit' appearance="primary" onClick={handleSubmit}>Login</Button>
-            <Button disabled={!validateForm()} type='submit' marginLeft={15} onClick={ () => {window.location.href = "/signup"}}>Sign Up</Button>
+            <Button type='submit' marginLeft={15} onClick={ () => {window.location.href = "/signup"}}>Sign Up</Button>
             <Pane marginBottom={15}></Pane>
           </FormField>
       </Pane>
