@@ -7,6 +7,7 @@ import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
+import Inventory from "./components/inventory/inventory";
 const Router = () => {
   return (
     <>
@@ -15,6 +16,7 @@ const Router = () => {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/inventory" component={Inventory} />
           <Route exact path={"/materialmanager"} component={MaterialManager} />
           <Route exact path={"/dashboard"} component={EmployeeDashboard} />
           <Route
