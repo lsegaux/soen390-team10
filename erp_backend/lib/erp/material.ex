@@ -4,6 +4,7 @@ defmodule Erp.Material do
 
   schema "materials" do
     field :material_id, :integer
+    field :name, :string
     field :quantity, :integer
     field :plant_id, :id
 
@@ -13,8 +14,8 @@ defmodule Erp.Material do
   @doc false
   def changeset(material, attrs) do
     material
-    |> cast(attrs, [:material_id, :quantity])
-    |> validate_required([:material_id, :quantity])
+    |> cast(attrs, [:name, :material_id, :quantity])
+    |> validate_required([:name, :material_id, :quantity])
     |> unique_constraint(:material_id)
   end
 end
