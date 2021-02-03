@@ -9,7 +9,7 @@ import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
 import AdminView from "./components/adminfolder/adminview";
 import { Auth } from "./Auth";
-import Inventory from "./components/inventory/inventory";
+import Inventory from "./components/production/inventory";
 
 function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
@@ -38,9 +38,10 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          <Route path="/inventory" component={Inventory} />
 
           <PrivateRoute path="/">
-            <Route exact path="/inventory" component={Inventory} />
+            {/* <Route exact path="/inventory" component={Inventory} /> */}
             <Route exact path="/" component={HomePage} />
             <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />

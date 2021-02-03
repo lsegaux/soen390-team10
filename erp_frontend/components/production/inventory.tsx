@@ -75,7 +75,7 @@ export default function Inventory(this: any) {
     return (
         <div className={classes.root}>
             {inventoryObj.map((plant) => (
-                <Accordion>
+                <Accordion key={plant.location}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"

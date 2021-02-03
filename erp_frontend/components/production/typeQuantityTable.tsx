@@ -14,6 +14,8 @@ const useStyles = makeStyles({
     },
 });
 
+let uniqueKey = 0;
+
 export default function TypeQuantityTable({ content, type }) {
     const classes = useStyles();
 
@@ -28,7 +30,7 @@ export default function TypeQuantityTable({ content, type }) {
                 </TableHead>
                 <TableBody>
                     {content.map((content) => (
-                        <TableRow key={content.type}>
+                        <TableRow key={++uniqueKey + content.type}>
                             <TableCell component="th" scope="row">
                                 {content.type}
                             </TableCell>
