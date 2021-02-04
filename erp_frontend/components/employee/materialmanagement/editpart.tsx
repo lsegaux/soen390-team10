@@ -119,7 +119,7 @@ class Edit extends React.Component<RouteComponentProps<any>, InputFormState> {
                 <Button
                   variant="outlined"
                   component="a"
-                  href="/"
+                  href="/dashboard"
                   style={{
                     padding: "1%",
                     margin: "1%",
