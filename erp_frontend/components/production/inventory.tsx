@@ -10,13 +10,40 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
+        production: {
+            fontFamily: 'sans-serif',
+            fontStyle: 'normal',
+        },
+        inventoryDiv: {
+            width: '85%',
+            margin: 'auto',
+        },
+        welcomeProduction: {
+            padding: '60px',
+            '& h3': {
+                paddingBottom: '30px'
+            },
+
+        },
+        plantsDiv: {
             width: '100%',
         },
-        heading: {
-            fontSize: theme.typography.pxToRem(15),
-            fontWeight: theme.typography.fontWeightRegular,
+        bikesTypography: {
+            color: '#FFFFFF !important'
         },
+        plantsAccordion: {
+            background: '#247cd1'
+        },
+        mainAccordion: {
+            background: '#054787'
+        },
+        plantHeading: {
+            color: '#FFFFFF',
+
+        },
+        expand_icon: {
+            color: '#FFFFFF'
+        }
     }),
 );
 
@@ -73,71 +100,70 @@ export default function Inventory(this: any) {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            {inventoryObj.map((plant) => (
-                <Accordion key={plant.location}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography className={classes.heading}>{plant.location}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className={classes.root}>
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
-                                    <Typography className={classes.heading}>Materials ({plant.materials.length})</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <TypeQuantityTable content={plant.materials} type="materials" />
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
-                                    <Typography className={classes.heading}>Parts ({plant.materials.length})</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <TypeQuantityTable content={plant.parts} type="parts" />
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion>
-                                <AccordionSummary
-                                    disabled={true}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
-                                    <Typography className={classes.heading}>Built Bikes ({plant.bikesBuilt})</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion>
-                                <AccordionSummary
-                                    disabled={true}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
-                                    <Typography className={classes.heading}>Bikes Being Built ({plant.bikesBeingBuilt})</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-
-                                </AccordionDetails>
-                            </Accordion>
-
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
+        <div className={classes.production}>
+            <div className={classes.welcomeProduction}>
+                <Typography variant="h3" align="center">Production</Typography>
+                <Typography variant="h6" align="center">Welcome to production where you can see the inventory of all the different plants. Under each plant location you can see information on the different materials, parts and bikes.</Typography>
+            </div>
+            <div className={classes.inventoryDiv}>
+                {inventoryObj.map((plant) => (
+                    <Accordion key={plant.location} className={classes.mainAccordion}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography className={classes.plantHeading}>{plant.location}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <div className={classes.plantsDiv}>
+                                <Accordion className={classes.plantsAccordion}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.plantHeading}>Materials ({plant.materials.length})</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <TypeQuantityTable content={plant.materials} type="materials" />
+                                    </AccordionDetails>
+                                </Accordion>
+                                <Accordion className={classes.plantsAccordion}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.plantHeading}>Parts ({plant.materials.length})</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <TypeQuantityTable content={plant.parts} type="parts" />
+                                    </AccordionDetails>
+                                </Accordion>
+                                <Accordion className={classes.plantsAccordion}>
+                                    <AccordionSummary
+                                        disabled={true}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.plantHeading}>Built Bikes ({plant.bikesBuilt})</Typography>
+                                    </AccordionSummary>
+                                </Accordion>
+                                <Accordion className={classes.plantsAccordion}>
+                                    <AccordionSummary
+                                        disabled={true}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.plantHeading}>Bikes Being Built ({plant.bikesBeingBuilt})</Typography>
+                                    </AccordionSummary>
+                                </Accordion>
+                            </div>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </div>
         </div>
     );
 }
