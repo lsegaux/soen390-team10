@@ -1,1 +1,11 @@
 Risk Management Log to be updated as needed as per Risk Management Document requirements
+
+01/02/21
+Created the top 10 risks list to keep track of what are the most pressing risks
+
+31/01/21
+Revised risk management document and made some improvements
+
+30/01/21
+Developed Risk Management document detailing how risk will be managed throughout this project
+
