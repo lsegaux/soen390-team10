@@ -17,4 +17,7 @@ if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
   echo "Database $PGDATABASE created."
 fi
 
+mix ecto.migrate
+mix run priv/repo/seeds.exs
+
 exec mix phx.server
