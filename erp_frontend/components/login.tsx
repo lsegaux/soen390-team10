@@ -23,7 +23,7 @@ export default function Login(this: any) {
       if (res.status === 200) {
         console.log(res);
         localStorage.setItem("jwt", res.data.jwt);
-        window.location.href = "/dashboard"
+        window.location.href = "/"
         return
       }
       setLoginError(true);
@@ -35,7 +35,7 @@ export default function Login(this: any) {
   }
 
   if(Auth.isAuthenticated()) {
-    window.location.href = "/dashboard"
+    window.location.href = "/"
   }
 
   return (
