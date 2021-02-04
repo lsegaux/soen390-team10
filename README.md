@@ -1,6 +1,11 @@
 # ERP
 SOEN390 Team 10 ERP Project
 
+## How to run with docker
+
+`sudo docker-compose build`
+`sudo docker-compose up`
+
 ## How to run
 - Install [Elixir](https://elixir-lang.org/install.html)
 - Install [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
