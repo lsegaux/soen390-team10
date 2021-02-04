@@ -2,6 +2,7 @@ defmodule Erp.Production.Materialmap do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:quantity, :part_id, :material_id]}
   #each part has a list of materials
   schema "materialmaps" do
     field :quantity, :integer

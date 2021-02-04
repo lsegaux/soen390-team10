@@ -56,6 +56,7 @@ export default function Inventory(this: any) {
 
     const url = 'http://localhost:4000';
 
+    // TODO: update
     // useEffect(() => {
     //     axios({
     //         method: 'get',

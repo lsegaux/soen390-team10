@@ -2,6 +2,7 @@ defmodule Erp.Production.Material do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:name, :material_id, :quantity, :plant_id]}
   schema "materials" do
     field :material_id, :integer
     field :name, :string

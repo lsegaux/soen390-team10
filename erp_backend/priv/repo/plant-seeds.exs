@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Erp.Repo
-alias Erp.Plant
+alias Erp.Production.Plant
 
 
 data = [

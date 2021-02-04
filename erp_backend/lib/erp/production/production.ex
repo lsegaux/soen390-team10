@@ -9,18 +9,29 @@ defmodule Erp.Production do
   alias Erp.Production.Material
   alias Erp.Production.Product
 
-
   def production_status() do
-    with {:ok, plants} <- query_plants(),
-    {:ok, parts} <- query_parts(),
-    {:ok, materials} <- query_materials(),
-    {:ok, bikes} <- query_bikes() 
+    with {:ok, plants} <- query_plants()
     do
-      format_response(plants, parts, materials, bikes)
+      format_response(plants, [], [], [])
     else
       :error -> {:error, :db_error}
     end
   end
+
+  #TODO: update
+  # def production_status() do
+  #   with {:ok, plants} <- query_plants(),
+  #   {:ok, parts} <- query_parts(),
+  #   {:ok, materials} <- query_materials(),
+  #   {:ok, bikes} <- query_bikes() 
+  #   do
+  #     format_response(plants, parts, materials, bikes)
+  #     format_response(plants)
+
+  #   else
+  #     :error -> {:error, :db_error}
+  #   end
+  # end
 
   def list_plants() do
     Repo.all(Plant)
