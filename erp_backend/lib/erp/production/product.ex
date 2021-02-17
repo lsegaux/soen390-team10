@@ -2,13 +2,15 @@ defmodule Erp.Production.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
   schema "products" do
     field :name, :string
     field :product_id, :integer
     field :quantity, :integer
     field :start_time, :naive_datetime
-    field :plant_id, :id
+    field :plant_id, :integer
 
+    @primary_key {:product_id, :integer, autogenerate: true}
     timestamps()
   end
 

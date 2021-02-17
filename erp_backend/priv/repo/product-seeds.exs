@@ -5,7 +5,7 @@
 
 
 alias Erp.Repo
-alias Erp.Product
+alias Erp.Production.Product
 
 
 data = [
