@@ -38,7 +38,7 @@ RUN mkdir /app
 COPY . /app
 
 COPY ./docker_files/repo.ex /app/erp_backend/lib/erp/
-COPY ./docker_files/test.exx /app/erp_backend/config/
+COPY ./docker_files/test.exs /app/erp_backend/config/
 
 WORKDIR /app
 
