@@ -11,11 +11,11 @@ export function loginPost(email:string, password:string) {
     })
 }
 
-export function signUpPost(email:string, password:string) {
+export function signUpPost(email:string, password:string, firstName:string, lastName:string, userRole:string) {
     return axios({
         method: 'post',
         url: `${domain}/api/v1/sign_up`,
         headers: { "Content-Type": "application/json" }, 
-        data: {user: { email, password }}
+        data: {user: { email, password, first_name: firstName, last_name:lastName, role:userRole }}
     })
 }
