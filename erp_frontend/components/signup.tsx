@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormField, TextInput, Pane, Heading, SelectMenu } from 'evergreen-ui'
+import { Button, FormField, TextInput, Pane, Heading, Select } from 'evergreen-ui'
 import {signUpPost} from "../utils/datafetcher"
 import { Auth } from "../Auth";
 
@@ -14,7 +14,8 @@ export default function Signup(this: any) {
   const [password, setPassword] = useState("");
   
   function validateForm() {
-    return email.length > 0 && password.length > 8 && firstName.length > 0 && lastName.length > 0 && userRole.length > 0;
+    return email.length > 0 && password.length > 8 && firstName.length > 0 &&
+    lastName.length > 0 && userRole.length > 0;
   }
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
@@ -92,13 +93,14 @@ export default function Signup(this: any) {
                     {passwordTouched && password.length < 8 &&  <FormField label='' validationMessage='Password should be more than 8 characters.' />}
                     {signupError &&  <FormField label='' validationMessage='Email already taken.' />}
                 <Pane style={{padding: '20px', paddingBottom: '40px'}}>
-                    <SelectMenu
-                      title="Select name"
-                      options={['Employee', 'Administrator', 'Client'].map(label => ({ label, value: label }))}
-                      onSelect={(e: { target: { value: React.SetStateAction<string>; }; }) => setUserRole(e.value)}
+                    <Select
+                      onChange={(e: { target: { value: any; }; }) => setUserRole(e.target.value)}
+                      width='100%'
                     >
-                      <Button>{userRole || 'Select User Role'}</Button>
-                    </SelectMenu>
+                      <option value="Administrator">Administrator</option>
+                      <option value="Client">Client</option>
+                      <option value="Employee">Employee</option>
+                    </Select>
                   </Pane>
                 <Button disabled={!validateForm()} type='submit' appearance="primary" onClick={handleSubmit}>Sign Up</Button>
                 <Button type='submit' marginLeft={15} onClick={ () => {window.location.href = "/login"}}>Go to Login</Button>
