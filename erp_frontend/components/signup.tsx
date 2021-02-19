@@ -6,7 +6,7 @@ import { Auth } from "../Auth";
 export default function Signup(this: any) {
 
   const [email, setEmail] = useState("");
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState("Client");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [signupError, setSignupError] = useState(false);
@@ -97,8 +97,8 @@ export default function Signup(this: any) {
                       onChange={(e: { target: { value: any; }; }) => setUserRole(e.target.value)}
                       width='100%'
                     >
-                      <option value="Administrator">Administrator</option>
                       <option value="Client">Client</option>
+                      <option value="Administrator">Administrator</option>
                       <option value="Employee">Employee</option>
                     </Select>
                   </Pane>
