@@ -20,7 +20,7 @@ defmodule Erp.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :role])
+    |> cast(attrs, [:email, :password, :role, :first_name, :last_name])
     |> validate_required([:email, :password])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
