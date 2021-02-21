@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import HomePage from "./components/homepage";
 import Signup from "./components/signup";
-import EmployeeDashboard from "./components/employee/dashboard/Dashboard";
+import EmployeeDashboard from "./components/employee/dashboard/Skeleton";
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
