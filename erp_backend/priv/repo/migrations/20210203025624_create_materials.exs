@@ -2,11 +2,11 @@ defmodule Erp.Repo.Migrations.CreateMaterials do
   use Ecto.Migration
 
   def change do
-    create table(:materials) do
-      add :material_id, :integer
+    create table(:materials, primary_key: false) do
+      add :material_id, :integer, primary_key: true
       add :name, :string
       add :quantity, :integer
-      add :plant_id, references(:plants, on_delete: :nothing)
+      add :plant_id, references(:plants, column: :plant_id, on_delete: :nothing)
 
       timestamps()
     end

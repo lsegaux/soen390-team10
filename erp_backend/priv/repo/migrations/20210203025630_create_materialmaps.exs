@@ -4,8 +4,8 @@ defmodule Erp.Repo.Migrations.CreateMaterialmaps do
   def change do
     create table(:materialmaps) do
       add :quantity, :integer
-      add :part_id, references(:parts, on_delete: :nothing)
-      add :material_id, references(:materials, on_delete: :nothing)
+      add :part_id, references(:parts, column: :part_id, on_delete: :nothing)
+      add :material_id, references(:materials, column: :material_id, on_delete: :nothing)
 
       timestamps()
     end

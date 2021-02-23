@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Erp.Repo
-alias Erp.Plant
+alias Erp.Production.Plant
 
 
 data = [
@@ -35,7 +35,7 @@ Enum.each data, fn(plant) ->
   name = Map.get(plant, "name")
 
   Repo.insert! %Plant{
-    name: name,
-    plant_id: plant_id
+    plant_id: plant_id,
+    name: name
   }
 end
