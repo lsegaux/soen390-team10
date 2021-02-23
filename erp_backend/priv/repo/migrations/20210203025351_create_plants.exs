@@ -2,9 +2,9 @@ defmodule Erp.Repo.Migrations.CreatePlants do
   use Ecto.Migration
 
   def change do
-    create table(:plants) do
+    create table(:plants, primary_key: false) do
+      add :plant_id, :integer, primary_key: true
       add :name, :string
-      add :plant_id, :integer
 
       timestamps()
     end

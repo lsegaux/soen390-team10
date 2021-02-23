@@ -16,5 +16,7 @@ defmodule Erp.Production.Materialmap do
     materialmap
     |> cast(attrs, [:quantity])
     |> validate_required([:quantity])
+    |> foreign_key_constraint(:part_id)
+    |> foreign_key_constraint(:material_id)
   end
 end
