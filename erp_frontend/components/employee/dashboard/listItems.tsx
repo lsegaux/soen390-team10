@@ -8,6 +8,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 
+
 export default function MainListItems({setCurrentPage}){
  return <div>
  <ListItem button onClick= {()=>setCurrentPage(0)}>
@@ -40,11 +41,11 @@ export default function MainListItems({setCurrentPage}){
    </ListItemIcon>
    <ListItemText primary="Reports" />
  </ListItem>
- <ListItem button component="a" href="/materialmanager">
+ <ListItem button component="a" href="/accounting">
    <ListItemIcon>
      <LayersIcon />
    </ListItemIcon>
-   <ListItemText primary="Parts and Materials" />
+   <ListItemText primary="Accounting" />
  </ListItem>
 </div>
 
