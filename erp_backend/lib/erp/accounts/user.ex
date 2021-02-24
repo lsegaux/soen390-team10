@@ -7,8 +7,9 @@ defmodule Erp.Accounts.User do
 
   schema "users" do
     field :email, :string
-    field :is_admin, :boolean, default: false
-    field :name, :string
+    field :first_name, :string
+    field :last_name, :string
+    field :role, :string
     field :org_name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
@@ -19,7 +20,7 @@ defmodule Erp.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :role, :first_name, :last_name])
     |> validate_required([:email, :password])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
