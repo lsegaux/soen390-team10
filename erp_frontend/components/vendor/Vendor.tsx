@@ -24,6 +24,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 
 import Checkout from '../vendor/checkout';
 
+const url = 'http://localhost:4000';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,6 +117,7 @@ export default function Vendor() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectPlantIndex, setSelectedPlantIndex] = useState("montreal");
+  const [allPlants, setAllPlants] = useState([]);
   const data = useState(hardData);
   const [orderData,setOrderData] = useState(new Array());
   const [openCheckoutModal, setOpenCheckoutoutModal] = useState(false);
@@ -133,6 +135,27 @@ export default function Vendor() {
   useEffect(()=>{  
       setOrderData(new Array(data[0][selectPlantIndex]["materialList"].length).fill(0));
 },[selectPlantIndex]);
+
+    useEffect(() => {
+      let isMounted = true;
+
+
+        axios({
+          method: 'get',
+          url: `${url}/api/v1/production/plants`,
+          headers: { "Content-Type": "application/json" },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+              setAllPlants(res.data.data)
+          }
+      }).catch(err => {
+          console.error(err);
+      });
+      
+      return ()=>{isMounted = false}
+   
+    }, []);
+    
 
 
   function handlePlantSelect (name){
@@ -161,8 +184,6 @@ export default function Vendor() {
   function toggleCheckout(){
     setOpenCheckoutoutModal(!openCheckoutModal);
   }
-  console.log();
-  
   return (
     <>
     <TableContainer>
@@ -172,8 +193,8 @@ export default function Vendor() {
             <TableCell align = "center">
             <Button className = {classes.button} onClick={handleClick}>Choose plant: {selectPlantIndex}</Button>
               <Menu id = "plant" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
-              {Object.keys(data[0]).map((item, key)=>{
-                return <MenuItem key={key} onClick = {()=>{handlePlantSelect(item);handleClose()}}>{item[0].toUpperCase() + item.substring(1)}</MenuItem>
+              {Object.keys(allPlants).map((item, key)=>{
+                return <MenuItem key={key} onClick = {()=>{handlePlantSelect(item);handleClose()}}>{}</MenuItem>
               })}
               </Menu>
             </TableCell>
