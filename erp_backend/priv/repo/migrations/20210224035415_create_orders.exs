@@ -8,6 +8,9 @@ defmodule Erp.Repo.Migrations.CreateOrders do
       add :userEmail, references(:users, column: :email, type: :string, on_delete: :nothing)
       add :time, :naive_datetime
       add :bikesAmount, :integer
+    timestamps()
     end
+
+  create unique_index(:orders, [:orderId])
   end
 end

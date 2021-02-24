@@ -12,6 +12,9 @@ data = [
   %{
     "email" => "nic@mail.com",
   },
+  %{
+    "email" => "test@mail.com"
+  }
 ]
 
 Enum.each data, fn(user) ->

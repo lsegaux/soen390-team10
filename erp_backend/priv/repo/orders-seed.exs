@@ -17,7 +17,7 @@ data = [
   },
   %{
     "price" => 900000,
-    "userEmail" => "nicolasmacbeth@gmail.com",
+    "userEmail" => "test@mail.com",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 3000
   },
