@@ -38,7 +38,7 @@ export default function BasicTable() {
        }).catch(err => {
           console.error(err);
       });
-  });
+  }, []);
 
   return (
     <TableContainer component={Paper}>
