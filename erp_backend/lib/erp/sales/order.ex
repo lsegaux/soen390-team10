@@ -4,7 +4,6 @@ defmodule Erp.Sales.Order do
 
   @primary_key false
   schema "orders" do
-    field :orderId, :id
     field :price, :integer
     field :time, :naive_datetime
     field :bikesAmount, :integer

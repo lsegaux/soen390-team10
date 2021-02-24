@@ -3,7 +3,6 @@ defmodule Erp.Repo.Migrations.ChangeOrdersTable do
 
   def change do
     alter table(:orders) do
-      add :orderId, :id
 
     timestamps()
     end
