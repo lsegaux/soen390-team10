@@ -32,8 +32,8 @@ var plants = [
             {
             type: "Wheels",
             material: "Carbon",
-            price: "200$",
-            quantity: 3,
+            price: 200,
+            quantity: 0,
             }
         ]
     },
@@ -43,13 +43,13 @@ var plants = [
             {
             type: "Wheels",
             material: "Aluminium",
-            price: "22$",
+            price: 22,
             quantity: 230,
             },
             {
             type: "Wheels",
             material: "Carbon",
-            price: "200$",
+            price: 200,
             quantity: 15,
             }
         ]
@@ -119,7 +119,7 @@ export default function Sales() {
                   const materialName = plants[i]["parts"][j]["material"];  
                   const quantity = plants[i]["parts"][j]["quantity"]
                   const price = plants[i]["parts"][j]["price"]
-                  
+
                   if (!(materialName in parts[partName])){
                       parts[partName][materialName] = {price: price, quantity:quantity}
                   }
@@ -208,8 +208,7 @@ export default function Sales() {
             alert(`This part is out of stock (only ${qty} left).`);
             return;
         }
-        let priceInt = price.substring(0, price.length - 1);
-        setTotalPrice(totalPrice + parseInt(priceInt));
+        setTotalPrice(totalPrice + price);
 
         if (!bikeAssembled[partName]){
             bikeAssembled[partName] = {material: value, quantity: qty-bikeQty}
@@ -280,8 +279,6 @@ export default function Sales() {
                                         <TableRow>
                                             <TableCell>Category</TableCell>
                                             <TableCell colSpan={4}>Material/Type</TableCell>
-                                            <TableCell colSpan={4}>Price</TableCell>
-                                            <TableCell colSpan={4}>In Stock</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -357,7 +354,7 @@ export default function Sales() {
                                         </DialogActions>
                                     </Dialog>
                                 </Box>
-                                <Title>Total: {totalPrice} </Title>
+                                <Title>Total: {totalPrice}$ </Title>
                             </Paper>
                         </Grid>
                     </Grid>
