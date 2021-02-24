@@ -116,9 +116,9 @@ const tableHeaders = ["Material", "Internal Stock", "Vendor", "Price Per Unit", 
 export default function Vendor() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectPlantIndex, setSelectedPlantIndex] = useState("montreal");
+  const [selectPlantIndex, setSelectedPlantIndex] = useState(0);
   const [allPlants, setAllPlants] = useState([]);
-  const data = useState(hardData);
+  const [data, setData] = useState([]);
   const [orderData,setOrderData] = useState(new Array());
   const [openCheckoutModal, setOpenCheckoutoutModal] = useState(false);
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -127,13 +127,29 @@ export default function Vendor() {
   //initializes array of 0 for order items
   useEffect(()=>{ 
       if (orderData.length ===0 ){
-        setOrderData(new Array(data[0][selectPlantIndex]["materialList"].length).fill(0));
+        setOrderData(new Array(data.length).fill(0));
       } 
   },[data]);
 
 //Resets orders when changing plants
-  useEffect(()=>{  
-      setOrderData(new Array(data[0][selectPlantIndex]["materialList"].length).fill(0));
+  useEffect(()=>{
+      let isMounted = true;
+      setOrderData(new Array(data.length).fill(0));
+
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
+        headers: { "Content-Type": "application/json" },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+            setData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
+
+      return ()=>{isMounted = false}
+
 },[selectPlantIndex]);
 
     useEffect(() => {
@@ -151,11 +167,24 @@ export default function Vendor() {
       }).catch(err => {
           console.error(err);
       });
+
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
+        headers: { "Content-Type": "application/json" },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+            setData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
       
       return ()=>{isMounted = false}
    
     }, []);
     
+    // useEffect(() => {}, [])
 
 
   function handlePlantSelect (name){
@@ -184,6 +213,22 @@ export default function Vendor() {
   function toggleCheckout(){
     setOpenCheckoutoutModal(!openCheckoutModal);
   }
+
+  function clearOrder(){
+    setOrderData(new Array(data.length).fill(0));
+    
+    axios({
+      method: 'get',
+      url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
+      headers: { "Content-Type": "application/json" },
+    }).then(res => {
+        if (res.status === 200) {
+          setData(res.data.data);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+  }
   return (
     <>
     <TableContainer>
@@ -191,10 +236,10 @@ export default function Vendor() {
         <TableBody>
           <TableRow>
             <TableCell align = "center">
-            <Button className = {classes.button} onClick={handleClick}>Choose plant: {selectPlantIndex}</Button>
+            <Button className = {classes.button} onClick={handleClick}>Choose plant: {(allPlants[selectPlantIndex])? allPlants[selectPlantIndex]["name"]:""}</Button>
               <Menu id = "plant" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
               {Object.keys(allPlants).map((item, key)=>{
-                return <MenuItem key={key} onClick = {()=>{handlePlantSelect(item);handleClose()}}>{}</MenuItem>
+                return <MenuItem key={key} onClick = {()=>{handlePlantSelect(item);handleClose()}}>{allPlants[item].name}</MenuItem>
               })}
               </Menu>
             </TableCell>
@@ -215,13 +260,13 @@ export default function Vendor() {
           </TableHead>
           <TableBody>
             {
-              data[0][selectPlantIndex]["materialList"].map((row, key)=>{
+              data.map((row, key)=>{
                 return ( 
                 <TableRow key ={key}>
-                  <TableCell align = "center">{row.name}</TableCell>
-                  <TableCell align = "center">{row.stock}</TableCell>
-                  <TableCell align = "center">{row.vendor}</TableCell>
-                  <TableCell align = "center">{row.pricePerUnit}</TableCell>
+                  <TableCell align = "center">{row["name"]}</TableCell>
+                  <TableCell align = "center">{row["quantity"]}</TableCell>
+                  <TableCell align = "center">Wilson Inc</TableCell>
+                  <TableCell align = "center">{row["price"]}</TableCell>
                   <TableCell align = "center" style = {{display:"flex"}}>
                       <Button className={classes.orderButton} startIcon={<RemoveCircleIcon/>} onClick={()=>handleOrdering(false, key)}></Button>
                       <div className={classes.orderTextField}>{orderData[key]}</div>
@@ -241,7 +286,7 @@ export default function Vendor() {
             </TableFooter>
         </Table>
       </TableContainer>
-      <Checkout open={openCheckoutModal} closePopup={toggleCheckout} data = {data} order = {orderData} selectedPlant={selectPlantIndex}/>  
+      <Checkout open={openCheckoutModal} closePopup={toggleCheckout} data = {data} order = {orderData} clearOrder={clearOrder}/>  
       </form>
     </div>
    

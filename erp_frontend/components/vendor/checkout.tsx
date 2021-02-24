@@ -13,6 +13,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
 
+const url = 'http://localhost:4000';
+
 const useStyles = makeStyles((theme) => ({
     popupCheckout:{
         margin:"auto",
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   
 const tableHeaders = ["Material", "Price Per Unit", "Quantity Ordering", "Cost"];
 
-export default function Checkout({open, closePopup, order, data, selectedPlant}){
+export default function Checkout({open, closePopup, order, data, clearOrder}){
     const classes = useStyles(useTheme());
 
     function calcMaterialPrice(qty,pricePerUnit){
@@ -55,7 +57,7 @@ export default function Checkout({open, closePopup, order, data, selectedPlant})
     function calcTotal(arrQty, arrMats){
         let total = 0;
         for(let i = 0; i<arrQty.length;i++){
-            total+= (arrQty[i]*arrMats[i].pricePerUnit)
+            total+= (arrQty[i]*arrMats[i]["price"])
         }
         return total;
     }
@@ -67,7 +69,30 @@ export default function Checkout({open, closePopup, order, data, selectedPlant})
        * Add items to our internal stock in the database
        * 
        */
+      let success = true;
 
+       for(let i = 0; i < order.length; i++){
+           let success = true;
+           if(order[i] !== 0 && success){
+               axios({
+                 method: 'post',
+                 url: `${url}/api/v1/production/material/update/material_id/${data[i]["material_id"]}/quantity/${data[i]["quantity"] + order[i]}`,
+                 headers: { "Content-Type": "application/json" },
+               }).then(res => {
+                   if (res.status === 200) {
+                   }
+               }).catch(err => {
+                   console.error(err);
+                   alert("Order was not processed.");
+                    success = false;
+               });
+           }
+       }
+
+       if(success)
+        alert("Successfully processed your order.");
+
+       clearOrder();
        closePopup();
     }
 
@@ -86,10 +111,10 @@ export default function Checkout({open, closePopup, order, data, selectedPlant})
             {order.map((item,key)=>{
                 if (item !== 0){
                 return <TableRow key = {key}> 
-                    <TableCell className={classes.checkoutTable} align="center">{data[0][selectedPlant]["materialList"][key].name} </TableCell>
-                    <TableCell className={classes.checkoutTable}align="center">{data[0][selectedPlant]["materialList"][key].pricePerUnit} </TableCell>
+                    <TableCell className={classes.checkoutTable} align="center">{data[key]["name"]} </TableCell>
+                    <TableCell className={classes.checkoutTable}align="center">{data[key]["price"]} </TableCell>
                     <TableCell className={classes.checkoutTable} align="center">{item} </TableCell>
-                    <TableCell className={classes.checkoutTable} align="center">{calcMaterialPrice(item,data[0][selectedPlant]["materialList"][key].pricePerUnit)} </TableCell>
+                    <TableCell className={classes.checkoutTable} align="center">{calcMaterialPrice(item, data[key]["price"])} </TableCell>
                 </TableRow> 
                 }
             })}
@@ -101,7 +126,7 @@ export default function Checkout({open, closePopup, order, data, selectedPlant})
                     <Button className={classes.checkoutButton} onClick={(event)=>handleCheckout(event)}>BUY</Button>
                 </TableCell>
                 <TableCell className={classes.checkoutTable} align = "center">
-                    Total: {calcTotal(order,data[0][selectedPlant]["materialList"]).toFixed(2)}
+                    Total: {calcTotal(order, data).toFixed(2)}
                 </TableCell>
             </TableRow>
         </TableFooter>
