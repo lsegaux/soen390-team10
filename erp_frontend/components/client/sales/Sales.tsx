@@ -22,6 +22,40 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
 
+var bikeAssembled={};
+
+// TODO: query backend to get real info
+var plants = [
+    {
+        plantName: "Montreal",
+        parts: [
+            {
+            type: "Wheels",
+            material: "Carbon",
+            price: "200$",
+            quantity: 3,
+            }
+        ]
+    },
+    {
+        plantName: "Toronto",
+        parts: [
+            {
+            type: "Wheels",
+            material: "Aluminium",
+            price: "22$",
+            quantity: 230,
+            },
+            {
+            type: "Wheels",
+            material: "Carbon",
+            price: "200$",
+            quantity: 15,
+            }
+        ]
+        }
+    ]
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         sales: {
@@ -77,37 +111,6 @@ export default function Sales() {
     };
 
     function parseInventory(){
-        // TODO: query backend to get real info
-        var plants = [
-            {
-              plantName: "Montreal",
-              parts: [
-                 {
-                  type: "Wheels",
-                  material: "Carbon",
-                  price: "200$",
-                  quantity: 3,
-                  }
-              ]
-            },
-            {
-                plantName: "Toronto",
-                parts: [
-                   {
-                    type: "Wheels",
-                    material: "Aluminium",
-                    price: "22$",
-                    "quantity": 230,
-                    },
-                    {
-                    type: "Wheels",
-                    material: "Carbon",
-                    price: "200$",
-                    quantity: 10,
-                    }
-                ]
-              }
-          ]
 
           for (var i=0; i <plants.length; i++){
               for (var j = 0; j < plants[i]["parts"].length; j++){
@@ -129,6 +132,7 @@ export default function Sales() {
     }
 
     parseInventory()
+
     let wheels = {
         partName: "Wheels",
         material: ['Carbon', 'Aluminium'],
@@ -144,7 +148,7 @@ export default function Sales() {
     let handlebars = {
         partName: 'Handlebars',
         material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Hadndlebars"]
+        types: parts["Handlebars"]
     }
 
     let brakes = {
@@ -197,17 +201,38 @@ export default function Sales() {
         setBikeQty(numBikes)
     }
 
-    function buttonChange(value: string, partName:string){
-        switch(partName){
-            case "Wheels":
-                let qty = wheels["types"][value]["quantity"]
-                if (qty < bikeQty){
-                    alert(`This part is out of stock (only ${qty} left).`);
-                    return;
+    function buttonChange(value: string, partName:string, index:number){
+        let qty = bikeParts[index]["types"][value]["quantity"]
+        let price = bikeParts[index]["types"][value]["price"];
+        if (qty < bikeQty){
+            alert(`This part is out of stock (only ${qty} left).`);
+            return;
+        }
+        let priceInt = price.substring(0, price.length - 1);
+        setTotalPrice(totalPrice + parseInt(priceInt));
+
+        if (!bikeAssembled[partName]){
+            bikeAssembled[partName] = {material: value, quantity: qty-bikeQty}
+        }
+    }
+
+    function parseAfter(){
+        for (var i=0; i <plants.length; i++){
+            for (var j = 0; j < plants[i]["parts"].length; j++){
+                for (var key in bikeAssembled){
+
+                    if (plants[i]["parts"][j]["type"] == key &&
+                    plants[i]["parts"][j]["material"] == bikeAssembled[key]["material"]
+                    && plants[i]["parts"][j]["quantity"] >= bikeQty){
+
+                        // Info for backend
+                        let plantName = plants[i]["plantName"];
+                        let partName = key;
+                        let material = bikeAssembled[key]["material"];
+                        console.log(plantName + " " + partName + " " + material + " " + bikeQty)
+                    }
                 }
-                let price = wheels["types"][value]["price"].substring(0,wheels["types"][value]["price"].length - 1);
-                setTotalPrice(totalPrice + parseInt(price));
-                break;
+            }
         }
     }
 
@@ -221,6 +246,7 @@ export default function Sales() {
       };
     
       const handleClose = () => {
+        parseAfter();
         setOpenPayment(false);
       };
 
@@ -254,15 +280,17 @@ export default function Sales() {
                                         <TableRow>
                                             <TableCell>Category</TableCell>
                                             <TableCell colSpan={4}>Material/Type</TableCell>
+                                            <TableCell colSpan={4}>Price</TableCell>
+                                            <TableCell colSpan={4}>In Stock</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bikePartsArr.map((bike) => (
-                                            <TableRow key={bike.partName}>
-                                                <TableCell>{bike.partName}</TableCell>
-                                                {bike.material.map((material) => (
-                                                    <TableCell key={bike.types + material}>
-                                                        <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bike.partName)}>
+                                        {bikePartsArr.map((bikePart, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{bikePart.partName}</TableCell>
+                                                {bikePart.material.map((material, price, quantity) => (
+                                                    <TableCell key={bikePart.types + material}>
+                                                        <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bikePart.partName, index)}>
                                                         <FormControlLabel value={material} 
                                                         control={<Radio color="primary" disabled={!validateBikeAmt()}/>} label={material} />
                                                         </RadioGroup>
