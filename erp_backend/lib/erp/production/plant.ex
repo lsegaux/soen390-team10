@@ -1,13 +1,16 @@
 defmodule Erp.Production.Plant do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, warn: false
 
-  @primary_key false
+  alias Erp.Repo
+  alias Erp.Production.Plant
+
+  @primary_key {:plant_id, :integer, []}
+  @derive {Phoenix.Param, key: :plant_id}
   schema "plants" do
-    field :plant_id, :integer
     field :name, :string
 
-    @primary_key {:plant_id, :integer, autogenerate: true}
     timestamps()
   end
 
@@ -16,6 +19,12 @@ defmodule Erp.Production.Plant do
     plant
     |> cast(attrs, [:name, :plant_id])
     |> validate_required([:name, :plant_id])
-    |> unique_constraint(:plant_id, name: "plants_pkey")
+    |> unique_constraint(:plant_id)
+  end
+
+  def get_plant!(id), do: Repo.get!(Plant, id)
+
+  def list_plants() do
+    Repo.all(Plant)
   end
 end
