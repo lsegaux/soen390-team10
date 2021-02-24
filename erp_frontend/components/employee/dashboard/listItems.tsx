@@ -23,11 +23,11 @@ export default function MainListItems({setCurrentPage}){
    </ListItemIcon>
    <ListItemText primary="Vendors" />
  </ListItem>
- <ListItem button>
+ <ListItem button onClick= {()=>setCurrentPage(2)}>
    <ListItemIcon>
      <ShoppingCartIcon />
    </ListItemIcon>
-   <ListItemText primary="Orders" />
+   <ListItemText primary="Accounting" />
  </ListItem>
  <ListItem button>
    <ListItemIcon>
@@ -40,12 +40,6 @@ export default function MainListItems({setCurrentPage}){
      <BarChartIcon />
    </ListItemIcon>
    <ListItemText primary="Reports" />
- </ListItem>
- <ListItem button component="a" href="/accounting">
-   <ListItemIcon>
-     <LayersIcon />
-   </ListItemIcon>
-   <ListItemText primary="Accounting" />
  </ListItem>
 </div>
 

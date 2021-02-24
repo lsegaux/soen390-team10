@@ -69,7 +69,6 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {row.clientName}
               </TableCell>
-              <TableCell align="right">{row.clientName}</TableCell>
               <TableCell align="right">{row.amountDue}</TableCell>
             </TableRow>
           ))}
