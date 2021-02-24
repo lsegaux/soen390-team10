@@ -126,7 +126,6 @@ export default function Sales() {
                     parts[partName][materialName]["quantity"] = quantity + currQuantity
                   }
               }
-              console.log(parts);
           }
     }
 
@@ -181,7 +180,7 @@ export default function Sales() {
 
     let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, forks, pedals];
     const [bikePartsArr, setBikePartsArr] = useState(bikeParts);
-    const [wheelMaterial, setWheelMaterial] = useState("");
+    // const [wheelMaterial, setWheelMaterial] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
     const [bikeQty, setBikeQty] = useState(0);
 
@@ -196,17 +195,24 @@ export default function Sales() {
         setBikeQty(numBikes)
     }
 
-    function wheelButtonChange(value: string){
-        let qty = wheels["types"][value]["quantity"]
-        console.log(qty)
-        console.log(bikeQty)
-        if (qty < bikeQty){
-            alert(`This part is out of stock (only ${qty} left).`);
-            return;
+    function buttonChange(value: string, partName:string){
+        switch(partName){
+            case "Wheels":
+                let qty = wheels["types"][value]["quantity"]
+                if (qty < bikeQty){
+                    alert(`This part is out of stock (only ${qty} left).`);
+                    return;
+                }
+                // setWheelMaterial(value);
+                let price = wheels["types"][value]["price"].substring(0,wheels["types"][value]["price"].length - 1);
+                setTotalPrice(parseInt(totalPrice + price));
+                break;
         }
-        setWheelMaterial(value);
-        let price = wheels["types"][value]["price"].substring(0,wheels["types"][value]["price"].length - 1);
-        setTotalPrice(parseInt(totalPrice + price));
+    }
+
+    function validateBikeAmt(){
+        if (Number.isNaN(bikeQty)) return false;
+        return true;
     }
 
     return (
@@ -247,8 +253,9 @@ export default function Sales() {
                                                 <TableCell>{bike.partName}</TableCell>
                                                 {bike.material.map((material) => (
                                                     <TableCell key={bike.types + material}>
-                                                        <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => wheelButtonChange(e.target.value)}>
-                                                        <FormControlLabel value={material} control={<Radio color="primary" />} label={material} />
+                                                        <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bike.partName)}>
+                                                        <FormControlLabel value={material} 
+                                                        control={<Radio color="primary" disabled={!validateBikeAmt()}/>} label={material} />
                                                         </RadioGroup>
                                                     </TableCell>
                                                 ))}
