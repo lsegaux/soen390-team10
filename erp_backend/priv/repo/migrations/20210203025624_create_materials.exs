@@ -7,6 +7,7 @@ defmodule Erp.Repo.Migrations.CreateMaterials do
       add :name, :string
       add :quantity, :integer
       add :plant_id, references(:plants, column: :plant_id, on_delete: :nothing)
+      add :price, :float
 
       timestamps()
     end
