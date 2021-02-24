@@ -37,7 +37,7 @@ defmodule ErpWeb.Router do
     get "/production/materials", MaterialController, :show_all_materials
     get "/production/material/:id", MaterialController, :show
     get "/production/material/plant_id/:id", MaterialController, :get_materials_by_plant_id
-    post "production/material/update/material_id/:id/quantity/:quantity", MaterialController, :update_quantity
+    post "/production/material/update/material_id/:id/quantity/:quantity", MaterialController, :update_quantity
 
   end
 

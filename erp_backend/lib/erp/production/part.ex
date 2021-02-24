@@ -2,15 +2,14 @@ defmodule Erp.Production.Part do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key false
+  @primary_key {:part_id, :integer, []}
+  @derive {Phoenix.Param, key: :part_id}
   schema "parts" do
-    field :part_id, :integer
     field :name, :string
     field :quantity, :integer
     field :build_time, :time
     field :plant_id, :id
 
-    @primary_key {:part_id, :integer, autogenerate: true}
     timestamps()
   end
 
