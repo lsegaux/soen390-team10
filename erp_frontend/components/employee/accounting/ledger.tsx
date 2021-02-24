@@ -69,7 +69,6 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {row.purchaser}
               </TableCell>
-              <TableCell align="right">{row.purchaser}</TableCell>
               <TableCell align="right">{row.amountDue}</TableCell>
             </TableRow>
           ))}
