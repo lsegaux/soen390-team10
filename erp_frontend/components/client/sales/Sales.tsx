@@ -20,8 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import { RadioGroup } from '@material-ui/core';
-import { Label } from 'recharts';
+import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -180,9 +179,12 @@ export default function Sales() {
 
     let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, forks, pedals];
     const [bikePartsArr, setBikePartsArr] = useState(bikeParts);
-    // const [wheelMaterial, setWheelMaterial] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
     const [bikeQty, setBikeQty] = useState(0);
+    const [openPayment, setOpenPayment] = useState(false);
+    const [cardNumber, setCardNumber] = useState("");
+    const [securityCode, setSecurityCode] = useState("");
+    const [expiration, setExpiration] = useState("");
 
     const classes = useStyles();
 
@@ -203,17 +205,24 @@ export default function Sales() {
                     alert(`This part is out of stock (only ${qty} left).`);
                     return;
                 }
-                // setWheelMaterial(value);
                 let price = wheels["types"][value]["price"].substring(0,wheels["types"][value]["price"].length - 1);
-                setTotalPrice(parseInt(totalPrice + price));
+                setTotalPrice(totalPrice + parseInt(price));
                 break;
         }
     }
 
     function validateBikeAmt(){
-        if (Number.isNaN(bikeQty)) return false;
+        if (Number.isNaN(bikeQty) || bikeQty < 15) return false;
         return true;
     }
+
+    const handleOpen = () => {
+        setOpenPayment(true);
+      };
+    
+      const handleClose = () => {
+        setOpenPayment(false);
+      };
 
     return (
         <div className={classes.sales}>
@@ -265,9 +274,60 @@ export default function Sales() {
                                 </Table>
                                 <br></br>
                                 <Box display="flex" flexDirection="row-reverse">
-                                    <Button variant="contained" color="primary" href="#contained-buttons">
+                                    <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleOpen} >
                                         Order
                                     </Button>
+                                    <Dialog open={openPayment} onClose={handleClose} aria-labelledby="form-dialog-title">
+                                        <DialogTitle id="form-dialog-title">Payment Information</DialogTitle>
+                                        <DialogContent>
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="Name of cardholder"
+                                            type="string"
+                                            fullWidth
+                                        />
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="Card Number"
+                                            type="string"
+                                            fullWidth
+                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardNumber(e.target.value)}
+                                            error={cardNumber.length != 19}
+                                        />
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="Security Code"
+                                            type="string"
+                                            fullWidth
+                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setSecurityCode(e.target.value)}
+                                            error={securityCode.length != 3}
+                                        />
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="Expiration Date"
+                                            type="string"
+                                            fullWidth
+                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setExpiration(e.target.value)}
+                                            error={expiration.match("[0-9][0-9]\/[0-9][0-9]") == null}
+                                        />
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button onClick={handleClose} color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button onClick={handleClose} color="primary">
+                                            Proceed to Payment
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
                                 </Box>
                                 <Title>Total: {totalPrice} </Title>
                             </Paper>
