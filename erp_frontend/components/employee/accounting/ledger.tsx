@@ -15,39 +15,30 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(purchaser, amountDue) {
-  return { purchaser, amountDue };
-}
-
-const rows = [
-  createData('Element 1', 100),
-  createData('Element 2', 200),
-  createData('Element 3', 150),
-  createData('Element 4', 5000),
-  createData('Element 5', 300)
-];
 
 export default function BasicTable() {
   const classes = useStyles();
 
-  /*
   const url = 'http://localhost:4000';
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(Array());
 
   useEffect(() => {
        axios({
-          method: 'post',
-          url: `${url}/api/v1/EndpointHere`,
+          method: 'get',
+          url: `${url}/api/v1/accounting/ledger`,
           headers: { "Content-Type": "application/json" },
        }).then(res => {
           if (res.status === 200) {
-              setData(res.data["accountsReceivable"])
+            var rows = Array();
+            for(var i=0; i<res.data.data.length; i++){
+              rows.push(res.data.data[i]);
+            }
+            setData(rows);
           }
        }).catch(err => {
           console.error(err);
       });
-  });
-  */
+  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -60,16 +51,20 @@ export default function BasicTable() {
           </TableRow>
           <TableRow>
             <TableCell>Purchaser</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell>Number of Bikes</TableCell>
+            <TableCell>Cost</TableCell>
+            <TableCell align="right">Time</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.purchaser}>
+          {data.map((row) => (
+            <TableRow key={row.userEmail}>
               <TableCell component="th" scope="row">
-                {row.purchaser}
+                {row.userEmail}
               </TableCell>
-              <TableCell align="right">{row.amountDue}</TableCell>
+              <TableCell>{row.bikesAmount}</TableCell>
+              <TableCell>{row.price}</TableCell>
+              <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}
         </TableBody>
