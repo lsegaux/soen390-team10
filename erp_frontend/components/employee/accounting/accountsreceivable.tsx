@@ -15,39 +15,29 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(clientName, amountDue) {
-    return { clientName, amountDue };
-  }
-
-const rows = [
-  createData('Client 1', 100),
-  createData('Client 2', 200),
-  createData('Client 3', 150),
-  createData('Client 4', 5000),
-  createData('Client 5', 300)
-];
-
 export default function BasicTable() {
   const classes = useStyles();
 
-  /*
   const url = 'http://localhost:4000';
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(Array());
 
   useEffect(() => {
        axios({
-          method: 'post',
-          url: `${url}/api/v1/EndpointHere`,
+          method: 'get',
+          url: `${url}/api/v1/accounting/ledger`,
           headers: { "Content-Type": "application/json" },
        }).then(res => {
           if (res.status === 200) {
-              setData(res.data["accountsReceivable"])
+            var rows = Array();
+            for(var i=0; i<res.data.data.length; i++){
+              rows.push(res.data.data[i]);
+            }
+            setData(rows);
           }
        }).catch(err => {
           console.error(err);
       });
-  });
-  */
+  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -55,21 +45,23 @@ export default function BasicTable() {
         <TableHead>
           <TableRow>
             <TableCell>
-              Accounts Receivable
+              Account Receivable
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Client Name</TableCell>
+            <TableCell>Status</TableCell>
             <TableCell align="right">Amount Owed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.clientName}>
+          {data.map((row) => (
+            <TableRow key={row.userEmail}>
               <TableCell component="th" scope="row">
-                {row.clientName}
+                {row.userEmail}
               </TableCell>
-              <TableCell align="right">{row.amountDue}</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell align="right">0</TableCell>
             </TableRow>
           ))}
         </TableBody>
