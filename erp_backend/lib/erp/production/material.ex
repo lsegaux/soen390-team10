@@ -3,9 +3,11 @@ defmodule Erp.Production.Material do
   import Ecto.Changeset
   import Ecto.Query, warn: false
 
+
   alias Erp.Repo
   alias Erp.Production.Material
 
+  @derive {Jason.Encoder, only: [:name, :quantity, :plant_id, :material_id]}
   @primary_key {:material_id, :integer, []}
   @derive {Phoenix.Param, key: :material_id}
   schema "materials" do

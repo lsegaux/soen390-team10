@@ -6,6 +6,7 @@ defmodule Erp.Production.Plant do
   alias Erp.Repo
   alias Erp.Production.Plant
 
+  @derive {Jason.Encoder, only: [:name, :plant_id]}
   @primary_key {:plant_id, :integer, []}
   @derive {Phoenix.Param, key: :plant_id}
   schema "plants" do

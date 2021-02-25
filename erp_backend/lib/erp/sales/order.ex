@@ -8,7 +8,7 @@ defmodule Erp.Sales.Order do
 
   @primary_key false
   schema "orders" do
-    field :price, :integer
+    field :price, :float
     field :time, :naive_datetime
     field :bikesAmount, :integer
     field :userEmail, :string

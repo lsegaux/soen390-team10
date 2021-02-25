@@ -21,6 +21,7 @@ import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
+import axios from 'axios';
 
 var bikeAssembled = {};
 
@@ -33,28 +34,161 @@ var plants = [
                 type: "Wheels",
                 material: "Carbon",
                 price: 200,
-                quantity: 0,
-            }
-        ]
-    },
-    {
-        plantName: "Toronto",
-        parts: [
-            {
-                type: "Wheels",
-                material: "Aluminium",
-                price: 22,
-                quantity: 230,
+                quantity: 120,
             },
             {
                 type: "Wheels",
+                material: "Aluminium",
+                price: 220,
+                quantity: 80,
+            },
+            {
+                type: "Frame",
                 material: "Carbon",
-                price: 200,
-                quantity: 15,
+                price: 85,
+                quantity: 150,
+            },
+            {
+                type: "Frame",
+                material: "Aluminium",
+                price: 85,
+                quantity: 78,
+            },
+            {
+                type: "Frame",
+                material: "Alloy",
+                price: 80,
+                quantity: 65,
+            },
+            {
+                type: "Frame",
+                material: "Steel",
+                price: 75,
+                quantity: 90,
+            },
+            {
+                type: "Handlebars",
+                material: "Carbon",
+                price: 60,
+                quantity: 87,
+            },
+            {
+                type: "Handlebars",
+                material: "Aluminium",
+                price: 55,
+                quantity: 87,
+            },
+            {
+                type: "Handlebars",
+                material: "Alloy",
+                price: 50,
+                quantity: 44,
+            },
+            {
+                type: "Handlebars",
+                material: "Steel",
+                price: 45,
+                quantity: 67,
+            },
+            {
+                type: "Brakes",
+                material: "Carbon",
+                price: 86,
+                quantity: 78,
+            },
+            {
+                type: "Brakes",
+                material: "Aluminium",
+                price: 87,
+                quantity: 87,
+            },
+            {
+                type: "Brakes",
+                material: "Alloy",
+                price: 89,
+                quantity: 76,
+            },
+            {
+                type: "Brakes",
+                material: "Steel",
+                price: 80,
+                quantity: 28,
+            },
+            {
+                type: "Tires",
+                material: "Summer",
+                price: 180,
+                quantity: 80,
+            },
+            {
+                type: "Tires",
+                material: "Winter",
+                price: 220,
+                quantity: 87,
+            },
+            {
+                type: "Seats",
+                material: "Cloth",
+                price: 45,
+                quantity: 76,
+            },
+            {
+                type: "Seats",
+                material: "Leather",
+                price: 60,
+                quantity: 46,
+            },
+            {
+                type: "Fork",
+                material: "Steel",
+                price: 85,
+                quantity: 76,
+            },
+            {
+                type: "Fork",
+                material: "Carbon",
+                price: 80,
+                quantity: 66,
+            },
+            {
+                type: "Fork",
+                material: "Aluminium",
+                price: 80,
+                quantity: 60,
+            },
+            {
+                type: "Fork",
+                material: "Alloy",
+                price: 75,
+                quantity: 86,
+            },
+            {
+                type: "Pedals",
+                material: "Aluminum mountain bike petals",
+                price: 110,
+                quantity: 52,
+            },
+            {
+                type: "Pedals",
+                material: "Plastic mountain bike petals",
+                price: 70,
+                quantity: 47,
+            },
+            {
+                type: "Pedals",
+                material: "Aluminum road bike petals",
+                price: 90,
+                quantity: 91,
+            },
+            {
+                type: "Pedals",
+                material: "Plastic road bike petals",
+                price: 60,
+                quantity: 39,
             }
         ]
     }
-]
+    ]
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -169,10 +303,10 @@ export default function Sales() {
         types: parts["Seats"]
     }
 
-    let forks = {
-        partName: 'Forks',
+    let fork = {
+        partName: 'fork',
         material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Forks"]
+        types: parts["fork"]
     }
 
     let pedals = {
@@ -181,7 +315,7 @@ export default function Sales() {
         types: parts["Pedals"]
     }
 
-    let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, forks, pedals];
+    let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, fork, pedals];
     const [bikePartsArr, setBikePartsArr] = useState(bikeParts);
     const [totalPrice, setTotalPrice] = useState(0);
     const [bikeQty, setBikeQty] = useState(0);
@@ -189,6 +323,7 @@ export default function Sales() {
     const [cardNumber, setCardNumber] = useState("");
     const [securityCode, setSecurityCode] = useState("");
     const [expiration, setExpiration] = useState("");
+    const [cardPerson, setCardPerson] = useState("");
 
     const classes = useStyles();
 
@@ -216,6 +351,23 @@ export default function Sales() {
     }
 
     function parseAfter() {
+        axios({
+            method: 'post',
+            url: "http://localhost/api/v1/sale",
+            headers: { "Content-Type": "application/json" },
+            data: {
+                price: totalPrice,
+                name: cardPerson,
+                quantity: bikeQty
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                console.log("success");
+            }
+        }).catch(err => {
+            console.error(err);
+        });
+
         for (var i = 0; i < plants.length; i++) {
             for (var j = 0; j < plants[i]["parts"].length; j++) {
                 for (var key in bikeAssembled) {
@@ -228,7 +380,7 @@ export default function Sales() {
                         let plantName = plants[i]["plantName"];
                         let partName = key;
                         let material = bikeAssembled[key]["material"];
-                        console.log(plantName + " " + partName + " " + material + " " + bikeQty)
+                        console.log(plantName, partName, material);
                     }
                 }
             }
@@ -320,6 +472,7 @@ export default function Sales() {
                                                 label="Name of cardholder"
                                                 type="string"
                                                 fullWidth
+                                                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}
                                             />
                                             <TextField
                                                 autoFocus
