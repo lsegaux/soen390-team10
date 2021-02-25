@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import axios from 'axios';
 
@@ -50,16 +50,19 @@ const tableHeaders = ["Material", "Price Per Unit", "Quantity Ordering", "Cost"]
 export default function Checkout({open, closePopup, order, data, clearOrder}){
     const classes = useStyles(useTheme());
 
+    let total = 0;
+
     function calcMaterialPrice(qty,pricePerUnit){
         return qty * pricePerUnit;
     }
   
     function calcTotal(arrQty, arrMats){
-        let total = 0;
+        let temptotal = 0;
         for(let i = 0; i<arrQty.length;i++){
-            total+= (arrQty[i]*arrMats[i]["price"])
+            temptotal+= (arrQty[i]*arrMats[i]["price"])
         }
-        return total;
+        total = temptotal;
+        return temptotal;
     }
   
     function handleCheckout(event){
@@ -89,8 +92,21 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
            }
        }
 
-       if(success)
-        alert("Successfully processed your order.");
+       if(success){
+            axios({
+                method: 'post',
+                url: `${url}/api/v1/production/expense/create/amount/${total}`,
+                headers: { "Content-Type": "application/json" },
+            }).then(res => {
+                if (res.status === 200) {
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+             
+            total=0; 
+            alert("Order was processed succesfully.");
+       }
 
        clearOrder();
        closePopup();
@@ -114,7 +130,7 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
                     <TableCell className={classes.checkoutTable} align="center">{data[key]["name"]} </TableCell>
                     <TableCell className={classes.checkoutTable}align="center">{data[key]["price"]} </TableCell>
                     <TableCell className={classes.checkoutTable} align="center">{item} </TableCell>
-                    <TableCell className={classes.checkoutTable} align="center">{calcMaterialPrice(item, data[key]["price"])} </TableCell>
+                    <TableCell className={classes.checkoutTable} align="center">{calcMaterialPrice(item, data[key]["price"]).toFixed(2)} </TableCell>
                 </TableRow> 
                 }
             })}
