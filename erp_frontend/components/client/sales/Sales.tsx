@@ -303,10 +303,10 @@ export default function Sales() {
         types: parts["Seats"]
     }
 
-    let forks = {
-        partName: 'Forks',
+    let fork = {
+        partName: 'fork',
         material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Forks"]
+        types: parts["fork"]
     }
 
     let pedals = {
@@ -315,7 +315,7 @@ export default function Sales() {
         types: parts["Pedals"]
     }
 
-    let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, forks, pedals];
+    let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, fork, pedals];
     const [bikePartsArr, setBikePartsArr] = useState(bikeParts);
     const [totalPrice, setTotalPrice] = useState(0);
     const [bikeQty, setBikeQty] = useState(0);
