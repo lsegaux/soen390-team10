@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,40 +21,9 @@ import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
+import axios from 'axios';
 
 var bikeAssembled={};
-
-// TODO: query backend to get real info
-var plants = [
-    {
-        plantName: "Montreal",
-        parts: [
-            {
-            type: "Wheels",
-            material: "Carbon",
-            price: 200,
-            quantity: 0,
-            }
-        ]
-    },
-    {
-        plantName: "Toronto",
-        parts: [
-            {
-            type: "Wheels",
-            material: "Aluminium",
-            price: 22,
-            quantity: 230,
-            },
-            {
-            type: "Wheels",
-            material: "Carbon",
-            price: 200,
-            quantity: 15,
-            }
-        ]
-        }
-    ]
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -90,97 +59,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export default function Sales() {
-    
-    var parts = {
-        "Wheels": [
-        ],
-        "Frame": [
-        ],
-        "Handlebars": [
-        ],
-        "Brakes": [
-        ],
-        "Tires": [
-        ],
-        "Seats": [
-        ],
-        "Fork": [
-        ],
-        "Pedals": [
-        ]
-    };
-
-    function parseInventory(){
-
-          for (var i=0; i <plants.length; i++){
-              for (var j = 0; j < plants[i]["parts"].length; j++){
-
-                  const partName = plants[i]["parts"][j]["type"];
-                  const materialName = plants[i]["parts"][j]["material"];  
-                  const quantity = plants[i]["parts"][j]["quantity"]
-                  const price = plants[i]["parts"][j]["price"]
-
-                  if (!(materialName in parts[partName])){
-                      parts[partName][materialName] = {price: price, quantity:quantity}
-                  }
-                  else {
-                    let currQuantity = parts[partName][materialName]["quantity"];
-                    parts[partName][materialName]["quantity"] = quantity + currQuantity
-                  }
-              }
-          }
-    }
-
-    parseInventory()
-
-    let wheels = {
-        partName: "Wheels",
-        material: ['Carbon', 'Aluminium'],
-        types: parts["Wheels"]
-    };
-
-    let frames = {
-        partName: "Frame",
-        material: ['Carbon', 'Aluminum', 'Alloy', 'Steel'],
-        types: parts["Frame"]
-    };
-
-    let handlebars = {
-        partName: 'Handlebars',
-        material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Handlebars"]
-    }
-
-    let brakes = {
-        partName: 'Brakes',
-        material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Brakes"]
-    }
-
-    let tires = {
-        partName: 'Tires',
-        material: ['Summer', 'Winter'],
-        types: parts["Tires"]
-    }
-
-    let seats = {
-        partName: 'Seats',
-        material: ['Cloth', 'Leather'],
-        types: parts["Seats"]
-    }
-
-    let forks = {
-        partName: 'Forks',
-        material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["Forks"]
-    }
-
-    let pedals = {
-        partName: 'Pedals',
-        material: ['Plastic road bike petals', 'Aluminum road bike petals', 'Plastic mountain bike petals', 'Aluminum mountain bike petals'],
-        types: parts["Pedals"]
-    }
-
     let bikeParts = [wheels, handlebars, brakes, tires, seats, frames, forks, pedals];
     const [bikePartsArr, setBikePartsArr] = useState(bikeParts);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -189,13 +67,84 @@ export default function Sales() {
     const [cardNumber, setCardNumber] = useState("");
     const [securityCode, setSecurityCode] = useState("");
     const [expiration, setExpiration] = useState("");
+    const [plants, setPlants] = useState<any>([]);
+    const [inventory, setInventory] = useState<any>({});
+    //const [ready, setReady] = useState<Boolean>(false)
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: "http://localhost:4000/api/v1/production",
+        }).then(res => {
+            if (res.status === 200) {
+                let plants: any[] = [];
+                for (let key in res.data.productionData) {
+                    if (Object.prototype.hasOwnProperty.call(res.data.productionData, key)) {
+                        plants.push({...res.data.productionData[key], id: key});
+                    }
+                }
+                setPlants(plants);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
+    });
+
+    useEffect(() => {
+        parseInventory();
+        //setReady(true);
+    }, [plants]);
+
+    function parseInventory() {
+        let result: {[k: string]: any} = {};
+
+        plants.forEach(plant => {
+            plant.parts.forEach(part => {
+                if (!part.type){
+                    result.type = [];
+                }
+                if (!part.type[part.material]){
+                    result.type[part.material] = [];
+                }
+
+                result.type[part.material].push({
+                    plantID: plant.id,
+                    quantity: part.quantity,
+                    price: part.price
+                });
+            });
+        });
+
+        setInventory(result);
+    }
+
+    // function parseInventory(){
+    //     console.log("parsing", plants)
+    //     for (var i=0; i <plants.length; i++){
+    //         for (var j = 0; j < plants[i]["parts"].length; j++){
+
+    //             const partName = plants[i]["parts"][j]["type"];
+    //             const materialName = plants[i]["parts"][j]["material"];  
+    //             const quantity = plants[i]["parts"][j]["quantity"]
+    //             const price = plants[i]["parts"][j]["price"]
+
+    //             if (!(materialName in parts[partName])){
+    //                 parts[partName][materialName] = {price: price, quantity:quantity}
+    //             }
+    //             else {
+    //                 let currQuantity = parts[partName][materialName]["quantity"];
+    //                 parts[partName][materialName]["quantity"] = quantity + currQuantity
+    //             }
+    //         }
+    //     }
+    // }
 
     const classes = useStyles();
 
     function handleBikeQty(value: string){
         let numBikes = parseInt(value);
         if (numBikes < 15){
-            alert("You must order at least 15 bikes");
+            alert("You must order at least 15 bikes in one order");
             return;
         }
         setBikeQty(numBikes)
