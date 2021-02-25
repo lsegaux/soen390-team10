@@ -3,16 +3,14 @@ defmodule Erp.Production.Product do
   import Ecto.Changeset
 
   @derive {Jason.Encoder, only: [:name, :product_id, :quantity, :start_time, :plant_id]}
-
-  @primary_key false
+  @primary_key {:product_id, :integer, []}
+  @derive {Phoenix.Param, key: :product_id}
   schema "products" do
     field :name, :string
-    field :product_id, :integer
     field :quantity, :integer
     field :start_time, :naive_datetime
     field :plant_id, :integer
 
-    @primary_key {:product_id, :integer, autogenerate: true}
     timestamps()
   end
 

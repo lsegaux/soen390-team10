@@ -1,6 +1,42 @@
 
 Keeping track of the top 10 risks throughout our sprints
 
+Sprint 2:
+1. 
+    PROBLEM: Not completing Sales and Vendor modules early enough to leave time to create ledger, accounts receivable and accounts payable 
+    SOL: Communicate better amongst a team and try to get the work done earlier.
+
+2.  PROBLEM: Miscommunication with product owner on what is expected from the  
+    SOL: Ask numerous different questions to Fatima in order to build a clear image.
+
+3.  PROBLEM: CSS from certain components could cause issues in other components.
+    SOL: Determine which component is causing the problem and fix it.
+
+4.  PROBLEM: Miscommunication amongst teams and not having the expected result we needed to work cohesively.
+    SOL: Communicate extensively with teammates
+
+5.  PROBLEM: Scheduling conflicts with respect to other courses. Difficult to meet with teams and keep an open dialogue.
+    SOL: Create team meetings at the beginning of each sprint and set dates in advance.
+    
+6.  PROBLEM: Potential issues with respect to bad time estimation. 
+    SOL: Re-evaluate user story point assignment for issues.
+
+7.  PROBLEM: Slow request-response times with respect to communication between client (React) and server (Phoenix).
+    SOL: Determine which component is causing the bottleneck and eliminate any inefficiencies.
+
+8.  PROBLEM: Getting up to speed on Elixir while respecting project time constraints.
+    SOL: Time management and extreme programming.
+
+9.  PROBLEM: Insufficient planning with respect to testing for the front-end. 
+    SOL: Find a React testing framework and begin unit testing.
+
+10. PROBLEM: Late completion of the work means a possible problem with creating elaborate tests for the software.
+    SOL: Finish early!
+
+    
+
+
+
 Sprint 1:
 1. 
     PROBLEM: Poor understanding of high-level project requirements. 

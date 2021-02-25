@@ -25,6 +25,7 @@ import MainListItems from "./listItems";
 import {Auth} from "../../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../../vendor/Vendor";
+import Accounting from "../accounting/accountingdash";
 
 function Copyright() {
   return (
@@ -124,8 +125,9 @@ const useStyles = makeStyles((theme) => ({
   Page index -> Page name
   0          -> Dashboard
   1          -> Vendor
+  2          -> Accounting
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>];
+const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>];
 
 export default function Skeleton() {
   const classes = useStyles();

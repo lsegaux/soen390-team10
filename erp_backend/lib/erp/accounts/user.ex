@@ -13,7 +13,7 @@ defmodule Erp.Accounts.User do
     field :org_name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
-
+    field :captcha_response, :string, virtual: true
     timestamps()
   end
 

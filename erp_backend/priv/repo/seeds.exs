@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+Code.require_file("priv/repo/plant-seeds.exs")
+Code.require_file("priv/repo/product-seeds.exs")
+Code.require_file("priv/repo/part-seeds.exs")
+Code.require_file("priv/repo/material-seeds.exs")
+Code.require_file("priv/repo/users-seed.exs")
+Code.require_file("priv/repo/orders-seed.exs")
