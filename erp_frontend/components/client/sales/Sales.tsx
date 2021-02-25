@@ -22,7 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
 
-var bikeAssembled={};
+var bikeAssembled = {};
 
 // TODO: query backend to get real info
 var plants = [
@@ -30,10 +30,10 @@ var plants = [
         plantName: "Montreal",
         parts: [
             {
-            type: "Wheels",
-            material: "Carbon",
-            price: 200,
-            quantity: 0,
+                type: "Wheels",
+                material: "Carbon",
+                price: 200,
+                quantity: 0,
             }
         ]
     },
@@ -41,20 +41,20 @@ var plants = [
         plantName: "Toronto",
         parts: [
             {
-            type: "Wheels",
-            material: "Aluminium",
-            price: 22,
-            quantity: 230,
+                type: "Wheels",
+                material: "Aluminium",
+                price: 22,
+                quantity: 230,
             },
             {
-            type: "Wheels",
-            material: "Carbon",
-            price: 200,
-            quantity: 15,
+                type: "Wheels",
+                material: "Carbon",
+                price: 200,
+                quantity: 15,
             }
         ]
-        }
-    ]
+    }
+]
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export default function Sales() {
-    
+
     var parts = {
         "Wheels": [
         ],
@@ -110,25 +110,25 @@ export default function Sales() {
         ]
     };
 
-    function parseInventory(){
+    function parseInventory() {
 
-          for (var i=0; i <plants.length; i++){
-              for (var j = 0; j < plants[i]["parts"].length; j++){
+        for (var i = 0; i < plants.length; i++) {
+            for (var j = 0; j < plants[i]["parts"].length; j++) {
 
-                  const partName = plants[i]["parts"][j]["type"];
-                  const materialName = plants[i]["parts"][j]["material"];  
-                  const quantity = plants[i]["parts"][j]["quantity"]
-                  const price = plants[i]["parts"][j]["price"]
+                const partName = plants[i]["parts"][j]["type"];
+                const materialName = plants[i]["parts"][j]["material"];
+                const quantity = plants[i]["parts"][j]["quantity"]
+                const price = plants[i]["parts"][j]["price"]
 
-                  if (!(materialName in parts[partName])){
-                      parts[partName][materialName] = {price: price, quantity:quantity}
-                  }
-                  else {
+                if (!(materialName in parts[partName])) {
+                    parts[partName][materialName] = { price: price, quantity: quantity }
+                }
+                else {
                     let currQuantity = parts[partName][materialName]["quantity"];
                     parts[partName][materialName]["quantity"] = quantity + currQuantity
-                  }
-              }
-          }
+                }
+            }
+        }
     }
 
     parseInventory()
@@ -192,37 +192,37 @@ export default function Sales() {
 
     const classes = useStyles();
 
-    function handleBikeQty(value: string){
+    function handleBikeQty(value: string) {
         let numBikes = parseInt(value);
-        if (numBikes < 15){
+        if (numBikes < 15) {
             alert("You must order at least 15 bikes");
             return;
         }
         setBikeQty(numBikes)
     }
 
-    function buttonChange(value: string, partName:string, index:number){
+    function buttonChange(value: string, partName: string, index: number) {
         let qty = bikeParts[index]["types"][value]["quantity"]
         let price = bikeParts[index]["types"][value]["price"];
-        if (qty < bikeQty){
+        if (qty < bikeQty) {
             alert(`This part is out of stock (only ${qty} left).`);
             return;
         }
         setTotalPrice(totalPrice + price);
 
-        if (!bikeAssembled[partName]){
-            bikeAssembled[partName] = {material: value, quantity: qty-bikeQty}
+        if (!bikeAssembled[partName]) {
+            bikeAssembled[partName] = { material: value, quantity: qty - bikeQty }
         }
     }
 
-    function parseAfter(){
-        for (var i=0; i <plants.length; i++){
-            for (var j = 0; j < plants[i]["parts"].length; j++){
-                for (var key in bikeAssembled){
+    function parseAfter() {
+        for (var i = 0; i < plants.length; i++) {
+            for (var j = 0; j < plants[i]["parts"].length; j++) {
+                for (var key in bikeAssembled) {
 
                     if (plants[i]["parts"][j]["type"] == key &&
-                    plants[i]["parts"][j]["material"] == bikeAssembled[key]["material"]
-                    && plants[i]["parts"][j]["quantity"] >= bikeQty){
+                        plants[i]["parts"][j]["material"] == bikeAssembled[key]["material"]
+                        && plants[i]["parts"][j]["quantity"] >= bikeQty) {
 
                         // Info for backend
                         let plantName = plants[i]["plantName"];
@@ -235,19 +235,19 @@ export default function Sales() {
         }
     }
 
-    function validateBikeAmt(){
+    function validateBikeAmt() {
         if (Number.isNaN(bikeQty) || bikeQty < 15) return false;
         return true;
     }
 
     const handleOpen = () => {
         setOpenPayment(true);
-      };
-    
-      const handleClose = () => {
+    };
+
+    const handleClose = () => {
         parseAfter();
         setOpenPayment(false);
-      };
+    };
 
     return (
         <div className={classes.sales}>
@@ -271,7 +271,7 @@ export default function Sales() {
                             <Paper className={classes.paperSales}>
                                 <Title>Build a bike</Title>
                                 <br></br>
-                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" onMouseLeave={(e: { target: { value: React.SetStateAction<string>; }; }) => handleBikeQty(e.target.value)}/>
+                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" onMouseLeave={(e: { target: { value: React.SetStateAction<string>; }; }) => handleBikeQty(e.target.value)} />
                                 <Typography>Please select type of material for each category.</Typography>
                                 <br></br>
                                 <Table size="small">
@@ -282,19 +282,27 @@ export default function Sales() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bikePartsArr.map((bikePart, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell>{bikePart.partName}</TableCell>
-                                                {bikePart.material.map((material, price, quantity) => (
-                                                    <TableCell key={bikePart.types + material}>
-                                                        <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bikePart.partName, index)}>
-                                                        <FormControlLabel value={material} 
-                                                        control={<Radio color="primary" disabled={!validateBikeAmt()}/>} label={material} />
-                                                        </RadioGroup>
-                                                    </TableCell>
-                                                ))}
-                                            </TableRow>
-                                        ))}
+                                        {bikePartsArr.map((bikePart, index) => {
+                                            let materialLastIndex = bikePart.material.length - 1;
+                                            return (
+                                                <TableRow key={index}>
+                                                    <TableCell>{bikePart.partName}</TableCell>
+                                                    <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bikePart.partName, index)}>
+                                                        {bikePart.material.map((material, indexMaterial) => (
+                                                            <TableCell key={bikePart.types + material} colSpan={materialLastIndex === indexMaterial ? 40 : 1}>
+                                                                <FormControlLabel value={material}
+                                                                    control={<Radio color="primary" disabled={!validateBikeAmt()} />} label={material} />
+                                                            </TableCell>
+                                                            //     <TableCell>
+                                                            //         {/* price */}
+                                                            //     </TableCell>
+                                                            //     <TableCell>
+                                                            //     {/* quantity */}
+                                                            // </TableCell>
+                                                        ))}
+                                                    </RadioGroup>
+                                                </TableRow>)
+                                        })}
                                     </TableBody>
                                 </Table>
                                 <br></br>
@@ -305,51 +313,51 @@ export default function Sales() {
                                     <Dialog open={openPayment} onClose={handleClose} aria-labelledby="form-dialog-title">
                                         <DialogTitle id="form-dialog-title">Payment Information</DialogTitle>
                                         <DialogContent>
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Name of cardholder"
-                                            type="string"
-                                            fullWidth
-                                        />
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Card Number"
-                                            type="string"
-                                            fullWidth
-                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardNumber(e.target.value)}
-                                            error={cardNumber.length != 19}
-                                        />
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Security Code"
-                                            type="string"
-                                            fullWidth
-                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setSecurityCode(e.target.value)}
-                                            error={securityCode.length != 3}
-                                        />
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Expiration Date"
-                                            type="string"
-                                            fullWidth
-                                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setExpiration(e.target.value)}
-                                            error={expiration.match("[0-9][0-9]\/[0-9][0-9]") == null}
-                                        />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="Name of cardholder"
+                                                type="string"
+                                                fullWidth
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="Card Number"
+                                                type="string"
+                                                fullWidth
+                                                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardNumber(e.target.value)}
+                                                error={cardNumber.length != 19}
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="Security Code"
+                                                type="string"
+                                                fullWidth
+                                                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setSecurityCode(e.target.value)}
+                                                error={securityCode.length != 3}
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="Expiration Date"
+                                                type="string"
+                                                fullWidth
+                                                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setExpiration(e.target.value)}
+                                                error={expiration.match("[0-9][0-9]\/[0-9][0-9]") == null}
+                                            />
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={handleClose} color="primary">
-                                            Cancel
+                                            <Button onClick={handleClose} color="primary">
+                                                Cancel
                                         </Button>
-                                        <Button onClick={handleClose} color="primary">
-                                            Proceed to Payment
+                                            <Button onClick={handleClose} color="primary">
+                                                Proceed to Payment
                                         </Button>
                                         </DialogActions>
                                     </Dialog>
