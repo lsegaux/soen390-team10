@@ -15,7 +15,7 @@ data = [
     "quantity" => 40,
     "plantID" => 0,
     "time" => ~T[00:10:00],
-    "price" => 25,
+    "price" => 25.99,
     "material" => "Steel"
   },
   %{
@@ -24,7 +24,7 @@ data = [
     "quantity" => 25,
     "plantID" => 0,
     "time" => ~T[00:40:00],
-    "price" => 250,
+    "price" => 250.99,
     "material" => "Carbon Fibre"
   },
   %{
@@ -33,7 +33,7 @@ data = [
     "quantity" => 58,
     "plantID" => 0,
     "time" => ~T[00:25:00],
-    "price" => 25,
+    "price" => 25.99,
     "material" => "Cloth"
   },
   %{
@@ -42,7 +42,7 @@ data = [
     "quantity" => 115,
     "plantID" => 0,
     "time" => ~T[00:20:00],
-    "price" => 15,
+    "price" => 15.99,
     "material" => "Stainless Steel"
   },
   %{
@@ -51,7 +51,7 @@ data = [
     "quantity" => 40,
     "plantID" => 1,
     "time" => ~T[00:10:00],
-    "price" => 35,
+    "price" => 35.99,
     "material" => "Reinforced Titanium"
   },
   %{
@@ -60,7 +60,7 @@ data = [
     "quantity" => 25,
     "plantID" => 1,
     "time" => ~T[00:40:00],
-    "price" => 350,
+    "price" => 350.99,
     "material" => "Fiber Glass"
   },
   %{
@@ -69,7 +69,7 @@ data = [
     "quantity" => 58,
     "plantID" => 1,
     "time" => ~T[00:25:00],
-    "price" => 45,
+    "price" => 45.99,
     "material" => "Leather"
   },
   %{
@@ -78,7 +78,7 @@ data = [
     "quantity" => 115,
     "plantID" => 1,
     "time" => ~T[00:20:00],
-    "price" => 55,
+    "price" => 55.99,
     "material" => "Carbon Fiber"
   },
   %{
@@ -87,7 +87,7 @@ data = [
     "quantity" => 40,
     "plantID" => 2,
     "time" => ~T[00:10:00],
-    "price" => 30,
+    "price" => 30.99,
     "material" => "Reinforced Steel"
   },
   %{
@@ -96,7 +96,7 @@ data = [
     "quantity" => 25,
     "plantID" => 2,
     "time" => ~T[00:40:00],
-    "price" => 100,
+    "price" => 100.99,
     "material" => "Plastic"
   },
   %{
@@ -105,7 +105,7 @@ data = [
     "quantity" => 58,
     "plantID" => 2,
     "time" => ~T[00:25:00],
-    "price" => 10,
+    "price" => 10.99,
     "material" => "Wood"
   },
   %{
@@ -114,7 +114,7 @@ data = [
     "quantity" => 115,
     "plantID" => 2,
     "time" => ~T[00:20:00],
-    "price" => 25,
+    "price" => 25.99,
     "material" => "Fiber Glass"
   },
 ]

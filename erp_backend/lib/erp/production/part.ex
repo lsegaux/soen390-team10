@@ -11,7 +11,7 @@ defmodule Erp.Production.Part do
     field :build_time, :time
     field :plant_id, :id
     field :material, :string
-    field :price, :integer
+    field :price, :float
 
     timestamps()
   end

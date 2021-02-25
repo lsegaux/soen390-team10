@@ -4,7 +4,7 @@ defmodule Erp.Repo.Migrations.ChangeParts do
   def change do
     alter table(:parts) do
       add :material, :string
-      add :price, :integer
+      add :price, :float
     end
   end
 end

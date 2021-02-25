@@ -3,20 +3,18 @@
 #     mix run priv/repo/orders-seed.exs
 #
 
-
 alias Erp.Repo
 alias Erp.Sales.Order
 
-
 data = [
   %{
-    "price" => 2334,
+    "price" => 2334.95,
     "userEmail" => "nic@mail.com",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 22
   },
   %{
-    "price" => 900000,
+    "price" => 900000.99,
     "userEmail" => "test@mail.com",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 3000
