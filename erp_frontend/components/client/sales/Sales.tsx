@@ -351,22 +351,22 @@ export default function Sales() {
     }
 
     function parseAfter() {
-        axios({
-            method: 'post',
-            url: "http://localhost/api/v1/sale",
-            headers: { "Content-Type": "application/json" },
-            data: {
-                price: totalPrice,
-                name: cardPerson,
-                quantity: bikeQty
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                console.log("success");
-            }
-        }).catch(err => {
-            console.error(err);
-        });
+        // axios({
+        //     method: 'post',
+        //     url: "http://localhost/api/v1/sale",
+        //     headers: { "Content-Type": "application/json" },
+        //     data: {
+        //         price: totalPrice,
+        //         name: cardPerson,
+        //         quantity: bikeQty
+        //     }
+        // }).then(res => {
+        //     if (res.status === 200) {
+        //         console.log("success");
+        //     }
+        // }).catch(err => {
+        //     console.error(err);
+        // });
 
         for (var i = 0; i < plants.length; i++) {
             for (var j = 0; j < plants[i]["parts"].length; j++) {
@@ -385,6 +385,8 @@ export default function Sales() {
                 }
             }
         }
+
+        alert("Thanks for purchasing bikes!");  
     }
 
     function validateBikeAmt() {
