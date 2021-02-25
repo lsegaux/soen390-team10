@@ -18,7 +18,7 @@ export default function Signup(this: any) {
   const [captchaResponse,setCaptchaResponse] = useState("");
 
   function verifyCallback(response){
-    console.log(response, "test");
+    setCaptchaResponse(response);
     if (response){
       setRecaptchaVerify(true);
     }

@@ -16,6 +16,6 @@ export function signUpPost(email:string, password:string, firstName:string, last
         method: 'post',
         url: `${domain}/api/v1/sign_up`,
         headers: { "Content-Type": "application/json" }, 
-        data: {user: { email, password, first_name: firstName, last_name:lastName, role:userRole, captcharesponse:captcha }}
+        data: {user: { email, password, first_name: firstName, last_name:lastName, role:userRole, captcha_response:captcha }}
     })
 }
