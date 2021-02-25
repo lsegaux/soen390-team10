@@ -20,9 +20,12 @@ export default function BasicTable() {
   const classes = useStyles();
 
   const url = 'http://localhost:4000';
-  const [data, setData] = useState(Array());
+  const [customerData, setCustomerData] = useState(Array());
+  const [vendorData, setVendorData] = useState(Array());
 
   useEffect(() => {
+
+      //Fetching Customer Transactions
        axios({
           method: 'get',
           url: `${url}/api/v1/accounting/ledger`,
@@ -33,20 +36,39 @@ export default function BasicTable() {
             for(var i=0; i<res.data.data.length; i++){
               rows.push(res.data.data[i]);
             }
-            setData(rows);
+            setCustomerData(rows);
           }
        }).catch(err => {
           console.error(err);
       });
+
+      //Fetching Vendor Transactions
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/production/expenses`,
+        headers: { "Content-Type": "application/json" },
+     }).then(res => {
+        if (res.status === 200) {
+          var rows = Array();
+          for(var i=0; i<res.data.data.length; i++){
+            rows.push(res.data.data[i]);
+          }
+          setVendorData(rows);
+        }
+     }).catch(err => {
+        console.error(err);
+    });
+
   }, []);
 
   return (
+    <>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>
-              Ledger
+              Customer Transactions
             </TableCell>
           </TableRow>
           <TableRow>
@@ -57,7 +79,7 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
+          {customerData.map((row) => (
             <TableRow key={row.userEmail}>
               <TableCell component="th" scope="row">
                 {row.userEmail}
@@ -69,6 +91,34 @@ export default function BasicTable() {
           ))}
         </TableBody>
       </Table>
+      </TableContainer>
+      <TableContainer component={Paper}>
+        <br></br>
+        <br></br>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Vendor Transactions
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Vendor Name</TableCell>
+            <TableCell>Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {vendorData.map((row) => (
+            <TableRow key={row.amount}>
+              <TableCell component="th" scope="row">
+              Wilson Materials Company Limited
+              </TableCell>
+              <TableCell>{row.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </TableContainer>
+    </>
   );
 }

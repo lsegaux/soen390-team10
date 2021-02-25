@@ -18,5 +18,12 @@ config :erp, ErpWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+#Recaptcha config
+config :google_recaptcha,
+  api_url: "https://www.google.com/recaptcha/api/siteverify",
+  public_key: "6LcjqWQaAAAAAA_KNpNiiQhQT7rHtpo_AJySY_64",
+  secret_key: "6LcjqWQaAAAAAB3mCgCh_ndIHaPXozh10-nyitpZ",
+  enabled: true
+
 # Print only warnings and errors during test
 config :logger, level: :warn

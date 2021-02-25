@@ -20,7 +20,7 @@ function createData(vendorName, amountDue) {
 }
 
 const rows = [
-  createData('The Junkyard Materials Company Limited.', 0),
+  createData('Wilson Materials Company Limited.', 0),
 ];
 
 export default function BasicTable() {
