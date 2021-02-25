@@ -19,7 +19,6 @@ export default function Signup(this: any) {
   function verifyCallback(response){
     if (response){
       setRecaptchaVerify(true);
-      console.log("hello?")
     }
   }
   
@@ -117,7 +116,6 @@ export default function Signup(this: any) {
                     <Recaptcha
                     sitekey="6LcjqWQaAAAAAA_KNpNiiQhQT7rHtpo_AJySY_64"
                     render="explicit"
-                    onloadCallback={()=>console.log("Im loaded")}
                     verifyCallback={verifyCallback}
                     />
                     </div>
