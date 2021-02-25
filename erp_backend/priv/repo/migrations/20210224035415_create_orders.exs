@@ -5,7 +5,7 @@ defmodule Erp.Repo.Migrations.CreateOrders do
     create table(:orders) do
       add :orderId, :id
       add :price, :float
-      add :userEmail, references(:users, column: :email, type: :string, on_delete: :nothing)
+      add :userEmail, :string # MAKE THIS ACTUAL foreign key, references(:users, column: :email, type: :string, on_delete: :nothing)
       add :time, :naive_datetime
       add :bikesAmount, :integer
     timestamps()

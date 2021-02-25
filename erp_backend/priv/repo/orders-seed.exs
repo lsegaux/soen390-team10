@@ -9,13 +9,13 @@ alias Erp.Sales.Order
 data = [
   %{
     "price" => 2334.95,
-    "userEmail" => "nic@mail.com",
+    "userEmail" => "Nicolas MacBeth",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 22
   },
   %{
     "price" => 900000.99,
-    "userEmail" => "test@mail.com",
+    "userEmail" => "Bob Dylan",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 3000
   },
