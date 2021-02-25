@@ -2,6 +2,8 @@ defmodule Erp.Production.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:name, :product_id, :quantity, :start_time, :plant_id]}
+
   @primary_key false
   schema "products" do
     field :name, :string

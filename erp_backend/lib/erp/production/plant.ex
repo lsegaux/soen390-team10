@@ -2,6 +2,8 @@ defmodule Erp.Production.Plant do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:name, :plant_id]}
+
   @primary_key false
   schema "plants" do
     field :plant_id, :integer
