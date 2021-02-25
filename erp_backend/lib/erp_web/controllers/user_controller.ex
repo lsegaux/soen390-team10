@@ -23,9 +23,14 @@ defmodule ErpWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
-         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
-           conn |> render("jwt.json", jwt: token)
+    IO.inspect(Map.get(user_params, "captcha_response"))
+    case GoogleRecaptcha.verify( Map.get(user_params, "captcha_response"), conn.remote_ip) do
+      :ok ->
+        with {:ok, %User{} = user} <- Accounts.create_user(user_params),
+          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
+          conn |> render("jwt.json", jwt: token)
+        end
+      {:error, :invalid_captcha} -> {:error, :invalid_captcha}
     end
   end
 
