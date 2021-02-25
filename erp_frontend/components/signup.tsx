@@ -15,8 +15,10 @@ export default function Signup(this: any) {
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [password, setPassword] = useState("");
   const [recaptchaVerify,setRecaptchaVerify] = useState(false);
+  const [captchaResponse,setCaptchaResponse] = useState("");
 
   function verifyCallback(response){
+    console.log(response, "test");
     if (response){
       setRecaptchaVerify(true);
     }
@@ -30,7 +32,7 @@ export default function Signup(this: any) {
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
-    signUpPost(email, password, firstName, lastName, userRole)
+    signUpPost(email, password, firstName, lastName, userRole, captchaResponse)
     .then(res => { 
         if (res.status === 200) {
           localStorage.setItem("jwt", res.data.jwt);
@@ -116,6 +118,7 @@ export default function Signup(this: any) {
                     <Recaptcha
                     sitekey="6LcjqWQaAAAAAA_KNpNiiQhQT7rHtpo_AJySY_64"
                     render="explicit"
+                    onloadCallback={()=>console.log("im loaded")}
                     verifyCallback={verifyCallback}
                     />
                     </div>
