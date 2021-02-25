@@ -304,9 +304,9 @@ export default function Sales() {
     }
 
     let fork = {
-        partName: 'fork',
+        partName: 'Fork',
         material: ['Carbon', 'Aluminium', 'Alloy', 'Steel'],
-        types: parts["fork"]
+        types: parts["Fork"]
     }
 
     let pedals = {
