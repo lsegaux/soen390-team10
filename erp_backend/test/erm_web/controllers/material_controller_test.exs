@@ -1,4 +1,4 @@
-defmodule ErpWeb.PageControllerTest do
+defmodule ErpWeb.MaterialControllerPage do
   use ErpWeb.ConnCase
 
   test "GET /", %{conn: conn} do
