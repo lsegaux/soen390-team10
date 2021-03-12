@@ -31,6 +31,16 @@ config :erp, Erp.Guardian,
        issuer: "erpIssuer",
        secret_key: "Vx7O2Iaq8GUPAdSmm+w06vnEBgcVbIcSeFCzmXBqU93Uf0rAmHzCe3pokc0fk7/S"
 
+config :erp, Erp.Mailer,
+       adapter: Bamboo.SMTPAdapter,
+       server: "smtp.gmail.com",
+       port: 587,
+       username: "390teamten@gmail.com",
+       password: "390teamten$",
+       tls: :always,
+       ssl: false,
+       retries: 1
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

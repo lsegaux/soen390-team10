@@ -44,6 +44,7 @@ defmodule ErpWeb.Router do
     post "/sale", SaleController, :process_sale
 
     get "/accounting/ledger", OrderController, :show_all_orders
+    get "/sendemail", EmailController, :send_email
 
   end
 
