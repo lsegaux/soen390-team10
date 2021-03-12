@@ -48,15 +48,43 @@ const useStyles = makeStyles((theme) => ({
 
 
 //Table headers
-const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Action Requested", "Action Status"];
+const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Client Request", "Request Status"];
 
 //Defect Lists
 const defectListItems = ["Client Feedback List", "Vendor Defects List"];
 
+//QM Client defect filler data
+const clientDefectData = [
+                  {client: "John Lennon", orderID: 1, defectType: "Damaged product", 
+                    description: "The handlebar was already cracked",
+                    comment:"This is unacceptable, and I expect better!",
+                    status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  {client: "Matty Banks", orderID: 2, defectType: "Damaged product", 
+                  description: "The handlebar was already cracked",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  {client: "Eric Madlad", orderID: 3, defectType: "Damaged product", 
+                  description: "The handlebar was already cracked",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  {client: "Yoseph Pill", orderID: 4, defectType: "Damaged product", 
+                  description: "The handlebar was already cracked",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  {client: "Hose Green", orderID: 5, defectType: "Damaged product", 
+                  description: "The handlebar was already cracked",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  {client: "Purp Lee", orderID: 6, defectType: "Damaged product", 
+                  description: "The handlebar was already cracked",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
+                  ];
+
 export default function QualityManagement() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(clientDefectData);
   const [openDefectModal, setOpenDefectModal] = useState(false);
 
 
@@ -79,8 +107,6 @@ export default function QualityManagement() {
    
     }, []);
     
-
-
   function handleListSelect (name){
     
   }
@@ -130,17 +156,17 @@ export default function QualityManagement() {
           </TableHead>
           <TableBody>
             {
-              [1,2,3].map((row, key)=>{
+              data.map((row, key)=>{
                 return ( 
                 <TableRow key ={key}>
-                  <TableCell align = "center">Jogn</TableCell>
-                  <TableCell align = "center">23</TableCell>
-                  <TableCell align = "center">Damaged product</TableCell>
-                  <TableCell align = "center">"cracked handlebar"</TableCell>
-                  <TableCell align = "center">"unacceptable!"</TableCell>
-                  <TableCell align = "center">Resolved</TableCell>
-                  <TableCell align = "center">Replaced handlebars</TableCell>
-                  <TableCell align = "center">Resolved</TableCell>
+                  <TableCell align = "center">{row["client"]}</TableCell>
+                  <TableCell align = "center">{row["orderID"]}</TableCell>
+                  <TableCell align = "center">{row["defectType"]}</TableCell>
+                  <TableCell align = "center">{row["description"]}</TableCell>
+                  <TableCell align = "center">{row["comment"]}</TableCell>
+                  <TableCell align = "center">{row["status"]}</TableCell>
+                  <TableCell align = "center">{row["request"]}</TableCell>
+                  <TableCell align = "center">{row["requestStatus"]}</TableCell>
                 </TableRow>)
               })
             }
