@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
 import axios from 'axios';
 
@@ -12,7 +12,6 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
 
@@ -55,20 +54,24 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor: fade(theme.palette.common.white, 0.25),
         },
         color: "black"   
-      }
+    },
+    DefectTextArea:{
+        height: '100%',
+        width:"100%",
+        resize:"none"
+    }
   }));
  
 //Defect types
-const defectTypes = ["Damaged product", "Missing part/product", "Wrong product"];
+const defectTypes = ["Damaged product", "Incomplete order shipped", "Wrong product", "Service Complaint"];
 
 //Request action
-const requestActions = ["Replace product", "Refund"];
+const requestActions = ["Replace product", "Refund", "See comments"];
 
-export default function DefectForm({open, closePopup}){
+export default function DefectForm({open, closePopup, clientOrders, vendorOrders}){
     const classes = useStyles(useTheme());
     const [anchorElDefect, setAnchorElDefect] = useState<null | HTMLElement>(null);
     const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
-    //const [formData, setFormData] = useState({});
 
     const [formOrderID, setFormOrderID] = useState(-1);
     const [formDefectType, setFormDefectType] = useState("");
@@ -77,7 +80,6 @@ export default function DefectForm({open, closePopup}){
     const [formComment, setFormComment] = useState("");
 
 
-  
     function handleSubmit(event){
       event.preventDefault();
 
@@ -85,20 +87,14 @@ export default function DefectForm({open, closePopup}){
        * Add items to our internal stock in the database
        * 
        */
+       console.log(formOrderID,formDefectType,formRequest,formDescription, formComment);
 
-       
-
+       clearDefectVariables();
        closePopup();
     }
 
     function handleOrderID (e){
-        //TO-DO: Check if orderID exists
-        //Note: this check could be done during the submission
-
-        //IF exist, it is valid and set the formOrderID state
         setFormOrderID(e.target.value);
-        //ELSE it does not exist, it is no a valid orderID
-
     }
 
     function handleClickDefect (event: React.MouseEvent<HTMLButtonElement>){
@@ -124,13 +120,46 @@ export default function DefectForm({open, closePopup}){
     function handleCloseRequest (){
         setAnchorElRequest(null);
     }
+
+    function checkFormValid (){
+        if ((vendorOrders === null || clientOrders === null)) return false;
+
+        //Check the dropdown menu options are not empty
+        let requestSet = (formRequest !== "");
+        let defectSet = (formDefectType !== "");
+
+        //Check the order id exists
+        //Either check for client or vendors table, not both, depending on user type
+        let orderIDExists = false;
+        //console.log(localStorage.getItem('userRole'));
+
+        let tempData = vendorOrders;
+
+        tempData.map(element => {
+            if (formOrderID === element["id"].toString()){
+                orderIDExists = true;
+                return;
+            }
+        });
+       
+        return requestSet && defectSet && orderIDExists;
+    }
+
+    function clearDefectVariables(){
+        setFormComment("");
+        setFormDescription("");
+        setFormRequest("");
+        setFormDefectType("");
+        setFormOrderID(-1);
+    }
+
     return (
         <Modal open={open} onClose = {()=>closePopup()} className = {classes.popupCheckout}>
         <TableContainer>
         <Table>
         <TableBody>  
             <TableRow> 
-                <TableCell className={classes.DefectFormTable} align="left"><label>Order ID: </label><input type="text" size={10} onBlur = {(e)=>handleOrderID(e)}/></TableCell>
+                <TableCell className={classes.DefectFormTable} align="left"><label>Order ID: </label><input required type="text" size={10} onChange = {(e)=>handleOrderID(e)}/></TableCell>
                 <TableCell className={classes.DefectFormTable}align="center">
                     <Button className = {classes.DefectDropDownButton} onClick={handleClickDefect}>{(formDefectType === "" )? "Choose Defect Type":"Defect: "+formDefectType}</Button>
                     <Menu id = "defectList" anchorEl = {anchorElDefect} keepMounted open = {Boolean(anchorElDefect)} onClose={handleCloseDefect}>
@@ -143,17 +172,25 @@ export default function DefectForm({open, closePopup}){
                         {requestActions.map((item, key)=> {return <MenuItem key={key} onClick = {()=>{handleRequestType(item);handleCloseRequest()}}>{item}</MenuItem>})}
                     </Menu> 
                 </TableCell>
-            </TableRow>        
-           
+            </TableRow>
+            <TableRow>
+                <TableCell colSpan = {4}>
+                <label style = {{color:"white", fontWeight:"bold"}}>Provide description of defect:</label><br/>
+                <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormDescription(e.target.value)}/>
+                </TableCell>
+            </TableRow> 
+            <TableRow>
+                <TableCell colSpan = {4}>
+                    <label style = {{color:"white", fontWeight:"bold"}}>Make any comments:</label><br/>
+                    <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormComment(e.target.value)}/>
+                </TableCell>
+            </TableRow>       
         </TableBody> 
         <TableFooter>
             <TableRow>
                 <TableCell colSpan={2} align = "center"/>
                 <TableCell align = "center">
-                    <Button className={classes.DefectFormButton} onClick={(event)=>handleSubmit(event)}>Submit Report</Button>
-                </TableCell>
-                <TableCell className={classes.DefectFormTable} align = "center">
-                    
+                    <Button disabled={!checkFormValid()} className={classes.DefectFormButton} onClick={(event)=>handleSubmit(event)}>Submit Report</Button>
                 </TableCell>
             </TableRow>
         </TableFooter>

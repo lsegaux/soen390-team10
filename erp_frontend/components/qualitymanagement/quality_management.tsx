@@ -81,11 +81,46 @@ const clientDefectData = [
                   status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
                   ];
 
+//QM Vendor defect filler data
+const vendorDefectData = [
+                  {orderID: 1, defectType: "Incomplete order shipped", 
+                    description: "Missing 2 handlebars",
+                    comment:"This is unacceptable, and I expect better!",
+                    status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  {orderID: 2, defectType: "Incomplete order shipped", 
+                  description: "Missing 2 handlebars",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  {orderID: 3, defectType: "Incomplete order shipped", 
+                  description: "Missing 2 handlebars",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  {orderID: 4, defectType: "Incomplete order shipped", 
+                  description: "Missing 2 handlebars",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  {orderID: 5, defectType: "Incomplete order shipped", 
+                  description: "Missing 2 handlebars",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  {orderID: 6, defectType: "Incomplete order shipped", 
+                  description: "Missing 2 handlebars",
+                  comment:"This is unacceptable, and I expect better!",
+                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
+                  ];
+
 export default function QualityManagement() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [data, setData] = useState(clientDefectData);
+  const [clientQMData, setClientQMData] = useState(clientDefectData);
+  const [vendorQMData, setVendorQmData] = useState(vendorDefectData);
+
+  const [listClientBool, setListClientBool] = useState(true);
+
   const [openDefectModal, setOpenDefectModal] = useState(false);
+
+  const [clientOrders, setClientOrders] = useState(new Array());
+  const [vendorOrders, setVendorOrders] = useState(new Array());
 
 
     useEffect(() => {
@@ -106,9 +141,52 @@ export default function QualityManagement() {
       return ()=>{isMounted = false}
    
     }, []);
+
+    useEffect(() => {
+      let isMounted = true;
+
+      //Fetching Customer Transactions
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/accounting/ledger`,
+        headers: { "Content-Type": "application/json" },
+     }).then(res => {
+        if (res.status === 200 && isMounted) {
+          var rows = Array();
+          for(var i=0; i<res.data.data.length; i++){
+            //Adding an orderID because the client order schema does not have an orderID attribute
+            //Ideally, this changes and the schema adopts an actual orderID attribute
+            rows.push({...res.data.data[i], id: (i+1)});
+          }
+          setClientOrders(rows);
+        }
+     }).catch(err => {
+        console.error(err);
+    });
+
+      //Fetching Vendor Transactions
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/production/expenses`,
+        headers: { "Content-Type": "application/json" },
+     }).then(res => {
+        if (res.status === 200 && isMounted) {
+          var rows = Array();
+          for(var i=0; i<res.data.data.length; i++){
+            rows.push(res.data.data[i]);
+          }
+          setVendorOrders(rows);
+        }
+     }).catch(err => {
+        console.error(err);
+    });
+    return ()=>{isMounted = false}
+  }, []);
     
-  function handleListSelect (name){
-    
+  function handleListSelect (key){
+    if (key === 0) setListClientBool(true);
+
+    if (key === 1) setListClientBool(false);
   }
 
   function handleClick (event: React.MouseEvent<HTMLButtonElement>){
@@ -135,7 +213,7 @@ export default function QualityManagement() {
             <Button className = {classes.button} onClick={handleClick}>Menu</Button>
               <Menu id = "defectList" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
               {defectListItems.map((item, key)=>{
-                return <MenuItem key={key} onClick = {()=>{handleListSelect(item);handleClose()}}>{item}</MenuItem>
+                return <MenuItem key={key} onClick = {()=>{handleListSelect(key);handleClose()}}>{item}</MenuItem>
               })}
               </Menu>
             </TableCell>
@@ -156,7 +234,7 @@ export default function QualityManagement() {
           </TableHead>
           <TableBody>
             {
-              data.map((row, key)=>{
+              (listClientBool?clientDefectData:vendorDefectData).map((row, key)=>{
                 return ( 
                 <TableRow key ={key}>
                   <TableCell align = "center">{row["client"]}</TableCell>
@@ -181,7 +259,7 @@ export default function QualityManagement() {
             </TableFooter>
         </Table>
       </TableContainer>
-      <DefectForm open={openDefectModal} closePopup={toggleReportDefect}/>
+      <DefectForm open={openDefectModal} closePopup={toggleReportDefect} vendorOrders = {vendorOrders} clientOrders = {clientOrders}/>
       </form>
     </div>
    
