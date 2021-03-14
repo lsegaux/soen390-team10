@@ -1,0 +1,40 @@
+<h1>Listing Clientclaim</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Orderid</th>
+      <th>Defecttype</th>
+      <th>Description</th>
+      <th>Comments</th>
+      <th>Status</th>
+      <th>Clientrequest</th>
+      <th>Requeststatus</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for client_claim <- @clientclaim do %>
+    <tr>
+      <td><%= client_claim.name %></td>
+      <td><%= client_claim.orderid %></td>
+      <td><%= client_claim.defecttype %></td>
+      <td><%= client_claim.description %></td>
+      <td><%= client_claim.comments %></td>
+      <td><%= client_claim.status %></td>
+      <td><%= client_claim.clientrequest %></td>
+      <td><%= client_claim.requeststatus %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.client_claim_path(@conn, :show, client_claim) %></span>
+        <span><%= link "Edit", to: Routes.client_claim_path(@conn, :edit, client_claim) %></span>
+        <span><%= link "Delete", to: Routes.client_claim_path(@conn, :delete, client_claim), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Client claim", to: Routes.client_claim_path(@conn, :new) %></span>

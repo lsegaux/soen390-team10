@@ -44,7 +44,9 @@ defmodule ErpWeb.Router do
     post "/sale", SaleController, :process_sale
 
     get "/accounting/ledger", OrderController, :show_all_orders
-
+    
+    resources "/clientclaim", ClientClaimController
+    resources "/vendorclaim", VendorClaimController
   end
 
   scope "/", ErpWeb do
