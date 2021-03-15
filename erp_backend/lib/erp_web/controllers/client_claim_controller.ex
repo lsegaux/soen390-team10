@@ -18,7 +18,6 @@ defmodule ErpWeb.ClientClaimController do
     case QualityManagement.create_client_claim(client_claim_params) do
       {:ok, client_claim} ->
         conn
-        |> put_flash(:info, "Client claim created successfully.")
         |> redirect(to: Routes.client_claim_path(conn, :show, client_claim))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -26,9 +25,10 @@ defmodule ErpWeb.ClientClaimController do
     end
   end
 
+
   def show(conn, %{"id" => id}) do
     client_claim = QualityManagement.get_client_claim!(id)
-    render(conn, "show.html", client_claim: client_claim)
+    render(conn, "show.json", client_claim: client_claim)
   end
 
   def show_all_client_claim(conn, _params) do
@@ -39,7 +39,7 @@ defmodule ErpWeb.ClientClaimController do
   def edit(conn, %{"id" => id}) do
     client_claim = QualityManagement.get_client_claim!(id)
     changeset = QualityManagement.change_client_claim(client_claim)
-    render(conn, "index.json", client_claim: client_claim, changeset: changeset)
+    render(conn, "clientclaim.json", client_claim: client_claim, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "client_claim" => client_claim_params}) do
@@ -48,7 +48,6 @@ defmodule ErpWeb.ClientClaimController do
     case QualityManagement.update_client_claim(client_claim, client_claim_params) do
       {:ok, client_claim} ->
         conn
-        |> put_flash(:info, "Client claim updated successfully.")
         |> redirect(to: Routes.client_claim_path(conn, :show, client_claim))
 
       {:error, %Ecto.Changeset{} = changeset} ->
