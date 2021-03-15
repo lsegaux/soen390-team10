@@ -20,8 +20,8 @@ defmodule ErpWeb.VendorClaimView do
       status: vendor_claim.status}
   end
 
-  def render("show.json", %{vendorclaim: vendorclaim}) do
-    %{data: render_one(vendorclaim, VendorClaimView, "vendorclaim.json")}
+  def render("show.json", %{vendor_claim: vendor_claim}) do
+    %{data: render_one(vendor_claim, VendorClaimView, "vendorclaim.json")}
   end
 
 end

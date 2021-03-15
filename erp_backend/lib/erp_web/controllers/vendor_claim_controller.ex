@@ -18,7 +18,6 @@ defmodule ErpWeb.VendorClaimController do
     case QualityManagement.create_vendor_claim(vendor_claim_params) do
       {:ok, vendor_claim} ->
         conn
-        |> put_flash(:info, "Vendor claim created successfully.")
         |> redirect(to: Routes.vendor_claim_path(conn, :show, vendor_claim))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -28,7 +27,7 @@ defmodule ErpWeb.VendorClaimController do
 
   def show(conn, %{"id" => id}) do
     vendor_claim = QualityManagement.get_vendor_claim!(id)
-    render(conn, "show.html", vendor_claim: vendor_claim)
+    render(conn, "show.json", vendor_claim: vendor_claim)
   end
 
   def show_all_vendor_claim(conn, _params) do
