@@ -1,5 +1,0 @@
-<h1>New Client claim</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.client_claim_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.client_claim_path(@conn, :index) %></span>

@@ -31,6 +31,11 @@ defmodule ErpWeb.VendorClaimController do
     render(conn, "show.html", vendor_claim: vendor_claim)
   end
 
+  def show_all_vendor_claim(conn, _params) do
+    vendorclaim = QualityManagement.list_vendorclaim()
+    render(conn, "index.json", vendorclaim: vendorclaim)
+  end
+
   def edit(conn, %{"id" => id}) do
     vendor_claim = QualityManagement.get_vendor_claim!(id)
     changeset = QualityManagement.change_vendor_claim(vendor_claim)

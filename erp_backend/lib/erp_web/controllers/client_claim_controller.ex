@@ -31,10 +31,15 @@ defmodule ErpWeb.ClientClaimController do
     render(conn, "show.html", client_claim: client_claim)
   end
 
+  def show_all_client_claim(conn, _params) do
+    clientclaim = QualityManagement.list_clientclaim()
+    render(conn, "index.json", clientclaim: clientclaim)
+  end
+
   def edit(conn, %{"id" => id}) do
     client_claim = QualityManagement.get_client_claim!(id)
     changeset = QualityManagement.change_client_claim(client_claim)
-    render(conn, "edit.html", client_claim: client_claim, changeset: changeset)
+    render(conn, "index.json", client_claim: client_claim, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "client_claim" => client_claim_params}) do

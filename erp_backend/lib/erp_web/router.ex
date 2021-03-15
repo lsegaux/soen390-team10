@@ -42,6 +42,8 @@ defmodule ErpWeb.Router do
     post "/production/expense/create/amount/:amount", MaterialsExpenseController, :create
     post "/production/expense/process/:id", MaterialsExpenseController, :process_expense
     post "/sale", SaleController, :process_sale
+    get "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
+    get "/quality_management/vendor_claim", VendorClaimController, :show_all_vendor_claim
 
     get "/accounting/ledger", OrderController, :show_all_orders
     
