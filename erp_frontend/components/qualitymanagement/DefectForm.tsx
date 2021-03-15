@@ -14,7 +14,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
-import { LaptopWindows } from '@material-ui/icons';
 
 const url = 'http://localhost:4000';
 
@@ -98,13 +97,13 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
        
        clearDefectVariables();
        closePopup();
-       window.location.href ='/';
+       window.location.href ='/dashboard';
     }
 
     function addClientDefect(){
         axios({
             method: 'post',
-            url: `${url}/api/v1//quality_management/client_claim/newClaim`,
+            url: `${url}/api/v1/quality_management/client_claim/newClaim`,
             headers: { "Content-Type": "application/json" },
             data:{
                 client_claim:{
@@ -128,7 +127,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
     function addVendorDefect(){
         axios({
             method: 'post',
-            url: `${url}/api/v1//quality_management/vendor_claim/newClaim`,
+            url: `${url}/api/v1/quality_management/vendor_claim/newClaim`,
             headers: { "Content-Type": "application/json" },
             data:{
                 vendor_claim:{

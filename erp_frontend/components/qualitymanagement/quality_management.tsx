@@ -53,10 +53,21 @@ const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comme
 //Defect Lists
 const defectListItems = ["Client Defect List", "Vendor Defects List"];
 
+//Status options
+const statusOption = ["Pending Review", "In progress", "Resolved"];
+
+//Status options
+const requestStatusOption = ["Decline", "Accept"];
+
 
 export default function QualityManagement() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const [anchorElStatus, setAnchorElStatus] = useState<null | HTMLElement>(null);
+  const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
+  const [rowSelectId,setRowSelectId] = useState(0);
+
   const [clientQMData, setClientQMData] = useState([]);
   const [vendorQMData, setVendorQMData] = useState([]);
 
@@ -141,15 +152,70 @@ export default function QualityManagement() {
     if (key === 1) setListClientBool(false);
   }
 
+  function handleStatusSelect(option){
+    axios({
+      method: 'post',
+      url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${rowSelectId}`,
+      headers: { "Content-Type": "application/json" },
+      data:{
+          client_claim:{
+              status:option
+          }
+      }
+    }).then((res)=>{
+      if (res.status == 200) window.location.href = '/dashboard'
+    }).catch(err => {
+        console.error(err);
+        alert("Status was not updated due to some error.");
+    });
+    handleClose();
+  }
+
+  function handleRequestSelect(option){
+    axios({
+      method: 'post',
+      url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${rowSelectId}`,
+      headers: { "Content-Type": "application/json" },
+      data:{
+          client_claim:{
+              requeststatus:option
+          }
+      }
+    }).then((res)=>{
+      if (res.status == 200) window.location.href = '/dashboard'
+    }).catch(err => {
+        console.error(err);
+        alert("Request status was not updated due to some error.");
+    });
+    handleClose();
+  }
+
   function handleClick (event: React.MouseEvent<HTMLButtonElement>){
     setAnchorEl(event.currentTarget);
   };
 
+  
+  function handleClickStatus (event: React.MouseEvent<HTMLButtonElement>, key){
+    setAnchorElStatus(event.currentTarget);
+    setRowSelectId(key)
+  };
+
+  function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>, key){
+    setAnchorElRequest(event.currentTarget);
+    setRowSelectId(key)
+  };
 
   function handleClose (){
     setAnchorEl(null);
   }
 
+  function handleCloseStatus (){
+    setAnchorElStatus(null);
+  }
+
+  function handleCloseRequest (){
+    setAnchorElRequest(null);
+  }
   
   function toggleReportDefect(){
     setOpenDefectModal(!openDefectModal);
@@ -162,7 +228,7 @@ export default function QualityManagement() {
         <TableBody>
           <TableRow>
             <TableCell align = "center">
-            <Button className = {classes.button} onClick={handleClick}>Menu</Button>
+            <Button className = {classes.button} onClick={handleClick}>{listClientBool?defectListItems[0]:defectListItems[1]}</Button>
               <Menu id = "defectList" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
               {defectListItems.map((item, key)=>{
                 return <MenuItem key={key} onClick = {()=>{handleListSelect(key);handleClose()}}>{item}</MenuItem>
@@ -194,9 +260,23 @@ export default function QualityManagement() {
                   <TableCell align = "center">{row["defecttype"]}</TableCell>
                   <TableCell align = "center">{row["description"]}</TableCell>
                   <TableCell align = "center">{row["comments"]}</TableCell>
-                  <TableCell align = "center">{row["status"]}</TableCell>
+                  <TableCell align = "center"> 
+                    <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
+                      <Menu anchorEl = {anchorElStatus} keepMounted open = {Boolean(anchorElStatus)} onClose={handleCloseStatus}>
+                      {statusOption.map((item, key2)=>{
+                        return <MenuItem key={key2} onClick = {()=>{handleStatusSelect(item);}}>{item}</MenuItem>
+                      })}
+                      </Menu>                 
+                  </TableCell>
                   <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
-                  <TableCell align = "center">{row["requeststatus"]}</TableCell>
+                  <TableCell align = "center">
+                  <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
+                      <Menu anchorEl = {anchorElRequest} keepMounted open = {Boolean(anchorElRequest)} onClose={handleCloseRequest}>
+                      {requestStatusOption.map((item, key2)=>{
+                        return <MenuItem key={key2} onClick = {()=>{handleRequestSelect(item);}}>{item}</MenuItem>
+                      })}
+                      </Menu> 
+                    </TableCell>
                 </TableRow>)
               })
             }
