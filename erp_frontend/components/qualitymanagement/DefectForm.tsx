@@ -14,6 +14,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
+import { LaptopWindows } from '@material-ui/icons';
 
 const url = 'http://localhost:4000';
 
@@ -87,10 +88,65 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
        * Add items to our internal stock in the database
        * 
        */
-       console.log(formOrderID,formDefectType,formRequest,formDescription, formComment);
+        //Uncomment when user roles can be fetched from the database
+        //if (localStorage.getItem("role") === 'Client'){
+            //addClientDefect();
 
+        //}else{
+            addVendorDefect();
+        //}
+       
        clearDefectVariables();
        closePopup();
+       window.location.href ='/';
+    }
+
+    function addClientDefect(){
+        axios({
+            method: 'post',
+            url: `${url}/api/v1//quality_management/client_claim/newClaim`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                client_claim:{
+                    claim_id:1, //The number doesn't matter
+                    name:"MounceTest", //localStorage.getItem("email")
+                    comments: formComment,
+                    defecttype: formDefectType,
+                    description: formDescription,
+                    orderid: formOrderID,
+                    requeststatus: "N/A",
+                    status: "Pending review",
+                    clientrequest: formRequest
+                }
+            }
+          }).catch(err => {
+              console.error(err);
+              alert("Defect was not added due to some error.");
+          });
+    }
+
+    function addVendorDefect(){
+        axios({
+            method: 'post',
+            url: `${url}/api/v1//quality_management/vendor_claim/newClaim`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                vendor_claim:{
+                    claim_id:0, //The number doesn't matter
+                    name:"Wilson Inc.",
+                    comments: formComment,
+                    defecttype: formDefectType,
+                    description: formDescription,
+                    orderid: formOrderID,
+                    requeststatus: "N/A",
+                    status: "Pending review",
+                    vendorrequest: formRequest
+                }
+            }
+          }).catch(err => {
+              console.error(err);
+              alert("Defect was not added due to some error.");
+          });
     }
 
     function handleOrderID (e){

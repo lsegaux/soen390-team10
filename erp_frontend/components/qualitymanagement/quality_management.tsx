@@ -48,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 //Table headers
-const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Client Request", "Request Status"];
+const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Action Request", "Request Status"];
 
 //Defect Lists
-const defectListItems = ["Client Feedback List", "Vendor Defects List"];
+const defectListItems = ["Client Defect List", "Vendor Defects List"];
 
 
 export default function QualityManagement() {
