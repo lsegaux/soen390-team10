@@ -42,12 +42,13 @@ defmodule ErpWeb.Router do
     post "/production/expense/create/amount/:amount", MaterialsExpenseController, :create
     post "/production/expense/process/:id", MaterialsExpenseController, :process_expense
     post "/sale", SaleController, :process_sale
-    
     get "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
-
+    post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
     post "/quality_management/vendor_claim/newClaim", VendorClaimController, :create
+    post "quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
     get "/quality_management/vendor_claim", VendorClaimController, :show_all_vendor_claim
+
 
     get "/accounting/ledger", OrderController, :show_all_orders
     

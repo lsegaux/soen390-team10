@@ -47,7 +47,6 @@ defmodule ErpWeb.VendorClaimController do
     case QualityManagement.update_vendor_claim(vendor_claim, vendor_claim_params) do
       {:ok, vendor_claim} ->
         conn
-        |> put_flash(:info, "Vendor claim updated successfully.")
         |> redirect(to: Routes.vendor_claim_path(conn, :show, vendor_claim))
 
       {:error, %Ecto.Changeset{} = changeset} ->
