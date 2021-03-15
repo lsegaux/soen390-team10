@@ -53,67 +53,12 @@ const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comme
 //Defect Lists
 const defectListItems = ["Client Feedback List", "Vendor Defects List"];
 
-//QM Client defect filler data
-const clientDefectData = [
-                  {client: "John Lennon", orderID: 1, defectType: "Damaged product", 
-                    description: "The handlebar was already cracked",
-                    comment:"This is unacceptable, and I expect better!",
-                    status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Matty Banks", orderID: 2, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Eric Madlad", orderID: 3, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Yoseph Pill", orderID: 4, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Hose Green", orderID: 5, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Purp Lee", orderID: 6, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  ];
-
-//QM Vendor defect filler data
-const vendorDefectData = [
-                  {orderID: 1, defectType: "Incomplete order shipped", 
-                    description: "Missing 2 handlebars",
-                    comment:"This is unacceptable, and I expect better!",
-                    status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 2, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 3, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 4, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 5, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 6, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  ];
 
 export default function QualityManagement() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [clientQMData, setClientQMData] = useState(clientDefectData);
-  const [vendorQMData, setVendorQmData] = useState(vendorDefectData);
+  const [clientQMData, setClientQMData] = useState([]);
+  const [vendorQMData, setVendorQMData] = useState([]);
 
   const [listClientBool, setListClientBool] = useState(true);
 
@@ -126,24 +71,31 @@ export default function QualityManagement() {
     useEffect(() => {
       let isMounted = true;
 
-      // axios({
-      //     method: 'get',
-      //     url: `${url}/api/v1/production/plants`,
-      //     headers: { "Content-Type": "application/json" },
-      // }).then(res => {
-      //     if (isMounted && res.status === 200) {
-      //         setAllPlants(res.data.data)
-      //     }
-      // }).catch(err => {
-      //     console.error(err);
-      // });
+      //Fetch vendor claims
+      axios({
+          method: 'get',
+          url: `${url}/api/v1/quality_management/vendor_claim`,
+          headers: { "Content-Type": "application/json" },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+              setVendorQMData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
 
-      return ()=>{isMounted = false}
-   
-    }, []);
-
-    useEffect(() => {
-      let isMounted = true;
+       //Fetch client claims
+       axios({
+        method: 'get',
+        url: `${url}/api/v1/quality_management/client_claim`,
+        headers: { "Content-Type": "application/json" },
+    }).then(res => {
+        if (isMounted && res.status === 200) {
+            setClientQMData(res.data.data);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
 
       //Fetching Customer Transactions
       axios({
@@ -154,8 +106,8 @@ export default function QualityManagement() {
         if (res.status === 200 && isMounted) {
           var rows = Array();
           for(var i=0; i<res.data.data.length; i++){
-            //Adding an orderID because the client order schema does not have an orderID attribute
-            //Ideally, this changes and the schema adopts an actual orderID attribute
+            //Adding an orderid because the client order schema does not have an orderid attribute
+            //Ideally, this changes and the schema adopts an actual orderid attribute
             rows.push({...res.data.data[i], id: (i+1)});
           }
           setClientOrders(rows);
@@ -234,17 +186,17 @@ export default function QualityManagement() {
           </TableHead>
           <TableBody>
             {
-              (listClientBool?clientDefectData:vendorDefectData).map((row, key)=>{
+              (listClientBool?clientQMData:vendorQMData).map((row, key)=>{
                 return ( 
                 <TableRow key ={key}>
-                  <TableCell align = "center">{row["client"]}</TableCell>
-                  <TableCell align = "center">{row["orderID"]}</TableCell>
-                  <TableCell align = "center">{row["defectType"]}</TableCell>
+                  <TableCell align = "center">{row["name"]}</TableCell>
+                  <TableCell align = "center">{row["orderid"]}</TableCell>
+                  <TableCell align = "center">{row["defecttype"]}</TableCell>
                   <TableCell align = "center">{row["description"]}</TableCell>
-                  <TableCell align = "center">{row["comment"]}</TableCell>
+                  <TableCell align = "center">{row["comments"]}</TableCell>
                   <TableCell align = "center">{row["status"]}</TableCell>
-                  <TableCell align = "center">{row["request"]}</TableCell>
-                  <TableCell align = "center">{row["requestStatus"]}</TableCell>
+                  <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
+                  <TableCell align = "center">{row["requeststatus"]}</TableCell>
                 </TableRow>)
               })
             }
