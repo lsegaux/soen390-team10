@@ -9,7 +9,7 @@ defmodule ErpWeb.ClientClaimView do
 
   def render("clientclaim.json", %{client_claim: client_claim}) do
     %{
-      claim_id: vendor_claim.id,
+      claim_id: client_claim.id,
       name: client_claim.name,
       clientrequest: client_claim.clientrequest,
       comments: client_claim.comments,
