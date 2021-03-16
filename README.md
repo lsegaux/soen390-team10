@@ -6,8 +6,9 @@
 ## Table of Contents
 - [Docker Setup](#docker-setup)
 - [Quick Start](#quick-start)
-- [Coding Conventions](#coding-conventions)
+- [Coding Conventions](#code-conventions)
 - [Important Plugins and Dependencies](#import-plugins-and-dependencies)
+- [Documents](#documents)
 
 ## Docker Setup
 
@@ -39,12 +40,17 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 - Start the Phoenix endpoint with `mix phx.server`
 - Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Coding Conventions
-[Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
-[Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
-[Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
-
+## Code Conventions
+* [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
+* [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
+* [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
+* Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors.
 ## Important Plugins and Dependencies
-[Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
-[Material UI](https://material-ui.com/)
+* [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
+* [Material UI](https://material-ui.com/)
+
+## Documents
+[Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
+[Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
+[Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
 
