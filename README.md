@@ -7,7 +7,7 @@
 - [Docker Setup](#docker-setup)
 - [Quick Start](#quick-start)
 - [Coding Conventions](#code-conventions)
-- [Important Plugins and Dependencies](#import-plugins-and-dependencies)
+- [Plugins](#plugins)
 - [Documents](#documents)
 
 ## Docker Setup
@@ -45,7 +45,8 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 * [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
 * [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
 * Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors.
-## Important Plugins and Dependencies
+
+## Plugins
 * [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
 * [Material UI](https://material-ui.com/)
 
