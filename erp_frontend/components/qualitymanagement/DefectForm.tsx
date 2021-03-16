@@ -95,9 +95,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             addVendorDefect();
         //}
        
-       clearDefectVariables();
-       closePopup();
-       window.location.href ='/dashboard';
+       
     }
 
     function addClientDefect(){
@@ -118,6 +116,12 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
                     clientrequest: formRequest
                 }
             }
+          }).then((res)=>{
+              if (res.status == 200){
+                clearDefectVariables();
+                closePopup();
+                window.location.href ='/dashboard';
+              }
           }).catch(err => {
               console.error(err);
               alert("Defect was not added due to some error.");
@@ -142,7 +146,13 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
                     vendorrequest: formRequest
                 }
             }
-          }).catch(err => {
+          }).then((res)=>{
+            if (res.status == 200){
+              clearDefectVariables();
+              closePopup();
+              window.location.href ='/dashboard';
+            }
+        }).catch(err => {
               console.error(err);
               alert("Defect was not added due to some error.");
           });
