@@ -46,7 +46,7 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 * [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
 * [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
 * [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
-* Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors.
+* Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors or warnings.
 
 ## Plugins
 * [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
