@@ -1,5 +1,10 @@
 # SOEN Team 10 Minicap Project.
-![adrenaline-logo](https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG)
+[![GitHub release](https://img.shields.io/github/release/lsegaux/soen390-team10.svg)](https://GitHub.com/lsegaux/soen390-team10/releases/)
+[![GitHub issues](https://img.shields.io/github/issues/lsegaux/soen390-team10.svg)](https://GitHub.com/lsegaux/soen390-team10/issues/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/lsegaux/soen390-team10.svg)](https://GitHub.com/lsegaux/soen390-team10/pull/)
+<p align="center">
+  ![adrenaline-logo](https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG)
+</p>
 
 ## Table of Contents
 - [Docker Setup](#docker-setup)
