@@ -1,5 +1,5 @@
-# ERP
-SOEN390 Team 10 ERP Project
+# SOEN Team 10 Minicap Project.
+![adrenaline-logo](https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG)
 
 ## Table of Contents
 - [Docker Setup](#docker-setup)
