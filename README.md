@@ -1,24 +1,12 @@
-# <p align="center">SOEN Team 10 Minicap Project.</p>
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG">
-</p>
+# ERP
+SOEN390 Team 10 ERP Project
 
-## Table of Contents
-- [Docker Setup](#docker-setup)
-- [Quick Start](#quick-start)
-- [Coding Conventions](#code-conventions)
-- [Plugins](#plugins)
-- [Documents](#documents)
-- [Story Points Breakdown](#story-points-breakdown)
-- [Requirements](#requirements)
-
-## Docker Setup
+## How to run with docker
 
 `sudo docker-compose build`
 `sudo docker-compose up`
 
-## Quick Start
-
+## How to run
 - Install [Elixir](https://elixir-lang.org/install.html)
 - Install [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 - Install [Node.js](https://nodejs.org/en/download/)
@@ -41,26 +29,3 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 - Create and migrate your database with `mix ecto.setup`
 - Start the Phoenix endpoint with `mix phx.server`
 - Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-## Code Conventions
-* [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
-* [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
-* [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
-* Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors or warnings.
-
-## Plugins
-* [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
-* [Material UI](https://material-ui.com/)
-
-## Documents
-* [Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
-* [Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
-* [Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
-
-## Story Points Breakdown
-* Low Priority = 3 story points
-* Medium Priority = 5 story points
-* High Priority = 8 story points
-
-## Requirements
-* [Functional and Non-Functional Requirements by Sprint](https://docs.google.com/document/d/1Xa1G2cgjGcb52q1HJ05BqpITo3Nu8N6lh9V74oW9NGo/edit)
