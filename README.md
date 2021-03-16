@@ -53,9 +53,9 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 * [Material UI](https://material-ui.com/)
 
 ## Documents
-[Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
-[Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
-[Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
+* [Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
+* [Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
+* [Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
 
 ## Story Points Breakdown
 * Low Priority = 3 story points
@@ -63,4 +63,4 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 * High Priority = 8 story points
 
 ## Requirements
-[Functional and Non-Functional Requirements by Sprint](https://docs.google.com/document/d/1Xa1G2cgjGcb52q1HJ05BqpITo3Nu8N6lh9V74oW9NGo/edit)
+* [Functional and Non-Functional Requirements by Sprint](https://docs.google.com/document/d/1Xa1G2cgjGcb52q1HJ05BqpITo3Nu8N6lh9V74oW9NGo/edit)
