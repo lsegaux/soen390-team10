@@ -14,7 +14,8 @@ defmodule ErpWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       email: user.email,
-      password_hash: user.password_hash}
+      password_hash: user.password_hash,
+      role: user.role}
   end
 
   def render("jwt.json", %{jwt: jwt}) do
