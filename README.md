@@ -1,12 +1,19 @@
 # ERP
 SOEN390 Team 10 ERP Project
 
-## How to run with docker
+## Table of Contents
+- [Docker Setup](#docker-setup)
+- [Quick Start](#quick-start)
+- [Coding Conventions](#coding-conventions)
+- [Important Plugins and Dependencies](#import-plugins-and-dependencies)
+
+## Docker Setup
 
 `sudo docker-compose build`
 `sudo docker-compose up`
 
-## How to run
+## Quick Start
+
 - Install [Elixir](https://elixir-lang.org/install.html)
 - Install [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 - Install [Node.js](https://nodejs.org/en/download/)
@@ -29,3 +36,13 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 - Create and migrate your database with `mix ecto.setup`
 - Start the Phoenix endpoint with `mix phx.server`
 - Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+## Coding Conventions
+[Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
+[Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
+[Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
+
+## Important Plugins and Dependencies
+[Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
+[Material UI](https://material-ui.com/)
+
