@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+      <p>Hello!</p>
+      <p>Adrenaline has shipped your order!</p>
+      <p>Order ID: <%= @id %></p>
+      <p>Estimated delivery date: <%= @delivery_date %></p>
+      <br/>
+      <p>The Adrenaline Team.</p>
+  </body>
+</html>

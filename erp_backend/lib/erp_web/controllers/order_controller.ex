@@ -7,8 +7,8 @@ defmodule ErpWeb.OrderController do
   alias Erp.Sales
   alias Erp.Sales.Order
 
-  def show(conn, %{"id" => orderId}) do
-    order = Erp.Sales.Order.get_order!(orderId)
+  def show(conn, %{"id" => id}) do
+    order = Erp.Sales.Order.get_order!(id)
     render(conn, "show.json", order: order)
   end
 

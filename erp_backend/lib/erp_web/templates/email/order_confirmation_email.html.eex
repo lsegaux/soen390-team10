@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+      <p>Hello!</p>
+      <p>Thanks for Ordering with Adrenaline ERP! Here are your order details: </p>
+      <table style="width:100%">
+        <tr>
+          <th colspan="5">Order Details</th>
+        </tr>
+        <tr>
+          <td>Email: <%= @email_address %></td>
+          <td>Order ID: <%= @id %></td>
+          <td>Quantity: <%= @bikesAmount %></td>
+          <td>Total Cost: <%= @price %></td>
+          <td>Time: <%= @time %></td>
+        </tr>
+        </table>
+      <br/>
+      <p>The Adrenaline Team.</p>
+  </body>
+</html>
+
+
+
+
+

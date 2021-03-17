@@ -6,14 +6,12 @@ defmodule Erp.Sales.Order do
   alias Erp.Repo
   alias Erp.Sales.Order
 
-  @primary_key false
   schema "orders" do
     field :price, :float
     field :time, :naive_datetime
     field :bikesAmount, :integer
     field :userEmail, :string
-
-    @primary_key {:orderId, :id, autogenerate: true}
+    field :status, :integer # 0 is created, 1 is packaged, 2 is shipped and 3 is delivered
     timestamps()
   end
 
