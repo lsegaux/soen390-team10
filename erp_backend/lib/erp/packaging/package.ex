@@ -1,4 +1,8 @@
 defmodule Erp.Packaging.Package do
+  @moduledoc """
+  The Package context
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Erp.Packaging.Package
@@ -22,6 +26,14 @@ defmodule Erp.Packaging.Package do
     |> foreign_key_constraint(:plant_id)
   end
 
+    @doc """
+  Creates a package.
+  ## Examples
+      iex> create_package(%{field: value})
+      {:ok, %Package{}}
+      iex> create_package(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
   def create_package(attrs \\ %{}) do
     %Package{}
     |> Package.changeset(attrs)
