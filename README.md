@@ -81,14 +81,11 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
   - [Explanation](https://github.com/elixir-ecto/ecto)
 
 ## Testing
-### Link to Testing Plan
-* https://drive.google.com/file/d/1L7WR0L3ljpHLHSbWl05ziPT0DJ3ScaJZ/view?usp=sharing
+* [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
 ---
-### Backend Testing System
-* https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test
+* [Backend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test)
 ---
-### Frontend Testing System
-* https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress
+### [Frontend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress)
 ---
 ## Story Points Breakdown
 
