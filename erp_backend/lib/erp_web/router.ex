@@ -47,6 +47,8 @@ defmodule ErpWeb.Router do
     get "/sendemail", EmailController, :send_email
 
     post "/packaging/create_package", PackagingController, :create_package
+    post "/packaging/reduce_quantity", BoxController, :reduce_quantity
+    post "/packaging/order_boxes", BoxController, :order_boxes
   end
 
   scope "/", ErpWeb do

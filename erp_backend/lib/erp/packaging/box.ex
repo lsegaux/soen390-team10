@@ -17,10 +17,18 @@ defmodule Erp.Packaging.Box do
     |> cast(attrs, [:small, :medium, :large, :xlarge])
   end
 
-  # def decrease_boxes(attrs \\ %{}) do
-  #   %Package{}
-  #   |> Package.changeset(attrs)
-  #   |> Repo.insert()
-  # end
+  def get_box!(id), do: Repo.get!(Box, id)
+
+  def reduce_quantity(%Box{} = box, small, medium, large, xlarge) do
+    box
+    |> Box.changeset(%{small: small, medium: medium, large: large, xlarge: xlarge})
+    |> Repo.update()
+  end
+
+  def increase_quantity(%Box{} = box, small, medium,large, xlarge) do
+    box
+    |> Box.changeset(%{small: small, medium: medium, large: large, xlarge: xlarge})
+    |> Repo.update()
+  end
 
 end
