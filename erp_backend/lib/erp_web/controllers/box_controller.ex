@@ -1,4 +1,9 @@
 defmodule ErpWeb.BoxController do
+  @moduledoc """
+  This is the Box Controller module. It is used to manipulate and access the data
+  about the boxes used for shipping bikes
+  """
+
   use ErpWeb, :controller
   import Ecto.Query, warn: false
   alias Erp.Packaging.Box
@@ -8,6 +13,9 @@ defmodule ErpWeb.BoxController do
     conn |> render("package.json", package: package)
   end
 
+  @doc """
+  Reduce number of boxes in inventory
+  """
   def reduce_quantity(conn, %{"id" => id, "order_id" => order_id}) do
     box = Box.get_boxes!(id + 1)
     orderQty = Erp.Sales.Order.get_order!(order_id).bikesAmount
@@ -21,12 +29,18 @@ defmodule ErpWeb.BoxController do
     end
   end
 
+  @doc """
+  Get number of boxes in inventory by plant id
+  """
   def get_boxes_by_plant(conn, %{"id" => id}) do
     intId = String.to_integer(id) + 1
     box = Box.get_boxes!(intId)
     render(conn, "boxes.json", box: box)
   end
 
+  @doc """
+  Order boxes
+  """
   def order_boxes(conn, %{"id" => id, "smallOrder" => smallOrder, "mediumOrder" => mediumOrder, "largeOrder" => largeOrder, "xlargeOrder" => xlargeOrder }) do
     box = Box.get_boxes!(id + 1)
     small = box.small
@@ -38,7 +52,7 @@ defmodule ErpWeb.BoxController do
     newMedium = medium + mediumOrder
     newLarge = large + largeOrder
     newXLarge = xlarge + xlargeOrder
-
+    #TO-DO: Send price of boxes to accounting
     with {:ok, %Box{} = box} <- Box.increase_quantity(box, id + 1,newSmall, newMedium, newLarge, newXLarge) do
       render(conn, "boxes.json", box: box)
     end
