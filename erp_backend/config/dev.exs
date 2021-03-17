@@ -75,5 +75,12 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
+#Recaptcha config
+config :google_recaptcha,
+  api_url: "https://www.google.com/recaptcha/api/siteverify",
+  public_key: "6LcjqWQaAAAAAA_KNpNiiQhQT7rHtpo_AJySY_64",
+  secret_key: "6LcjqWQaAAAAAB3mCgCh_ndIHaPXozh10-nyitpZ",
+  enabled: true
+
 # Override above config with gitignored credentials
 import_config "dev.secret.exs"

@@ -22,4 +22,11 @@ defmodule ErpWeb.FallbackController do
     |> put_status(:unauthorized)
     |> json(%{error: "Login error"})
   end
+
+
+  def call(conn, {:error, :invalid_captcha}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{error: "Captcha wrong"})
+  end
 end

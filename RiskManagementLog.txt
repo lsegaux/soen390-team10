@@ -1,5 +1,13 @@
 Risk Management Log to be updated as needed as per Risk Management Document requirements
 
+
+23/02/21
+Not completing Sales and Vendor modules early enough to leave time to create ledger, accounts receivable and accounts payable. Monitoring
+this risk closely
+
+22/02/21
+Risk of finishing sales module and vendors module with not enough time to spare in order to create the Ledger, Accounts Receivable and Payable
+
 01/02/21
 Created the top 10 risks list to keep track of what are the most pressing risks
 

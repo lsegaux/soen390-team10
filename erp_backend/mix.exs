@@ -48,7 +48,10 @@ defmodule Erp.MixProject do
       #Auth deps
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:google_recaptcha, "~> 0.2.0"},
+      {:bamboo, "~> 0.7"},
+      {:bamboo_smtp, "~>1.2.1"}
     ]
   end
 

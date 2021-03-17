@@ -12,6 +12,7 @@ import AdminView from "./components/adminfolder/adminview";
 import Accounting from "./components/employee/accounting/accountingdash"
 import { Auth } from "./Auth";
 import Inventory from "./components/production/inventory";
+import Sales from "./components/client/sales/Sales";
 
 function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
@@ -51,6 +52,7 @@ export default () => {
             <Route exact path={"/materialmanager/create"} component={CreateParts}/>
             <Route exact path={"/accounting"} component={Accounting}/>
             <Route path={"/materialmanager/edit/:id"} component={EditParts} />
+            <Route exact path={"/sales"} component={Sales}/>
           </PrivateRoute>
         </Switch>
       </BrowserRouter>

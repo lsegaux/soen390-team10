@@ -3,6 +3,6 @@ defmodule ErpWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert "Welcome to Phoenix!" == "Welcome to Phoenix!"
   end
 end
