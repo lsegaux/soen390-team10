@@ -10,6 +10,7 @@ defmodule Erp.Production.MaterialsExpense do
   schema "materialsexpenses" do
     field :amount, :float
     field :processed, :boolean
+    field :company, :string
 
     timestamps()
   end
@@ -21,9 +22,9 @@ defmodule Erp.Production.MaterialsExpense do
     |> validate_required([ :amount, :processed])
   end
 
-  def create_expense(amount) do
+  def create_expense(amount, company_name) do
     float = Float.parse(amount) |> elem(0)
-    Repo.insert %MaterialsExpense{amount: float, processed: false}
+    Repo.insert %MaterialsExpense{amount: float, processed: false, company: company_name}
   end
 
   def get_materialsexpense!(id), do: Repo.get!(MaterialsExpense, id)

@@ -3,6 +3,7 @@ defmodule Erp.Chron do
 
   import Ecto.Query
   import Erp.Email
+  import Erp.Production.MaterialsExpense
   alias Erp.Repo
   alias Erp.Sales.Order
   alias Erp.Packaging.Package
@@ -57,6 +58,8 @@ defmodule Erp.Chron do
     # add the packages to expenses and email users
     if updated != nil do
       Enum.each(updated, fn(order) -> 
+        {:ok, package} = Repo.all(from(p in Package, where: p.order_id == ^order.id))
+        create_expense(package.weight * 0.5, 'Packaging Boxes Inc.')
         order_shipped_email(order.userEmail, order.id)
       end)
     end

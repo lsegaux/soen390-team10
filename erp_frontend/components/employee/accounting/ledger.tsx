@@ -111,7 +111,7 @@ export default function BasicTable() {
           {vendorData.map((row) => (
             <TableRow key={row.amount}>
               <TableCell component="th" scope="row">
-              Wilson Materials Company Limited
+              {row.company}
               </TableCell>
               <TableCell>{row.amount}</TableCell>
             </TableRow>

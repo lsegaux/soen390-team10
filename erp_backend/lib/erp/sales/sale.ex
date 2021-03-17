@@ -18,7 +18,6 @@ defmodule Erp.Sale do
 
     # insert order into DB and send email
     new_order = Repo.insert!(order)
-    IO.puts new_order.userEmail
     order_confirmation_email(new_order.userEmail, new_order.id, new_order.bikesAmount, new_order.price, new_order.time)
     {:ok}
   end

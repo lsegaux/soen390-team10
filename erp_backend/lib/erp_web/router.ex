@@ -44,7 +44,7 @@ defmodule ErpWeb.Router do
     get "/production/material/plant_id/:id", MaterialController, :get_materials_by_plant_id
     post "/production/material/update/material_id/:id/quantity/:quantity", MaterialController, :update_quantity
     get "/production/expenses", MaterialsExpenseController, :show_all_materialsexpenses
-    post "/production/expense/create/amount/:amount", MaterialsExpenseController, :create
+    post "/production/expense/create/amount/:amount/:company", MaterialsExpenseController, :create
     post "/production/expense/process/:id", MaterialsExpenseController, :process_expense
 
     get "/accounting/ledger", OrderController, :show_all_orders

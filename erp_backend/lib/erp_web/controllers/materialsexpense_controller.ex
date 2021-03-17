@@ -30,8 +30,8 @@ defmodule ErpWeb.MaterialsExpenseController do
     end
   end
 
-  def create(conn, %{"amount" => amount}) do
-    with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.create_expense(amount) do
+  def create(conn, %{"amount" => amount, "company" => company}) do
+    with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.create_expense(amount, company) do
       render(conn, "materialsexpense.json", materialsexpense: materialsexpense)
     end
   end
