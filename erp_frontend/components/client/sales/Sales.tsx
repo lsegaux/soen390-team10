@@ -454,8 +454,15 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
-                                                id="name"
                                                 label="Name of cardholder"
+                                                type="string"
+                                                fullWidth
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="Email of cardholder"
                                                 type="string"
                                                 fullWidth
                                                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}
