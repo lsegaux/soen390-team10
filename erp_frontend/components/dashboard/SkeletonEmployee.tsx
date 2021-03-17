@@ -20,25 +20,31 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MainListItems from "./listItems";
+import MainListItems from "./listItemsEmployee";
 
-import {Auth} from "../../../Auth"
+import {Auth} from "../../Auth"
 import Dashboard from "./Dashboard";
-import Vendor from "../../vendor/Vendor";
-import Accounting from "../accounting/accountingdash";
-import QualityManagement from "../../qualitymanagement/quality_management"
+import Vendor from "../vendor/Vendor";
+import Accounting from "../employee/accounting/accountingdash";
+import QualityManagement from "../qualitymanagement/quality_management"
+
 
 function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://localhost:4000/">
-        Adrenaline
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+  <>
+  <div>    
+    <p align = "center">
+      <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
+    </p>
+  </div>
+  <Typography variant="body2" color="textSecondary" align="center">
+    {"Copyright © "}
+    <Link color="inherit" href="https://localhost:4000/">
+      Adrenaline
+    </Link>{" "}
+    {new Date().getFullYear()}
+    {"."}
+  </Typography>
+  </>
 }
 
 const drawerWidth = 240;
@@ -128,10 +134,11 @@ const useStyles = makeStyles((theme) => ({
   1          -> Vendor
   2          -> Accounting
   3          -> Quality Management
+  4          -> Inventory Management
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>];
+const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <InventoryManagement key={4}/>];
 
-export default function Skeleton() {
+export default function SkeletonEmployee() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(3);
@@ -172,7 +179,7 @@ export default function Skeleton() {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            Dashboard - Employee
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

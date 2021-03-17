@@ -3,12 +3,11 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import HomePage from "./components/homepage";
 import Signup from "./components/signup";
-import EmployeeDashboard from "./components/employee/dashboard/Skeleton";
+import EmployeeDashboard from "./components/dashboard/SkeletonEmployee";
+import ClientDashboard from "./components/dashboard/SkeletonClient"
 import MaterialManager from "./components/employee/materialmanagement/materialmanager";
 import CreateParts from "./components/employee/materialmanagement/createpart";
 import EditParts from "./components/employee/materialmanagement/editpart";
-import ClientDashboard from "./components/client/dashboard/dashboard.component";
-import AdminView from "./components/adminfolder/adminview";
 import Accounting from "./components/employee/accounting/accountingdash"
 import { Auth } from "./Auth";
 import Inventory from "./components/production/inventory";
@@ -45,9 +44,8 @@ export default () => {
           <PrivateRoute path="/">
             <Route exact path="/inventory" component={Inventory} />
             <Route exact path="/" component={HomePage} />
-            <Route exact path={"/adminview"} component={AdminView} />
-            <Route exact path={"/dashboard"} component={EmployeeDashboard} />
-            <Route exact path={"/client"} component={ClientDashboard} />
+            <Route exact path={"/employee"} component={EmployeeDashboard} />
+            <Route exact path = {"/client"} component = {ClientDashboard}/>
             <Route exact path={"/materialmanager"} component={MaterialManager}/>
             <Route exact path={"/materialmanager/create"} component={CreateParts}/>
             <Route exact path={"/accounting"} component={Accounting}/>
