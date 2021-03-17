@@ -33,10 +33,6 @@ defmodule Erp.Chron do
   # DB updating methods
 
   defp update_database() do
-    # TEST
-    order_confirmation_email("nicolasmacbeth@gmail.com", 1, 222, 2223333, "11:45")
-    # TEST
-
     # handle order created -> packaged (0 -> 1)
     update_created_orders()
 
