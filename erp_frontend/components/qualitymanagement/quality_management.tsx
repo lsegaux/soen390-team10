@@ -3,7 +3,7 @@
  */
 
 import React, {useState ,useEffect} from "react";
-import { makeStyles, fade } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -57,20 +57,26 @@ const requestStatusOption = ["Decline", "Accept"];
 
 
 export default function QualityManagement() {
+  //Styling
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  //Anchor for all dropdown menus
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElStatus, setAnchorElStatus] = useState<null | HTMLElement>(null);
   const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
-  const [rowSelectId,setRowSelectId] = useState(0);
-
-  const [clientQMData, setClientQMData] = useState([]);
-  const [vendorQMData, setVendorQMData] = useState([]);
-
   const [listClientBool, setListClientBool] = useState(true);
 
+  //This variable keeps track of which table row was clicked on
+  const [rowSelectId,setRowSelectId] = useState(0);
+  
+  //Defect Data
+  const [clientQMData, setClientQMData] = useState([]);
+  const [vendorQMData, setVendorQMData] = useState([]);
+  
+  //Modal variable for hiding and showing
   const [openDefectModal, setOpenDefectModal] = useState(false);
 
+  //Orders data used to know if the defect id exists during submission
   const [clientOrders, setClientOrders] = useState(new Array());
   const [vendorOrders, setVendorOrders] = useState(new Array());
 
@@ -142,15 +148,19 @@ export default function QualityManagement() {
     return ()=>{isMounted = false}
   }, []);
     
+  //Defect Menu tracking
   function handleListSelect (key){
     if (key === 0) setListClientBool(true);
 
     if (key === 1) setListClientBool(false);
   }
 
+  //Update the status (only for admins)
   function handleStatusSelect(option){
     
     if (listClientBool){
+
+      //Client
         let index = clientQMData[rowSelectId]["claim_id"];
 
         axios({
@@ -168,7 +178,7 @@ export default function QualityManagement() {
               console.error(err);
               alert("Status was not updated due to some error.");
           });
-    }else{
+    }else{ //Vendors
 
         let index = vendorQMData[rowSelectId]["claim_id"];
 
@@ -191,12 +201,12 @@ export default function QualityManagement() {
     
     handleClose();
   }
-
+  //Update the request status (only for admins)
   function handleRequestSelect(option){
 
     if (listClientBool){
         let index = clientQMData[rowSelectId]["claim_id"];
-
+      //Client
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
@@ -212,7 +222,7 @@ export default function QualityManagement() {
               console.error(err);
               alert("Request status was not updated due to some error.");
           });
-    }else{
+    }else{ //Vendors
         
         let index = vendorQMData[rowSelectId]["claim_id"];
 
@@ -236,33 +246,39 @@ export default function QualityManagement() {
     handleClose();
   }
 
+  //Open defect menu
   function handleClick (event: React.MouseEvent<HTMLButtonElement>){
     setAnchorEl(event.currentTarget);
   };
 
-  
+  //Open Status menu (only for admins)
   function handleClickStatus (event: React.MouseEvent<HTMLButtonElement>, key){
     setAnchorElStatus(event.currentTarget);
     setRowSelectId(key)
   };
 
+  //Open Request Status menu (only for admins)
   function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>, key){
     setAnchorElRequest(event.currentTarget);
     setRowSelectId(key)
   };
 
+  //Closes defect menu
   function handleClose (){
     setAnchorEl(null);
   }
 
+  //Closes Status menu (only for admins)
   function handleCloseStatus (){
     setAnchorElStatus(null);
   }
 
+  //Closes Request status menu (only for admins)
   function handleCloseRequest (){
     setAnchorElRequest(null);
   }
   
+  //Toggles Submit form modal
   function toggleReportDefect(){
     setOpenDefectModal(!openDefectModal);
   }
@@ -274,6 +290,9 @@ export default function QualityManagement() {
         <TableBody>
           <TableRow>
             <TableCell align = "center">
+              {/* 
+              Defect List Menu
+              */}
             <Button className = {classes.button} onClick={handleClick}>{listClientBool?defectListItems[0]:defectListItems[1]}</Button>
               <Menu id = "defectList" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
               {defectListItems.map((item, key)=>{
@@ -298,6 +317,7 @@ export default function QualityManagement() {
           </TableHead>
           <TableBody>
             {
+              //Print table based on user role, and selected list
               (listClientBool?clientQMData:vendorQMData).map((row, key)=>{
                 if (localStorage.getItem('role') !== "Client" || localStorage.getItem('email') == row["name"])
                 return ( 
@@ -308,6 +328,7 @@ export default function QualityManagement() {
                   <TableCell align = "center">{row["description"]}</TableCell>
                   <TableCell align = "center">{row["comments"]}</TableCell>
                   <TableCell align = "center"> 
+                  {/*Admins can change the status and request status*/}
                     {(localStorage.getItem('role')==="Administrator")?
                     <>
                     <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
@@ -324,6 +345,7 @@ export default function QualityManagement() {
                   </TableCell>
                   <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
                   <TableCell align = "center">
+                    {/*Admins can change the status and request status*/}
                   {(localStorage.getItem('role')==="Administrator")?
                     <>
                   <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
@@ -349,6 +371,7 @@ export default function QualityManagement() {
             </TableFooter>
         </Table>
       </TableContainer>
+      {/*Submit report modal */}
       <DefectForm open={openDefectModal} closePopup={toggleReportDefect} vendorOrders = {vendorOrders} clientOrders = {clientOrders}/>
       </form>
     </div>

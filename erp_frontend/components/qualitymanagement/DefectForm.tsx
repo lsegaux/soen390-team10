@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
 import axios from 'axios';
 
@@ -69,17 +69,21 @@ const defectTypes = ["Damaged product", "Incomplete order shipped", "Wrong produ
 const requestActions = ["Replace product", "Refund", "See comments"];
 
 export default function DefectForm({open, closePopup, clientOrders, vendorOrders}){
+    //Styling
     const classes = useStyles(useTheme());
+
+    //Anchor for all dropdown menus
     const [anchorElDefect, setAnchorElDefect] = useState<null | HTMLElement>(null);
     const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
 
+    //Defect form information
     const [formOrderID, setFormOrderID] = useState(-1);
     const [formDefectType, setFormDefectType] = useState("");
     const [formRequest, setFormRequest] = useState("");
     const [formDescription, setFormDescription] = useState("");
     const [formComment, setFormComment] = useState("");
 
-
+    //Handle report submission for both client and non-clients
     function handleSubmit(event){
       event.preventDefault();
         if (localStorage.getItem("role") === "Client"){
@@ -89,6 +93,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         }     
     }
 
+    //Add client defect to backend
     function addClientDefect(){
         axios({
             method: 'post',
@@ -119,6 +124,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
           });
     }
 
+    //Add vendor defect to backend
     function addVendorDefect(){
         axios({
             method: 'post',
@@ -149,34 +155,35 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
           });
     }
 
+    //Set orderID
     function handleOrderID (e){
         setFormOrderID(e.target.value);
     }
-
+    //Open dropdown menu for defect type
     function handleClickDefect (event: React.MouseEvent<HTMLButtonElement>){
         setAnchorElDefect(event.currentTarget);
     };
-
+    //Open dropdown menu for request type
     function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>){
         setAnchorElRequest(event.currentTarget);
     };
-
+    //Set defect type
     function handleDefectType(item){
         setFormDefectType(item);
     }
-
+    //Set request type
     function handleRequestType(item){
         setFormRequest(item);
     }
-
+    //close Defect type dropdown menu
     function handleCloseDefect (){
         setAnchorElDefect(null);
     }
-
+    //close request type dropdown menu
     function handleCloseRequest (){
         setAnchorElRequest(null);
     }
-
+    //Validates the form
     function checkFormValid (){
         if ((vendorOrders === null || clientOrders === null)) return false;
 
@@ -187,10 +194,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         //Check the order id exists
         //Either check for client or vendors table, not both, depending on user type
         let orderIDExists = false;
-        //console.log(localStorage.getItem('userRole'));
-
-        let tempData = vendorOrders;
-
+        let tempData = (localStorage.getItem('role')==="Client")?clientOrders:vendorOrders;
         tempData.map(element => {
             if (formOrderID === element["id"].toString()){
                 orderIDExists = true;
@@ -201,6 +205,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         return requestSet && defectSet && orderIDExists;
     }
 
+    //clear defect form
     function clearDefectVariables(){
         setFormComment("");
         setFormDescription("");
