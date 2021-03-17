@@ -27,9 +27,10 @@ import Dashboard from "./Dashboard";
 import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
 import QualityManagement from "../qualitymanagement/quality_management"
-
+import Inventory from "../production/inventory"
 
 function Copyright() {
+  return (
   <>
   <div>    
     <p align = "center">
@@ -45,6 +46,7 @@ function Copyright() {
     {"."}
   </Typography>
   </>
+  );
 }
 
 const drawerWidth = 240;
@@ -136,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   3          -> Quality Management
   4          -> Inventory Management
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <InventoryManagement key={4}/>];
+const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Inventory key={4}/>];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();

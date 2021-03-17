@@ -36,6 +36,12 @@ export default function MainListItems({setCurrentPage}){
    </ListItemIcon>
    <ListItemText primary="Quality Management" />
  </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(4)}>
+   <ListItemIcon>
+     <AssignmentTurnedInIcon />
+   </ListItemIcon>
+   <ListItemText primary="Inventory" />
+ </ListItem>
 </div>
 
 }
