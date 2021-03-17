@@ -52,7 +52,6 @@ defmodule ErpWeb.BoxController do
     newMedium = medium + mediumOrder
     newLarge = large + largeOrder
     newXLarge = xlarge + xlargeOrder
-    #TO-DO: Send price of boxes to accounting
     with {:ok, %Box{} = box} <- Box.increase_quantity(box, id + 1,newSmall, newMedium, newLarge, newXLarge) do
       render(conn, "boxes.json", box: box)
     end
