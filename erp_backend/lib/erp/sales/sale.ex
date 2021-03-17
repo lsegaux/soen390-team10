@@ -1,9 +1,7 @@
 defmodule Erp.Sale do
-  @moduledoc """
-  The Sale context.
-  """
+    @moduledoc false
 
-  alias Erp.Repo
+    alias Erp.Repo
 
     def add_sale() do
     end

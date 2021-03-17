@@ -45,6 +45,7 @@ defmodule Erp.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       #Auth deps
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},

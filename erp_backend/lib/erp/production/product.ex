@@ -1,10 +1,15 @@
 defmodule Erp.Production.Product do
+  @moduledoc """
+  The Product context.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
+  #Each product has a list of attributes.
   @derive {Jason.Encoder, only: [:name, :product_id, :quantity, :start_time, :plant_id]}
   @primary_key {:product_id, :integer, []}
   @derive {Phoenix.Param, key: :product_id}
+  @doc false
   schema "products" do
     field :name, :string
     field :quantity, :integer

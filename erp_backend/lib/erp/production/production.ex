@@ -9,6 +9,12 @@ defmodule Erp.Production do
   alias Erp.Production.Material
   alias Erp.Production.Product
 
+    @doc """
+  Returns the production status for the plant.
+  ## Examples
+      iex> production_status()
+      [%Production{}, ...]
+  """
   def production_status() do
     with {:ok, plants} <- query_plants(),
     {:ok, parts} <- query_parts(),
@@ -21,10 +27,22 @@ defmodule Erp.Production do
     end
   end
 
+  @doc """
+  Returns the list of plants.
+  ## Examples
+      iex> list_plants()
+      [%Plant{}, ...]
+  """
   def list_plants() do
     Repo.all(Plant)
   end
 
+  @doc """
+  Queries the list of plants.
+  ## Examples
+      iex> list_plants()
+      [%Plant{}, ...]
+  """
   defp query_plants() do
     plants = list_plants()
     if length(plants) > 0 do
@@ -34,10 +52,22 @@ defmodule Erp.Production do
     end
   end
 
+  @doc """
+  Returns the list of parts.
+  ## Examples
+      iex> list_plarts()
+      [%Part{}, ...]
+  """
   def list_parts() do
     Repo.all(Part)
   end
 
+ @doc """
+  Queries the list of parts.
+  ## Examples
+      iex> query_parts()
+      [%Part{}, ...]
+  """
   defp query_parts() do
     parts = list_parts()
     if length(parts) > 0 do
@@ -47,10 +77,22 @@ defmodule Erp.Production do
     end
   end
 
+ @doc """
+  Returns the list of materials.
+  ## Examples
+      iex> list_materials()
+      [%Material{}, ...]
+  """
   def list_materials() do
     Repo.all(Material)
   end
 
+ @doc """
+  Queries the list of materials.
+  ## Examples
+      iex> query_materials()
+      [%Material{}, ...]
+  """
   defp query_materials() do
     materials = list_materials()
     if length(materials) > 0 do
@@ -60,10 +102,22 @@ defmodule Erp.Production do
     end
   end
 
+ @doc """
+  Returns the list of bikes.
+  ## Examples
+      iex> list_bikes()
+      [%Product{}, ...]
+  """
   def list_bikes() do
     Repo.all(Product)
   end
 
+ @doc """
+  Queries the list of bikes.
+  ## Examples
+      iex> query_bikes()
+      [%Product{}, ...]
+  """
   defp query_bikes() do
     bikes = list_bikes()
     if length(bikes) > 0 do
@@ -73,6 +127,14 @@ defmodule Erp.Production do
     end
   end
 
+  @doc """
+  Creates plants
+  ## Examples
+      iex> add_plants(%{field: value})
+      {:ok, %Plant{}}
+      iex> add_plants(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
   defp add_plants(plants) do
     plants |> Enum.reduce(%{}, fn(plant, map) -> 
       Map.put(map, plant.plant_id, %{
@@ -85,6 +147,14 @@ defmodule Erp.Production do
     end)
   end
 
+  @doc """
+  Create parts
+  ## Examples
+      iex> add_parts(%{field: value})
+      {:ok, %Part{}}
+      iex> add_parts(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
   defp add_parts(res, partsList) do
     Enum.reduce(partsList, res, fn(x, map) -> 
       xplant = x.plant_id
@@ -93,6 +163,14 @@ defmodule Erp.Production do
     end)
   end
 
+  @doc """
+  Create materials
+  ## Examples
+      iex> add_materials(%{field: value})
+      {:ok, %Material{}}
+      iex> add_materials(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
   defp add_materials(res, materialsList) do
     Enum.reduce(materialsList, res, fn(y, map) -> 
       yplant = y.plant_id
@@ -101,6 +179,14 @@ defmodule Erp.Production do
     end)
   end
 
+  @doc """
+  Create materials
+  ## Examples
+      iex> add_bikes(%{field: value})
+      {:ok, %Bike{}}
+      iex> add_bikes(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
   defp add_bikes(res, bikesList) do
     Enum.reduce(bikesList, res, fn(z, map) -> 
       if NaiveDateTime.compare(z.start_time, NaiveDateTime.add(NaiveDateTime.utc_now(), -3600, :second)) == :gt do
@@ -115,6 +201,7 @@ defmodule Erp.Production do
     end)
   end
 
+  @doc false
   defp format_response(plantsList, partsList, materialsList, bikesList) do
     response = add_plants(plantsList)
     response = add_parts(response, partsList)
