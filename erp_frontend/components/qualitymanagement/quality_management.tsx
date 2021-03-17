@@ -3,7 +3,7 @@
  */
 
 import React, {useState ,useEffect} from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 import axios from "axios";
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "1px 2px 1px 2px rgb(0,0,0,0.8)"
 
   },
-  orderButton:{
-    width: "40%",
-    borderColor: "rgb(0,0,0,0.8)",
-  },
   orderTextField:{
     width: "30%",
     marginLeft: "5px",
@@ -51,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Action Request", "Request Status"];
 
 //Defect Lists
-const defectListItems = ["Client Defect List", "Vendor Defects List"];
+const defectListItems = (localStorage.getItem('role')=== "Client")?["My Defects"]:["Client Defect List", "Vendor Defects List"];
 
 //Status options
 const statusOption = ["Pending Review", "In progress", "Resolved"];
@@ -153,40 +149,90 @@ export default function QualityManagement() {
   }
 
   function handleStatusSelect(option){
-    axios({
-      method: 'post',
-      url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${rowSelectId}`,
-      headers: { "Content-Type": "application/json" },
-      data:{
-          client_claim:{
-              status:option
-          }
-      }
-    }).then((res)=>{
-      if (res.status == 200) window.location.href = '/dashboard'
-    }).catch(err => {
-        console.error(err);
-        alert("Status was not updated due to some error.");
-    });
+    
+    if (listClientBool){
+        let index = clientQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                client_claim:{
+                    status:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/dashboard'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }else{
+
+        let index = vendorQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                vendor_claim:{
+                    status:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/dashboard'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }
+    
     handleClose();
   }
 
   function handleRequestSelect(option){
-    axios({
-      method: 'post',
-      url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${rowSelectId}`,
-      headers: { "Content-Type": "application/json" },
-      data:{
-          client_claim:{
-              requeststatus:option
-          }
-      }
-    }).then((res)=>{
-      if (res.status == 200) window.location.href = '/dashboard'
-    }).catch(err => {
-        console.error(err);
-        alert("Request status was not updated due to some error.");
-    });
+
+    if (listClientBool){
+        let index = clientQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                client_claim:{
+                    requeststatus:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/dashboard'
+          }).catch(err => {
+              console.error(err);
+              alert("Request status was not updated due to some error.");
+          });
+    }else{
+        
+        let index = vendorQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json" },
+            data:{
+                vendor_claim:{
+                    requeststatus:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/dashboard'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }
+    
     handleClose();
   }
 
@@ -253,6 +299,7 @@ export default function QualityManagement() {
           <TableBody>
             {
               (listClientBool?clientQMData:vendorQMData).map((row, key)=>{
+                if (localStorage.getItem('role') !== "Client" || localStorage.getItem('email') == row["name"])
                 return ( 
                 <TableRow key ={key}>
                   <TableCell align = "center">{row["name"]}</TableCell>
@@ -261,21 +308,32 @@ export default function QualityManagement() {
                   <TableCell align = "center">{row["description"]}</TableCell>
                   <TableCell align = "center">{row["comments"]}</TableCell>
                   <TableCell align = "center"> 
+                    {(localStorage.getItem('role')==="Administrator")?
+                    <>
                     <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
                       <Menu anchorEl = {anchorElStatus} keepMounted open = {Boolean(anchorElStatus)} onClose={handleCloseStatus}>
                       {statusOption.map((item, key2)=>{
                         return <MenuItem key={key2} onClick = {()=>{handleStatusSelect(item);}}>{item}</MenuItem>
                       })}
-                      </Menu>                 
+                      </Menu> 
+                    </>
+                    :
+                    <>{row["status"]}</>
+                    }
+                     
                   </TableCell>
                   <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
                   <TableCell align = "center">
+                  {(localStorage.getItem('role')==="Administrator")?
+                    <>
                   <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
                       <Menu anchorEl = {anchorElRequest} keepMounted open = {Boolean(anchorElRequest)} onClose={handleCloseRequest}>
                       {requestStatusOption.map((item, key2)=>{
                         return <MenuItem key={key2} onClick = {()=>{handleRequestSelect(item);}}>{item}</MenuItem>
                       })}
-                      </Menu> 
+                      </Menu>
+                      </>:
+                      <>{row["requeststatus"]}</>} 
                     </TableCell>
                 </TableRow>)
               })
@@ -283,9 +341,9 @@ export default function QualityManagement() {
             </TableBody> 
             <TableFooter>
               <TableRow>
-              <TableCell colSpan={4}/>
-                <TableCell align = "center">
-                  <Button className={classes.orderButton} onClick={()=>toggleReportDefect()}>Report a defect</Button>
+              <TableCell colSpan={7}/>
+                <TableCell align = "right">
+                  <Button className={classes.button} onClick={()=>toggleReportDefect()}>Report a defect</Button>
                 </TableCell>
               </TableRow>
             </TableFooter>

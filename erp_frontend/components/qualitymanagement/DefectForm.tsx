@@ -82,20 +82,11 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
 
     function handleSubmit(event){
       event.preventDefault();
-
-      /**
-       * Add items to our internal stock in the database
-       * 
-       */
-        //Uncomment when user roles can be fetched from the database
-        //if (localStorage.getItem("role") === 'Client'){
-            //addClientDefect();
-
-        //}else{
+        if (localStorage.getItem("role") === "Client"){
+            addClientDefect();
+        }else{
             addVendorDefect();
-        //}
-       
-       
+        }     
     }
 
     function addClientDefect(){
@@ -106,7 +97,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             data:{
                 client_claim:{
                     claim_id:1, //The number doesn't matter
-                    name:"MounceTest", //localStorage.getItem("email")
+                    name:localStorage.getItem("email"),
                     comments: formComment,
                     defecttype: formDefectType,
                     description: formDescription,
