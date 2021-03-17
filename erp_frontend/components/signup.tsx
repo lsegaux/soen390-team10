@@ -109,7 +109,6 @@ export default function Signup(this: any) {
                       width='100%'
                     >
                       <option value="Client">Client</option>
-                      <option value="Administrator">Administrator</option>
                       <option value="Employee">Employee</option>
                     </Select>
                   </Pane>
