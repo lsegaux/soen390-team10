@@ -88,7 +88,7 @@ export default function QualityManagement() {
       axios({
           method: 'get',
           url: `${url}/api/v1/quality_management/vendor_claim`,
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
       }).then(res => {
           if (isMounted && res.status === 200) {
               setVendorQMData(res.data.data);
@@ -101,7 +101,7 @@ export default function QualityManagement() {
        axios({
         method: 'get',
         url: `${url}/api/v1/quality_management/client_claim`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
     }).then(res => {
         if (isMounted && res.status === 200) {
             setClientQMData(res.data.data);
@@ -114,7 +114,7 @@ export default function QualityManagement() {
       axios({
         method: 'get',
         url: `${url}/api/v1/accounting/ledger`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
      }).then(res => {
         if (res.status === 200 && isMounted) {
           var rows = Array();
@@ -133,7 +133,7 @@ export default function QualityManagement() {
       axios({
         method: 'get',
         url: `${url}/api/v1/production/expenses`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
      }).then(res => {
         if (res.status === 200 && isMounted) {
           var rows = Array();
@@ -166,7 +166,7 @@ export default function QualityManagement() {
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 client_claim:{
                     status:option
@@ -185,7 +185,7 @@ export default function QualityManagement() {
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 vendor_claim:{
                     status:option
@@ -210,7 +210,7 @@ export default function QualityManagement() {
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 client_claim:{
                     requeststatus:option
@@ -229,7 +229,7 @@ export default function QualityManagement() {
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 vendor_claim:{
                     requeststatus:option

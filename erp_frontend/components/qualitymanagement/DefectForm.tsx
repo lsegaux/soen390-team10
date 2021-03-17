@@ -98,7 +98,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/client_claim/newClaim`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 client_claim:{
                     claim_id:1, //The number doesn't matter
@@ -129,7 +129,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         axios({
             method: 'post',
             url: `${url}/api/v1/quality_management/vendor_claim/newClaim`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 vendor_claim:{
                     claim_id:0, //The number doesn't matter

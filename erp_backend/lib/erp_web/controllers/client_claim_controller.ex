@@ -25,7 +25,6 @@ defmodule ErpWeb.ClientClaimController do
     end
   end
 
-
   def show(conn, %{"id" => id}) do
     client_claim = QualityManagement.get_client_claim!(id)
     render(conn, "show.json", client_claim: client_claim)
