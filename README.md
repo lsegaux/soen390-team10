@@ -1,9 +1,11 @@
 # <p align="center">SOEN Team 10 Minicap Project.</p>
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG">
 </p>
 
 ## Table of Contents
+
 - [Docker Setup](#docker-setup)
 - [Quick Start](#quick-start)
 - [Coding Conventions](#code-conventions)
@@ -30,30 +32,36 @@
 - Install dependencies with `mix deps.get`
 - If your PostgreSQL username, password and database are all set to default values (they're all `"postgres"`), you can skip the following step. If you've made changes to those default values (different user, db name or password, then you need to follow the next step)
 - Override the config values by adding the following code to `dev.secret.exs`.
+
 ```elixir
 config :erp, Erp.Repo,
   username: "custom_username",
   password: "custom_password",
   database: "custom_db_name"
 ```
-Obviously, change the strings to the proper values, and remove the ones you don't need to override. 
+
+Obviously, change the strings to the proper values, and remove the ones you don't need to override.
 
 Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.exs` to ignore future changes to that file.
+
 - Create and migrate your database with `mix ecto.setup`
 - Start the Phoenix endpoint with `mix phx.server`
 - Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Code Conventions
-* [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
-* [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
-* [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
-* Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors or warnings.
+
+- [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html)
+- [Syntax Reference](https://hexdocs.pm/elixir/syntax-reference.html)
+- [Writing Documentation](https://hexdocs.pm/elixir/master/writing-documentation.html)
+- Refactoring: Redundant code, un-efficient code, code deviating from above-mentioned conventions, code that throws errors or warnings.
 
 ## Plugins
-* [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
-* [Material UI](https://material-ui.com/)
+
+- [Bamboo](https://hexdocs.pm/bamboo/Bamboo.Email.html)
+- [Material UI](https://material-ui.com/)
 
 ## Documents
+
 - [Archived Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
 - [Archived Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
 - [Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
@@ -64,16 +72,17 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
   - [Risk Management and Assessment](https://drive.google.com/file/d/1g39MxZvHYq4Gg1h9cxwC3Qpqdhs_33co/view?usp=sharing)
 
 ## Design Patterns
+
 - [Model-View-Controller (Structural)](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/lib/erp_web)
 - [The Pipeline (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/email.ex)
   - [Explanation](https://mattpruitt.com/articles/the-pipeline)
 - [State (Behavioral)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/accounts.ex)
-  - [Explanation](https://refactoring.guru/design-patterns/state)   
+  - [Explanation](https://refactoring.guru/design-patterns/state)
 - [Data Mapper (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/user.ex)
   - [Explanation](https://github.com/elixir-ecto/ecto)
 
 ## Story Points Breakdown
-* Low Priority = 3 story points
-* Medium Priority = 5 story points
-* High Priority = 8 story points
 
+- Low Priority = 3 story points
+- Medium Priority = 5 story points
+- High Priority = 8 story points
