@@ -1,4 +1,8 @@
-import React from "react";
+/**
+ * Template credit: https://material-ui.com/getting-started/templates/
+ */
+
+import React, {useState} from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,20 +16,25 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-//import { mainListItems, secondaryListItems } from "../../dashboard/listItemsEmployee";
-import AccountsPayable from './accountspayable';
-import AccountsReceivable from './accountsreceivable';
-import Ledger from './ledger';
-import {Auth} from "../../../Auth"
+import MainListItems from "./listItemsClient";
+
+import {Auth} from "../../Auth"
+import Dashboard from "./Dashboard";
+import QualityManagement from "../qualitymanagement/quality_management"
+import Sales from "../client/sales/Sales"
 
 function Copyright() {
   return (
+    <>
+    <div>    
+      <p align = "center">
+        <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
+      </p>
+    </div>
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://localhost:4000/">
@@ -34,6 +43,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
+    </>
   );
 }
 
@@ -118,45 +128,94 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+/*
+  Page index -> Page name
+  0          -> Dashboard
+  1          -> Sales
+  2          -> QualityManagement
+  */
+const pages = [<Dashboard key={0}/>,<Sales key={1}/>, <QualityManagement key={2}/>];
+
+export default function SkeletonClient() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [currentPage, setCurrentPage] = useState(3);
+
+  
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
+            Dashboard - Client
+          </Typography>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit" onClick={() => {Auth.logout()}}>
+            <Typography>Logout</Typography>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <MainListItems setCurrentPage={setCurrentPage}/>
+        </List>
+        
+      </Drawer>
+      
       <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Accounts Payable */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <AccountsPayable/>
-              </Paper>
-            </Grid>
-            {/* Accounts Receivable */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <AccountsReceivable/>
-              </Paper>
-            </Grid>
-            {/* Ledger */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Ledger/>
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+            {pages.map((item,i)=>{
+              if (currentPage == i) return item
+            })}
         </Container>
+        <Box pt='4'><Copyright/></Box>
       </main>
     </div>
   );
