@@ -13,7 +13,6 @@
 - [Documents](#documents)
 - [Design Patterns](#design-patterns)
 - [Story Points Breakdown](#story-points-breakdown)
-- [Requirements](#requirements)
 
 ## Docker Setup
 
