@@ -53,7 +53,7 @@ export default function MainListItems({ setCurrentPage }) {
       <ListItemIcon>
         <LocalShippingIcon />
       </ListItemIcon>
-      <ListItemText primary="Shipping and Transportation" />
+      <ListItemText primary="Shipping" />
     </ListItem>
   </div>
 

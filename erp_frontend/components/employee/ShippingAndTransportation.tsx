@@ -9,6 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,23 +41,27 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function ShippingAndTransportation() {
-    const emptyOrders = [{
-        id: '',
-        name: '',
-        price: 0,
-        nbOfBikes: 0
-    }]
-    const [orderArr, setOrderArr] = useState(emptyOrders);
 
+    const [orderArr, setOrderArr] = useState(Array());
+    const url = 'http://localhost:4000';
 
     useEffect(() => {
-        console.log("here")
-        setOrderArr([{
-            id: '5af',
-            name: 'hey',
-            price: 500,
-            nbOfBikes: 10
-        }])
+        axios({
+            method: 'get',
+            url: `${url}/api/v1/accounting/ledger`,
+            headers: { "Content-Type": "application/json" },
+        }).then(res => {
+            if (res.status === 200) {
+                console.log(res.data.data)
+                var rows = Array();
+                for (var i = 0; i < res.data.data.length; i++) {
+                    rows.push(res.data.data[i]);
+                }
+                setOrderArr(rows);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
     }, []);
 
     const classes = useStyles();
@@ -83,13 +88,50 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell>{order.id}</TableCell>
-                                                    <TableCell>{order.name}</TableCell>
-                                                    <TableCell>{order.price}$</TableCell>
-                                                    <TableCell>{order.nbOfBikes}</TableCell>
-                                                </TableRow>)
+                                            if (order.status = "received") {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell>{order.id}</TableCell>
+                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.price}$</TableCell>
+                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                    </TableRow>)
+                                            }
+                                        })}
+                                    </TableBody>
+                                    <TableBody>
+                                    </TableBody>
+                                </Table>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paperShipping}>
+                                <Title>
+                                    Packaged
+                                <br></br>
+                                </Title>
+                                <Table size="small">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Order ID</TableCell>
+                                            <TableCell>Client Name</TableCell>
+                                            <TableCell>Price</TableCell>
+                                            <TableCell>Number of Bikes</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {orderArr.map((order, index) => {
+                                            if (order.status = "packaged") {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell>{order.id}</TableCell>
+                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.price}$</TableCell>
+                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                    </TableRow>)
+                                            }
                                         })}
                                     </TableBody>
                                     <TableBody>
@@ -116,13 +158,15 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell>{order.id}</TableCell>
-                                                    <TableCell>{order.name}</TableCell>
-                                                    <TableCell>{order.price}$</TableCell>
-                                                    <TableCell>{order.nbOfBikes}</TableCell>
-                                                </TableRow>)
+                                            if (order.status = "inTransit") {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell>{order.id}</TableCell>
+                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.price}$</TableCell>
+                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                    </TableRow>)
+                                            }
                                         })}
                                     </TableBody>
                                     <TableBody>
@@ -150,13 +194,15 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell>{order.id}</TableCell>
-                                                    <TableCell>{order.name}</TableCell>
-                                                    <TableCell>{order.price}$</TableCell>
-                                                    <TableCell>{order.nbOfBikes}</TableCell>
-                                                </TableRow>)
+                                            if (order.status = "delivered") {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell>{order.id}</TableCell>
+                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.price}$</TableCell>
+                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                    </TableRow>)
+                                            }
                                         })}
                                     </TableBody>
                                     <TableBody>
