@@ -16,8 +16,6 @@ defmodule Erp.Sales.Order do
     field :time, :naive_datetime
     field :bikesAmount, :integer
     field :userEmail, :string
-
-    @primary_key {:orderId, :id, autogenerate: true}
     timestamps()
   end
 

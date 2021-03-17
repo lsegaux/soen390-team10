@@ -11,8 +11,8 @@ A module that acts as the controller for managing orders (customer transactions)
   alias Erp.Sales.Order
 
   @doc false
-  def show(conn, %{"id" => orderId}) do
-    order = Erp.Sales.Order.get_order!(orderId)
+  def show(conn, %{"id" => id}) do
+    order = Erp.Sales.Order.get_order!(id)
     render(conn, "show.json", order: order)
   end
 

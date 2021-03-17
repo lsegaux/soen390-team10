@@ -351,42 +351,26 @@ export default function Sales() {
     }
 
     function parseAfter() {
-        // axios({
-        //     method: 'post',
-        //     url: "http://localhost/api/v1/sale",
-        //     headers: { "Content-Type": "application/json" },
-        //     data: {
-        //         price: totalPrice,
-        //         name: cardPerson,
-        //         quantity: bikeQty
-        //     }
-        // }).then(res => {
-        //     if (res.status === 200) {
-        //         console.log("success");
-        //     }
-        // }).catch(err => {
-        //     console.error(err);
-        // });
-
-        for (var i = 0; i < plants.length; i++) {
-            for (var j = 0; j < plants[i]["parts"].length; j++) {
-                for (var key in bikeAssembled) {
-
-                    if (plants[i]["parts"][j]["type"] == key &&
-                        plants[i]["parts"][j]["material"] == bikeAssembled[key]["material"]
-                        && plants[i]["parts"][j]["quantity"] >= bikeQty) {
-
-                        // Info for backend
-                        let plantName = plants[i]["plantName"];
-                        let partName = key;
-                        let material = bikeAssembled[key]["material"];
-                        console.log(plantName, partName, material);
-                    }
+        axios({
+            method: 'post',
+            url: "http://localhost:4000/api/v1/sale",
+            headers: { "Content-Type": "application/json" },
+            data: {
+                "sale": {
+                    price: parseFloat(totalPrice.toFixed(2)),
+                    email: cardPerson,
+                    quantity: bikeQty
                 }
             }
-        }
-
-        alert("Thanks for purchasing bikes!");  
+        }).then(res => {
+            if (res.status === 200) {
+                console.log("success");
+                alert("Thanks for purchasing bikes!");
+                location.reload();
+            }
+        }).catch(err => {
+            console.error(err);
+        });  
     }
 
     function validateBikeAmt() {
@@ -470,8 +454,15 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
-                                                id="name"
                                                 label="Name of cardholder"
+                                                type="string"
+                                                fullWidth
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="email"
+                                                label="Email of cardholder"
                                                 type="string"
                                                 fullWidth
                                                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}
