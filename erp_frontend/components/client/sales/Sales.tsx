@@ -324,6 +324,7 @@ export default function Sales() {
     const [securityCode, setSecurityCode] = useState("");
     const [expiration, setExpiration] = useState("");
     const [cardPerson, setCardPerson] = useState("");
+    const [partsMissing, setPartsMissing] = useState([""]);
 
     const classes = useStyles();
 
@@ -340,7 +341,10 @@ export default function Sales() {
         let qty = bikeParts[index]["types"][value]["quantity"]
         let price = bikeParts[index]["types"][value]["price"];
         if (qty < bikeQty) {
-            alert(`This part is out of stock (only ${qty} left).`);
+            // alert(`This part is out of stock (only ${qty} left).`);
+            let temp : string[] = partsMissing
+            temp.push(partName + ": " + qty)
+            setPartsMissing(temp)
             return;
         }
         setTotalPrice(totalPrice + price);
@@ -351,42 +355,26 @@ export default function Sales() {
     }
 
     function parseAfter() {
-        // axios({
-        //     method: 'post',
-        //     url: "http://localhost/api/v1/sale",
-        //     headers: { "Content-Type": "application/json" },
-        //     data: {
-        //         price: totalPrice,
-        //         name: cardPerson,
-        //         quantity: bikeQty
-        //     }
-        // }).then(res => {
-        //     if (res.status === 200) {
-        //         console.log("success");
-        //     }
-        // }).catch(err => {
-        //     console.error(err);
-        // });
-
-        for (var i = 0; i < plants.length; i++) {
-            for (var j = 0; j < plants[i]["parts"].length; j++) {
-                for (var key in bikeAssembled) {
-
-                    if (plants[i]["parts"][j]["type"] == key &&
-                        plants[i]["parts"][j]["material"] == bikeAssembled[key]["material"]
-                        && plants[i]["parts"][j]["quantity"] >= bikeQty) {
-
-                        // Info for backend
-                        let plantName = plants[i]["plantName"];
-                        let partName = key;
-                        let material = bikeAssembled[key]["material"];
-                        console.log(plantName, partName, material);
-                    }
+        axios({
+            method: 'post',
+            url: "http://localhost:4000/api/v1/sale",
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data: {
+                "sale": {
+                    price: parseFloat(totalPrice.toFixed(2)),
+                    email: cardPerson,
+                    quantity: bikeQty
                 }
             }
-        }
-
-        alert("Thanks for purchasing bikes!");  
+        }).then(res => {
+            if (res.status === 200) {
+                console.log("success");
+                alert("Thanks for purchasing bikes!");
+                location.reload();
+            }
+        }).catch(err => {
+            console.error(err);
+        });  
     }
 
     function validateBikeAmt() {
@@ -425,7 +413,13 @@ export default function Sales() {
                             <Paper className={classes.paperSales}>
                                 <Title>Build a bike</Title>
                                 <br></br>
-                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" onMouseLeave={(e: { target: { value: React.SetStateAction<string>; }; }) => handleBikeQty(e.target.value)} />
+                                {partsMissing.map((item) => {
+                                    <p style={{color: "red"}}>{item}</p>
+                                })}
+                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" 
+                                onMouseLeave={
+                                    (e) => handleBikeQty((e.target as any).value)
+                                } />
                                 <Typography>Please select type of material for each category.</Typography>
                                 <br></br>
                                 <Table size="small">
@@ -441,7 +435,7 @@ export default function Sales() {
                                             return (
                                                 <TableRow key={index}>
                                                     <TableCell>{bikePart.partName}</TableCell>
-                                                    <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bikePart.partName, index)}>
+                                                    <RadioGroup onChange={(e) => buttonChange(e.target.value, bikePart.partName, index)}>
                                                         {bikePart.material.map((material, indexMaterial) => (
                                                             <TableCell key={bikePart.types + material} colSpan={materialLastIndex === indexMaterial ? 40 : 1}>
                                                                 <FormControlLabel value={material}
@@ -470,8 +464,15 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
-                                                id="name"
                                                 label="Name of cardholder"
+                                                type="string"
+                                                fullWidth
+                                            />
+                                            <TextField
+                                                autoFocus
+                                                margin="dense"
+                                                id="email"
+                                                label="Email of cardholder"
                                                 type="string"
                                                 fullWidth
                                                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}

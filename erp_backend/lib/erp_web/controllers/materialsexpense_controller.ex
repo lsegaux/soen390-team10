@@ -2,13 +2,10 @@ defmodule ErpWeb.MaterialsExpenseController do
   use ErpWeb, :controller
   import Ecto.Query, warn: false
 
-  alias Erp.Repo
-
-  alias Erp.Production
   alias Erp.Production.MaterialsExpense
 
   def show(conn, %{"id" => expense_id}) do
-    materialsexpense = Erp.Production.MaterialsExpense.get_materialsexpense!(expense_id)
+    materialsexpense = Erp.Production.MaterialsExpense.get_materialsexpense(expense_id)
     render(conn, "show.json", materialsexpense: materialsexpense)
   end
 
@@ -23,7 +20,7 @@ defmodule ErpWeb.MaterialsExpenseController do
   end
 
   def process_expense(conn, %{"id" => expense_id}) do
-    materialsexpense = MaterialsExpense.get_materialsexpense!(expense_id)
+    materialsexpense = MaterialsExpense.get_materialsexpense(expense_id)
 
     with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.process_expense(materialsexpense, true) do
       render(conn, "show.json", materialsexpense: materialsexpense)

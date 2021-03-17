@@ -139,7 +139,7 @@ export default function Vendor() {
       axios({
         method: 'get',
         url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
       }).then(res => {
           if (isMounted && res.status === 200) {
             setData(res.data.data);
@@ -159,7 +159,7 @@ export default function Vendor() {
         axios({
           method: 'get',
           url: `${url}/api/v1/production/plants`,
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
       }).then(res => {
           if (isMounted && res.status === 200) {
               setAllPlants(res.data.data)
@@ -171,7 +171,7 @@ export default function Vendor() {
       axios({
         method: 'get',
         url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
       }).then(res => {
           if (isMounted && res.status === 200) {
             setData(res.data.data);
@@ -220,7 +220,7 @@ export default function Vendor() {
     axios({
       method: 'get',
       url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
     }).then(res => {
         if (res.status === 200) {
           setData(res.data.data);

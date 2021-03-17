@@ -149,7 +149,7 @@ export default function Skeleton() {
       url: `${url}/api/v1/my_user`,
       headers: { 
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem("jwt")}`
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
      },
   }).then(res => {
       if (res.status === 200) {

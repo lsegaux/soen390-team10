@@ -29,7 +29,7 @@ export default function BasicTable() {
        axios({
           method: 'get',
           url: `${url}/api/v1/accounting/ledger`,
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
        }).then(res => {
           if (res.status === 200) {
             var rows = Array();
@@ -46,8 +46,8 @@ export default function BasicTable() {
       axios({
         method: 'get',
         url: `${url}/api/v1/production/expenses`,
-        headers: { "Content-Type": "application/json" },
-     }).then(res => {
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+      }).then(res => {
         if (res.status === 200) {
           var rows = Array();
           for(var i=0; i<res.data.data.length; i++){
