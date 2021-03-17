@@ -27,6 +27,7 @@ defmodule ErpWeb.Router do
     post "/packaging/reduce_quantity", BoxController, :reduce_quantity
     post "/packaging/order_boxes", BoxController, :order_boxes
     get "/packaging/boxes/:id", BoxController, :get_boxes_by_plant
+    post "/sale", SaleController, :process_sale
   end
 
   scope "/api/v1", ErpWeb do
@@ -45,7 +46,6 @@ defmodule ErpWeb.Router do
     get "/production/expenses", MaterialsExpenseController, :show_all_materialsexpenses
     post "/production/expense/create/amount/:amount", MaterialsExpenseController, :create
     post "/production/expense/process/:id", MaterialsExpenseController, :process_expense
-    post "/sale", SaleController, :process_sale
 
     get "/accounting/ledger", OrderController, :show_all_orders
     get "/sendemail", EmailController, :send_email

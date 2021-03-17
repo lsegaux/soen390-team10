@@ -354,7 +354,10 @@ export default function Sales() {
         axios({
             method: 'post',
             url: "http://localhost:4000/api/v1/sale",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem('jwt'),
+             },
             data: {
                 "sale": {
                     price: parseFloat(totalPrice.toFixed(2)),
@@ -454,15 +457,8 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
+                                                id="name"
                                                 label="Name of cardholder"
-                                                type="string"
-                                                fullWidth
-                                            />
-                                            <TextField
-                                                autoFocus
-                                                margin="dense"
-                                                id="email"
-                                                label="Email of cardholder"
                                                 type="string"
                                                 fullWidth
                                                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}

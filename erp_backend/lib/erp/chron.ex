@@ -2,6 +2,7 @@ defmodule Erp.Chron do
   use GenServer
 
   import Ecto.Query
+  import Erp.Email
   alias Erp.Repo
   alias Erp.Sales.Order
   alias Erp.Packaging.Package
@@ -26,11 +27,16 @@ defmodule Erp.Chron do
 
   defp schedule_chron() do
     Process.send_after(self(), :work, 5 * 1000) # run every minute
+    # change time later!!!
   end
 
   # DB updating methods
 
   defp update_database() do
+    # TEST
+    order_confirmation_email("nicolasmacbeth@gmail.com", 1, 222, 2223333, "11:45")
+    # TEST
+
     # handle order created -> packaged (0 -> 1)
     update_created_orders()
 
@@ -52,12 +58,24 @@ defmodule Erp.Chron do
     query = from(o in Order, where: o.status == 1 and o.time < ^cutoff_time, select: o.id, update: [set: [status: 2]])
     {_ok, updated} = Repo.update_all(query, [])
 
-    # add the packages to expenses
+    # add the packages to expenses and email users
+    if updated != nil do
+      Enum.each(updated, fn(order) -> 
+        order_shipped_email(order.userEmail, order.id)
+      end)
+    end
   end
 
   defp update_shipped_orders() do
     cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -240, :second) # 4 minutes, for demo purposes
     query = from(o in Order, where: o.status == 2 and o.time < ^cutoff_time, update: [set: [status: 3]])
-    Repo.update_all(query, [])
+    {_ok, updated} = Repo.update_all(query, [])
+
+    # email users
+    if updated != nil do
+      Enum.each(updated, fn(order) -> 
+        order_delivered_email(order.userEmail, order.id, NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
+      end)
+    end
   end
 end

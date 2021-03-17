@@ -18,12 +18,12 @@ A module that contains the raw methods for emailing (called by controller).
     @doc """
     Send an email notifying that a bike order has been shipped.
     """
-    def order_shipped_email(email_address, id, delivery_date) do
+    def order_shipped_email(email_address, id) do
         new_email
         |> to(email_address)
         |> from("390teamten@gmail.com")
         |> subject("Order has been shipped.")
-        |> render("order_shipped_email.html", email_address: email_address, id: id, delivery_date: delivery_date)
+        |> render("order_shipped_email.html", email_address: email_address, id: id)
     end
 
     @doc """
