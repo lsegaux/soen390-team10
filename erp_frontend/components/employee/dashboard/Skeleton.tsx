@@ -2,7 +2,7 @@
  * Template credit: https://material-ui.com/getting-started/templates/
  */
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,11 +22,12 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MainListItems from "./listItems";
 
-import {Auth} from "../../../Auth"
+import { Auth } from "../../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../../vendor/Vendor";
 import Accounting from "../accounting/accountingdash";
 import QualityManagement from "../../qualitymanagement/quality_management"
+import ShippingAndTransportation from "../ShippingAndTransportation"
 
 function Copyright() {
   return (
@@ -129,14 +130,14 @@ const useStyles = makeStyles((theme) => ({
   2          -> Accounting
   3          -> Quality Management
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>];
+const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <ShippingAndTransportation key={4} />];
 
 export default function Skeleton() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(3);
 
-  
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -179,7 +180,7 @@ export default function Skeleton() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" onClick={() => {Auth.logout()}}>
+          <IconButton color="inherit" onClick={() => { Auth.logout() }}>
             <Typography>Logout</Typography>
           </IconButton>
         </Toolbar>
@@ -198,19 +199,19 @@ export default function Skeleton() {
         </div>
         <Divider />
         <List>
-          <MainListItems setCurrentPage={setCurrentPage}/>
+          <MainListItems setCurrentPage={setCurrentPage} />
         </List>
-        
+
       </Drawer>
-      
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            {pages.map((item,i)=>{
-              if (currentPage == i) return item
-            })}
+          {pages.map((item, i) => {
+            if (currentPage == i) return item
+          })}
         </Container>
-        <Box pt='4'><Copyright/></Box>
+        <Box pt='4'><Copyright /></Box>
       </main>
     </div>
   );
