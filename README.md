@@ -53,7 +53,7 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 * [Material UI](https://material-ui.com/)
 
 ## Documents
-- [Arhived Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
+- [Archived Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
 - [Archived Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
 - [Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
   - [Defects Tracking Report](https://docs.google.com/document/d/1BcYrnfd4Y4iT6bJVwd17okzYh-a8vdtIOCb-UB6DALU/edit?usp=sharing)
