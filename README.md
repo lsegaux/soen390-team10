@@ -85,7 +85,7 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 ---
 * [Backend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test)
 ---
-### [Frontend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress)
+* [Frontend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress)
 ---
 ## Story Points Breakdown
 
