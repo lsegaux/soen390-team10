@@ -155,7 +155,7 @@ export default function QualityManagement() {
     if (key === 1) setListClientBool(false);
   }
 
-  //Update the status (only for admins)
+  //Update the status (only for Employees)
   function handleStatusSelect(option){
     
     if (listClientBool){
@@ -201,7 +201,7 @@ export default function QualityManagement() {
     
     handleClose();
   }
-  //Update the request status (only for admins)
+  //Update the request status (only for Employees)
   function handleRequestSelect(option){
 
     if (listClientBool){
@@ -251,13 +251,13 @@ export default function QualityManagement() {
     setAnchorEl(event.currentTarget);
   };
 
-  //Open Status menu (only for admins)
+  //Open Status menu (only for Employees)
   function handleClickStatus (event: React.MouseEvent<HTMLButtonElement>, key){
     setAnchorElStatus(event.currentTarget);
     setRowSelectId(key)
   };
 
-  //Open Request Status menu (only for admins)
+  //Open Request Status menu (only for Employees)
   function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>, key){
     setAnchorElRequest(event.currentTarget);
     setRowSelectId(key)
@@ -268,12 +268,12 @@ export default function QualityManagement() {
     setAnchorEl(null);
   }
 
-  //Closes Status menu (only for admins)
+  //Closes Status menu (only for Employees)
   function handleCloseStatus (){
     setAnchorElStatus(null);
   }
 
-  //Closes Request status menu (only for admins)
+  //Closes Request status menu (only for Employees)
   function handleCloseRequest (){
     setAnchorElRequest(null);
   }
@@ -328,8 +328,8 @@ export default function QualityManagement() {
                   <TableCell align = "center">{row["description"]}</TableCell>
                   <TableCell align = "center">{row["comments"]}</TableCell>
                   <TableCell align = "center"> 
-                  {/*Admins can change the status and request status*/}
-                    {(localStorage.getItem('role')==="Administrator")?
+                  {/*Employees can change the status and request status*/}
+                    {(localStorage.getItem('role')==="Employee")?
                     <>
                     <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
                       <Menu anchorEl = {anchorElStatus} keepMounted open = {Boolean(anchorElStatus)} onClose={handleCloseStatus}>
@@ -345,8 +345,8 @@ export default function QualityManagement() {
                   </TableCell>
                   <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
                   <TableCell align = "center">
-                    {/*Admins can change the status and request status*/}
-                  {(localStorage.getItem('role')==="Administrator")?
+                    {/*Employees can change the status and request status*/}
+                  {(localStorage.getItem('role')==="Employee")?
                     <>
                   <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
                       <Menu anchorEl = {anchorElRequest} keepMounted open = {Boolean(anchorElRequest)} onClose={handleCloseRequest}>
