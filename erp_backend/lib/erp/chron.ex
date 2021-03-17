@@ -2,6 +2,9 @@ defmodule Erp.Chron do
   use GenServer
 
   import Ecto.Query
+  alias Erp.Repo
+  alias Erp.Sales.Order
+  alias Erp.Packaging.Package
 
   # Chron job methods
 
@@ -22,7 +25,7 @@ defmodule Erp.Chron do
   end
 
   defp schedule_chron() do
-    Process.send_after(self(), :work, 60 * 1000) # run every minute
+    Process.send_after(self(), :work, 5 * 1000) # run every minute
   end
 
   # DB updating methods
@@ -39,20 +42,22 @@ defmodule Erp.Chron do
   end
 
   defp update_created_orders() do
-    query = from(o in Order, join: p in Packages, on: o.id == p.orderId and o.status == 0, update: [set: [status: 1]])
-    Repo.update_all(query) # confirm Packages module, orderId foreign key
+    query = from(o in Order, join: p in Package, on: o.id == p.order_id and o.status == 0, update: [set: [status: 1]])
+    Repo.update_all(query, [])
   end
 
   defp update_packaged_orders() do
     # update the records
-    cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -120, :second)
-    query = from(o in Order, where: o.status == 1 and o.time < ^cutoff_time, update: [set: [status: 2]])
-    Repo.update_all(query)
+    cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -120, :second) # 2 minutes, for demo purposes
+    query = from(o in Order, where: o.status == 1 and o.time < ^cutoff_time, select: o.id, update: [set: [status: 2]])
+    {_ok, updated} = Repo.update_all(query, [])
+
+    # add the packages to expenses
   end
 
   defp update_shipped_orders() do
-    cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -240, :second)
+    cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -240, :second) # 4 minutes, for demo purposes
     query = from(o in Order, where: o.status == 2 and o.time < ^cutoff_time, update: [set: [status: 3]])
-    Repo.update_all(query)
+    Repo.update_all(query, [])
   end
 end

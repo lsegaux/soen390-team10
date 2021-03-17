@@ -9,7 +9,7 @@ alias Erp.Sales.Order
 data = [
   %{
     "price" => 2334.95,
-    "userEmail" => "nic@mail.com",
+    "userEmail" => "nicolasmacbeth+erpTest@gmail.com",
     "time" => ~N[2021-02-01 23:00:07],
     "bikesAmount" => 22,
     "status" => 1
@@ -29,11 +29,13 @@ Enum.each data, fn(order) ->
   price = Map.get(order, "price")
   time = Map.get(order, "time")
   bikesAmount = Map.get(order, "bikesAmount")
+  status = Map.get(order, "status")
 
   Repo.insert! %Order{
     userEmail: userEmail,
     price: price,
     time: time,
-    bikesAmount: bikesAmount
+    bikesAmount: bikesAmount,
+    status: status
   }
 end
