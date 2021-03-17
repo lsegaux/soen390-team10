@@ -358,7 +358,7 @@ export default function Sales() {
             data: {
                 "sale": {
                     price: parseFloat(totalPrice.toFixed(2)),
-                    name: cardPerson,
+                    email: cardPerson,
                     quantity: bikeQty
                 }
             }
@@ -461,7 +461,7 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
-                                                id="name"
+                                                id="email"
                                                 label="Email of cardholder"
                                                 type="string"
                                                 fullWidth

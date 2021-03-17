@@ -10,7 +10,7 @@ defmodule Erp.Sale do
     order = %Order{
       price: params["price"]/1,
       bikesAmount: params["quantity"],
-      userEmail: params["name"],
+      userEmail: params["email"],
       time: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
     }
     Repo.insert!(order)
