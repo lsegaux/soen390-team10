@@ -80,6 +80,16 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 - [Data Mapper (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/user.ex)
   - [Explanation](https://github.com/elixir-ecto/ecto)
 
+## Testing
+### Link to Testing Plan
+* https://drive.google.com/file/d/1L7WR0L3ljpHLHSbWl05ziPT0DJ3ScaJZ/view?usp=sharing
+---
+### Backend Testing System
+* https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test
+---
+### Frontend Testing System
+* https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress
+---
 ## Story Points Breakdown
 
 - Low Priority = 3 story points
