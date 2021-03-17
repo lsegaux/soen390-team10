@@ -9,6 +9,7 @@
 - [Coding Conventions](#code-conventions)
 - [Plugins](#plugins)
 - [Documents](#documents)
+- [Design Patterns](#design-patterns)
 - [Story Points Breakdown](#story-points-breakdown)
 - [Requirements](#requirements)
 
@@ -61,6 +62,15 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
   - [Software Architecture Document](https://docs.google.com/document/d/1CULgub9wpv8Vj4_SjcoRbXKTclCF5k4S2K-lXWwttLo/edit?usp=sharing)
   - [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
   - [Risk Management and Assessment](https://drive.google.com/file/d/1g39MxZvHYq4Gg1h9cxwC3Qpqdhs_33co/view?usp=sharing)
+
+## Design Patterns
+- [Model-View-Controller (Structural)](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/lib/erp_web)
+- [The Pipeline (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/email.ex)
+  - [Explanation](https://mattpruitt.com/articles/the-pipeline)
+- [State (Behavioral)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/accounts.ex)
+  - [Explanation](https://refactoring.guru/design-patterns/state)   
+- [Data Mapper (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/user.ex)
+  - [Explanation](https://github.com/elixir-ecto/ecto)
 
 ## Story Points Breakdown
 * Low Priority = 3 story points
