@@ -1,6 +1,41 @@
 
 Keeping track of the top 10 risks throughout our sprints
 
+See README for a more detailed
+
+Sprint 3:
+1.
+    PROBLEM: Orders Table has two ID columns
+    SOL: Elimnate one of the IDs
+
+2.  PROBLEM: Trouble properly generating API tests
+    SOL: Elimnate test examples from most of code
+
+3.  PROBLEM: Difficulty Simulating time for demo
+    SOL: Determine which component is cause the problem and fix it
+
+4.  PROBLEM: Sales not connecting to backend
+    SOL: Dedicate team to ensuring functionality
+
+5.  PROBLEM: Material UI Styles Leaking
+    SOL: Troubleshoot webpack for issues
+
+6.  PROBLEM: No TLS between server-client
+    SOL: Implement HTTPS
+
+7.  PROBLEM: User roles not defined WRT authorization
+    SOL: After site visibility for clients
+
+8.  PROBLEM: Orders Seed is improperly defined for Primary Key
+    SOL: Delete secondary Key
+
+9.  PROBLEM: Lack of sufficient code commenting causing confusion
+    SOL: Comment out the entire project
+
+10. PROBLEM: Various warnings client-side from props
+    SOL: Delay unless breaking page
+
+
 Sprint 2:
 1. 
     PROBLEM: Not completing Sales and Vendor modules early enough to leave time to create ledger, accounts receivable and accounts payable 

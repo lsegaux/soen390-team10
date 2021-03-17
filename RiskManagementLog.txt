@@ -1,5 +1,10 @@
 Risk Management Log to be updated as needed as per Risk Management Document requirements
 
+17/03/21 
+Risk of running out of time before implementing the ability for a client to view client features, and employee viewing employee features
+
+17/03/21
+Moved Top 10 Risks over to a Google doc, and it can be found in the wiki
 
 23/02/21
 Not completing Sales and Vendor modules early enough to leave time to create ledger, accounts receivable and accounts payable. Monitoring
