@@ -6,6 +6,7 @@ defmodule Erp.Packaging.Package do
 
   schema "packages" do
     field :order_id, :id
+    field :plant_id, :integer
     field :user_email, :string
     field :weight, :float
     field :shipped, :boolean
@@ -15,9 +16,10 @@ defmodule Erp.Packaging.Package do
   @doc false
   def changeset(package, attrs) do
     package
-    |> cast(attrs, [:order_id, :user_email, :weight, :shipped])
+    |> cast(attrs, [:order_id, :plant_id, :user_email, :weight, :shipped])
     |> validate_required([:order_id, :user_email, :weight, :shipped])
     |> foreign_key_constraint(:order_id)
+    |> foreign_key_constraint(:plant_id)
   end
 
   def create_package(attrs \\ %{}) do

@@ -23,6 +23,10 @@ defmodule ErpWeb.Router do
     pipe_through [:api, :jwt_authenticated]
 
     get "/my_user", UserController, :show
+    post "/packaging/create_package", PackagingController, :create_package
+    post "/packaging/reduce_quantity", BoxController, :reduce_quantity
+    post "/packaging/order_boxes", BoxController, :order_boxes
+    get "/packaging/boxes/:id", BoxController, :get_boxes_by_plant
   end
 
   scope "/api/v1", ErpWeb do
@@ -45,10 +49,6 @@ defmodule ErpWeb.Router do
 
     get "/accounting/ledger", OrderController, :show_all_orders
     get "/sendemail", EmailController, :send_email
-
-    post "/packaging/create_package", PackagingController, :create_package
-    post "/packaging/reduce_quantity", BoxController, :reduce_quantity
-    post "/packaging/order_boxes", BoxController, :order_boxes
   end
 
   scope "/", ErpWeb do

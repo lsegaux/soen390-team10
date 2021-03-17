@@ -6,8 +6,9 @@ defmodule ErpWeb.PackagingController do
 
   def create_package(conn, %{"package" => package_params}) do
     with {:ok, %Package{} = package} <- Package.create_package(package_params) do
-      ErpWeb.BoxController.reduce_quantity(conn, %{"id" => 1})
-      conn |> render("package.json", package: package)
+      order_id = package.order_id
+      plant_id = package.plant_id
+      ErpWeb.BoxController.reduce_quantity(conn, %{"id" => plant_id, "order_id" => order_id})
     end
   end
 end
