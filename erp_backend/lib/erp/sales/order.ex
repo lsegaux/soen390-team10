@@ -6,14 +6,11 @@ defmodule Erp.Sales.Order do
   alias Erp.Repo
   alias Erp.Sales.Order
 
-  @primary_key false
   schema "orders" do
     field :price, :float
     field :time, :naive_datetime
     field :bikesAmount, :integer
     field :userEmail, :string
-
-    @primary_key {:orderId, :id, autogenerate: true}
     timestamps()
   end
 
