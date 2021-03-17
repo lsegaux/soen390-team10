@@ -157,6 +157,21 @@ export default function Skeleton() {
           localStorage.setItem("role", res.data.role);
       }
   }).catch(err => {
+    axios({
+      method: 'get',
+      url: `${url}/api/v1/my_user1`,
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+     },
+  }).then(res => {
+      if (res.status === 200) {
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("role", res.data.role);
+      }
+  }).catch(err => {
+      console.error(err);
+  });
       console.error(err);
   });
 

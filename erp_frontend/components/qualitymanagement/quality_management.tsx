@@ -46,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
 //Table headers
 const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Action Request", "Request Status"];
 
-//Defect Lists
-const defectListItems = (localStorage.getItem('role')=== "Client")?["My Defects"]:["Client Defect List", "Vendor Defects List"];
-
 //Status options
 const statusOption = ["Pending Review", "In progress", "Resolved"];
 
@@ -80,6 +77,8 @@ export default function QualityManagement() {
   const [clientOrders, setClientOrders] = useState(new Array());
   const [vendorOrders, setVendorOrders] = useState(new Array());
 
+  //Defect Lists
+  const defectListItems = (localStorage.getItem('role')=== "Client")?["My Defects"]:["Client Defect List", "Vendor Defects List"];
 
     useEffect(() => {
       let isMounted = true;

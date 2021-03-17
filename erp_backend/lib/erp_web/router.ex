@@ -50,8 +50,6 @@ defmodule ErpWeb.Router do
     post "/quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
 
     post "/sale", SaleController, :process_sale
-
-    get "/accounting/ledger", OrderController, :show_all_orders
     get "/sendemail", EmailController, :send_email
 
     resources "/vendorclaim", VendorClaimController
@@ -62,6 +60,7 @@ defmodule ErpWeb.Router do
 
     get "/client_test", UserController, :client_test
 
+    get  "/my_user1", UserController, :show
     get  "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
@@ -74,6 +73,8 @@ defmodule ErpWeb.Router do
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
+
+    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/", ErpWeb do

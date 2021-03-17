@@ -185,7 +185,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
     }
     //Validates the form
     function checkFormValid (){
-        if ((vendorOrders === null || clientOrders === null)) return false;
+        //if ((vendorOrders === null || clientOrders === null)) return false;
 
         //Check the dropdown menu options are not empty
         let requestSet = (formRequest !== "");
