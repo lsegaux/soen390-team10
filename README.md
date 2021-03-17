@@ -13,7 +13,6 @@
 - [Documents](#documents)
 - [Design Patterns](#design-patterns)
 - [Story Points Breakdown](#story-points-breakdown)
-- [Requirements](#requirements)
 
 ## Docker Setup
 
@@ -69,7 +68,7 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
   - [Functional and Non-Functional Requirements by Sprint](https://docs.google.com/document/d/1Xa1G2cgjGcb52q1HJ05BqpITo3Nu8N6lh9V74oW9NGo/edit?usp=sharing)
   - [Software Architecture Document](https://docs.google.com/document/d/1CULgub9wpv8Vj4_SjcoRbXKTclCF5k4S2K-lXWwttLo/edit?usp=sharing)
   - [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
-  - [Risk Management and Assessment](https://drive.google.com/file/d/1g39MxZvHYq4Gg1h9cxwC3Qpqdhs_33co/view?usp=sharing)
+  - [Risk Management and Assessment](https://drive.google.com/file/d/1c46r5HwLpe5F80OuuRah0Vh5t9PFg51i/view?usp=sharing)
 
 ## Design Patterns
 
@@ -81,6 +80,13 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 - [Data Mapper (Architectural)](https://github.com/lsegaux/soen390-team10/blob/main/erp_backend/lib/erp/accounts/user.ex)
   - [Explanation](https://github.com/elixir-ecto/ecto)
 
+## Testing
+* [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
+---
+* [Backend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test)
+---
+* [Frontend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_frontend/cypress)
+---
 ## Story Points Breakdown
 
 - Low Priority = 3 story points
