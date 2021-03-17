@@ -49,6 +49,7 @@ defmodule ErpWeb.Router do
 
     get "/accounting/ledger", OrderController, :show_all_orders
     get "/sendemail", EmailController, :send_email
+
   end
 
   scope "/", ErpWeb do
