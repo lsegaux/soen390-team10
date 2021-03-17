@@ -13,6 +13,7 @@ import Accounting from "./components/employee/accounting/accountingdash"
 import { Auth } from "./Auth";
 import Inventory from "./components/production/inventory";
 import Sales from "./components/client/sales/Sales";
+import ShippingAndTransportation from "./components/employee/ShippingAndTransportation";
 
 function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
@@ -22,13 +23,13 @@ function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
         return Auth.isAuthenticated() ? (
           children
         ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location },
-              }}
-            />
-          );
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        );
       }}
     />
   );
@@ -41,18 +42,19 @@ export default () => {
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-        
+
           <PrivateRoute path="/">
             <Route exact path="/inventory" component={Inventory} />
             <Route exact path="/" component={HomePage} />
             <Route exact path={"/adminview"} component={AdminView} />
             <Route exact path={"/dashboard"} component={EmployeeDashboard} />
             <Route exact path={"/client"} component={ClientDashboard} />
-            <Route exact path={"/materialmanager"} component={MaterialManager}/>
-            <Route exact path={"/materialmanager/create"} component={CreateParts}/>
-            <Route exact path={"/accounting"} component={Accounting}/>
+            <Route exact path={"/materialmanager"} component={MaterialManager} />
+            <Route exact path={"/materialmanager/create"} component={CreateParts} />
+            <Route exact path={"/accounting"} component={Accounting} />
             <Route path={"/materialmanager/edit/:id"} component={EditParts} />
-            <Route exact path={"/sales"} component={Sales}/>
+            <Route exact path={"/sales"} component={Sales} />
+            <Route exact path={"/shipping"} component={ShippingAndTransportation} />
           </PrivateRoute>
         </Switch>
       </BrowserRouter>
