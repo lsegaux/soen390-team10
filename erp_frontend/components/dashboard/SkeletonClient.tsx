@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
   Page index -> Page name
   0          -> Dashboard
   1          -> Sales
-  2          -> QualityManagement
+  2          -> QualityManagement 
   */
 const pages = [<Dashboard key={0}/>,<Sales key={1}/>, <QualityManagement key={2}/>];
 

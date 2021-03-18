@@ -38,7 +38,7 @@ export function getPlants(callback) {
     axios({
         method: 'get',
         url: `${domain}/api/v1/production/plants`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem('jwt')},
     }).then(res => {
         if (res.status === 200) {
           callback(res.data)

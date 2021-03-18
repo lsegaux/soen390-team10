@@ -29,6 +29,7 @@ import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
 import QualityManagement from "../qualitymanagement/quality_management"
 import Inventory from "../production/inventory"
+import Packaging from "../packaging/Packaging"
 
 function Copyright() {
   return (
@@ -138,8 +139,9 @@ const useStyles = makeStyles((theme) => ({
   2          -> Accounting
   3          -> Quality Management
   4          -> Inventory Management
+  5          -> Packaging
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Inventory key={4}/>];
+const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Inventory key={4}/>, <Packaging key={5}/>];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();

@@ -40,15 +40,15 @@ export default function MainListItems({setCurrentPage}){
  </ListItem>
  <ListItem button onClick= {()=>setCurrentPage(4)}>
    <ListItemIcon>
+     <LayersIcon />
+   </ListItemIcon>
+   <ListItemText primary="Inventory" />
+ </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(5)}>
+   <ListItemIcon>
      <CardTravelIcon />
    </ListItemIcon>
    <ListItemText primary="Packaging" />
- </ListItem>
- <ListItem button>
-   <ListItemIcon>
-     <DynamicFeedIcon />
-   </ListItemIcon>
-   <ListItemText primary="Inventory" />
  </ListItem>
 </div>
 
