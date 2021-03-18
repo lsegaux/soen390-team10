@@ -1,9 +1,10 @@
 defmodule Erp.Sale do
-    @moduledoc false
+  @moduledoc false
 
   alias Erp.Repo
   alias Erp.Sales.Order
 
+  @doc false
   def add_sale(params) do
     order = %Order{
       price: params["price"]/1,

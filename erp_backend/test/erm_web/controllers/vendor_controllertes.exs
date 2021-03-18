@@ -1,4 +1,7 @@
 defmodule ErpWeb.VendorControllerTest do
+@moduledoc """
+A module for manages tests for vendors
+"""
   use ErpWeb.ConnCase
 
   alias Erp.Accounting

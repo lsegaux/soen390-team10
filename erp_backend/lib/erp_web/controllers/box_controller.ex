@@ -8,6 +8,7 @@ defmodule ErpWeb.BoxController do
   import Ecto.Query, warn: false
   alias Erp.Packaging.Box
 
+  @doc false
   def show(conn, _params) do
     package = Guardian.Plug.current_resource(conn)
     conn |> render("package.json", package: package)

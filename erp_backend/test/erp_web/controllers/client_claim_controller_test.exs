@@ -1,4 +1,7 @@
 defmodule ErpWeb.ClientClaimControllerTest do
+@moduledoc """
+A module for manages tests for client claims
+"""
   use ErpWeb.ConnCase
 
   alias Erp.QualityManagement

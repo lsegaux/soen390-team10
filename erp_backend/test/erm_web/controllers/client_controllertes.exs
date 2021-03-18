@@ -1,4 +1,7 @@
 defmodule ErpWeb.ClientControllerTest do
+@moduledoc """
+A module for manages tests for the clients
+"""
   use ErpWeb.ConnCase
 
   alias Erp.Accounting

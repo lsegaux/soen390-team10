@@ -6,6 +6,7 @@ defmodule Erp.Application do
   use Application
 
 
+  @doc false
   def start(_type, _args) do
     children = [
       # Start the Ecto repository

@@ -10,7 +10,6 @@ A module that provides methods that allow for managing materials costs.
 
   alias Erp.Production.MaterialsExpense
 
-  @doc false
   schema "materialsexpenses" do
     field :amount, :float
     field :processed, :boolean
@@ -25,7 +24,7 @@ A module that provides methods that allow for managing materials costs.
     |> validate_required([ :amount, :processed])
   end
 
-    @doc """
+  @doc """
   Creates an expense.
   ## Examples
       iex> create_expense(%{field: value})
@@ -38,7 +37,7 @@ A module that provides methods that allow for managing materials costs.
     Repo.insert %MaterialsExpense{amount: float, processed: false}
   end
 
-    @doc """
+  @doc """
   Gets a materials epense
   Raises `Ecto.NoResultsError` if the User does not exist.
   ## Examples
@@ -60,7 +59,7 @@ A module that provides methods that allow for managing materials costs.
     Repo.all(MaterialsExpense)
   end
 
-    @doc """
+  @doc """
   Verifies a user password.
   ## Examples
       iex> process_expense()

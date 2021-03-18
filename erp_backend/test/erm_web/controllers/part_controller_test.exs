@@ -1,4 +1,7 @@
 defmodule PartControllerTest do
+@moduledoc """
+A module for manages tests for parts
+"""
   use ErpWeb.ConnCase
 
   alias Erp.Accounting

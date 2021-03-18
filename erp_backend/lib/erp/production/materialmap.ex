@@ -6,7 +6,6 @@ defmodule Erp.Production.Materialmap do
   import Ecto.Changeset
 
   #Each part has a list of materials
-  @doc false
   schema "materialmaps" do
     field :quantity, :integer
     field :part_id, :id

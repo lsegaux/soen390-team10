@@ -9,7 +9,7 @@ defmodule Erp.Production do
   alias Erp.Production.Material
   alias Erp.Production.Product
 
-    @doc """
+  @doc """
   Returns the production status for the plant.
   ## Examples
       iex> production_status()

@@ -9,7 +9,6 @@ defmodule Erp.Production.Product do
   @derive {Jason.Encoder, only: [:name, :product_id, :quantity, :start_time, :plant_id]}
   @primary_key {:product_id, :integer, []}
   @derive {Phoenix.Param, key: :product_id}
-  @doc false
   schema "products" do
     field :name, :string
     field :quantity, :integer

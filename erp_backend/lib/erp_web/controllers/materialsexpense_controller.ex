@@ -13,25 +13,25 @@ A module that acts as the controller for managing materials expenses.
     render(conn, "show.json", materialsexpense: materialsexpense)
   end
 
-    @doc """
-    Show all materials expenses.
-    """
+  @doc """
+  Show all materials expenses.
+  """
   def show_all_materialsexpenses(conn, _params) do
     materialsexpenses = Erp.Production.MaterialsExpense.list_materialsexpenses()
     render(conn, "index.json", materialsexpenses: materialsexpenses)
   end
 
-    @doc """
-    Show a materials expense by ID.
-    """
+  @doc """
+  Show a materials expense by ID.
+  """
   def get_materials_by_expense_id(conn, %{"id" => expense_id}) do
     materialsexpense = Erp.Production.MaterialsExpense.get_materialsexpense(expense_id)
     render(conn, "index.json", materialsexpense: materialsexpense)
   end
 
-    @doc """
-    Process a materials expense by ID.
-    """
+  @doc """
+  Process a materials expense by ID.
+  """
   def process_expense(conn, %{"id" => expense_id}) do
     materialsexpense = MaterialsExpense.get_materialsexpense(expense_id)
 
@@ -40,9 +40,9 @@ A module that acts as the controller for managing materials expenses.
     end
   end
 
-    @doc """
-    Create a new materials expense.
-    """
+  @doc """
+  Create a new materials expense.
+  """
   def create(conn, %{"amount" => amount}) do
     with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.create_expense(amount) do
       render(conn, "materialsexpense.json", materialsexpense: materialsexpense)
