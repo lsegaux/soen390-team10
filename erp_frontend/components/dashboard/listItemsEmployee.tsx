@@ -12,39 +12,45 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 
-export default function MainListItems({setCurrentPage}){
- return <div>
- <ListItem button onClick= {()=>setCurrentPage(0)}>
-   <ListItemIcon>
-     <DashboardIcon />
-   </ListItemIcon>
-   <ListItemText primary="Dashboard" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(1)}>
-   <ListItemIcon>
-     <BarChartIcon />
-   </ListItemIcon>
-   <ListItemText primary="Vendors" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(2)}>
-   <ListItemIcon>
-     <ShoppingCartIcon />
-   </ListItemIcon>
-   <ListItemText primary="Accounting" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(3)}>
-   <ListItemIcon>
-     <AssignmentTurnedInIcon />
-   </ListItemIcon>
-   <ListItemText primary="Quality Management" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(4)}>
-   <ListItemIcon>
-     <DynamicFeedIcon />
-   </ListItemIcon>
-   <ListItemText primary="Inventory" />
- </ListItem>
-</div>
+export default function MainListItems({ setCurrentPage }) {
+  return <div>
+    <ListItem button onClick={() => setCurrentPage(0)}>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button onClick={() => setCurrentPage(1)}>
+      <ListItemIcon>
+        <BarChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Vendors" />
+    </ListItem>
+    <ListItem button onClick={() => setCurrentPage(2)}>
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Accounting" />
+    </ListItem>
+    <ListItem button onClick={() => setCurrentPage(3)}>
+      <ListItemIcon>
+        <AssignmentTurnedInIcon />
+      </ListItemIcon>
+      <ListItemText primary="Quality Management" />
+    </ListItem>
+    <ListItem button onClick={() => setCurrentPage(4)}>
+      <ListItemIcon>
+        <DynamicFeedIcon />
+      </ListItemIcon>
+      <ListItemText primary="Inventory" />
+    </ListItem>
+    <ListItem button onClick={() => setCurrentPage(5)}>
+      <ListItemIcon>
+        <LocalShippingIcon />
+      </ListItemIcon>
+      <ListItemText primary="Shipping" />
+    </ListItem>
+  </div>
 
 }
 

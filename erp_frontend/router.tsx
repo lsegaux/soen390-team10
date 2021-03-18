@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
@@ -35,23 +35,23 @@ function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
 
 
 export default () => {
-/*  
-  const url = "http://localhost:4000";
-
-  useEffect (()=>{
-    axios({
-    method: 'get',
-    url: `${url}/api/v1/my_user1`,
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-  }).then(res => {
-    if (res.status === 200) {
-      //setRole(res.data.role);
-    }
-  }).catch(err => {
-    console.error(err);
-  });
-  }, []);
-*/
+  /*  
+    const url = "http://localhost:4000";
+  
+    useEffect (()=>{
+      axios({
+      method: 'get',
+      url: `${url}/api/v1/my_user1`,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+      if (res.status === 200) {
+        //setRole(res.data.role);
+      }
+    }).catch(err => {
+      console.error(err);
+    });
+    }, []);
+  */
   return (
     <>
       <BrowserRouter>
@@ -59,6 +59,12 @@ export default () => {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
 
+          <Route exact path="/" component={HomePage} />
+          <Route exact path={"/employee"} component={EmployeeDashboard} />
+          <Route exact path={"/client"} component={ClientDashboard} />
+          <Route exact path={"/materialmanager"} component={MaterialManager} />
+          <Route exact path={"/materialmanager/create"} component={CreateParts} />
+          <Route path={"/materialmanager/edit/:id"} component={EditParts} />
           <PrivateRoute path="/">
             <Route exact path="/" component={HomePage} />
             <Route exact path={"/employee"} component={EmployeeDashboard} />

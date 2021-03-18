@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import Title from "./dashboard/Title";
+import Title from "../dashboard/Title";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
         paperShipping: {
             padding: theme.spacing(2),
             display: "flex",
-            // overflow: "auto",
             flexDirection: "column",
         },
         contentShipping: {
@@ -37,6 +36,18 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: theme.spacing(4),
             paddingBottom: theme.spacing(4),
         },
+        orderWidth: {
+            width: "20%"
+        },
+        emailWidth: {
+            width: "40%"
+        },
+        priceWidth: {
+            width: "20%"
+        },
+        bikeAmountWidth: {
+            width: "20%"
+        }
     }),
 );
 
@@ -62,6 +73,7 @@ export default function ShippingAndTransportation() {
         }).catch(err => {
             console.error(err);
         });
+
     }, []);
 
     const classes = useStyles();
@@ -80,10 +92,10 @@ export default function ShippingAndTransportation() {
                                 <Table size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Order ID</TableCell>
-                                            <TableCell>Client Name</TableCell>
-                                            <TableCell>Price</TableCell>
-                                            <TableCell>Number of Bikes</TableCell>
+                                            <TableCell className={classes.orderWidth}>Order ID</TableCell>
+                                            <TableCell className={classes.emailWidth}>Client Name</TableCell>
+                                            <TableCell className={classes.priceWidth}>Price</TableCell>
+                                            <TableCell className={classes.bikeAmountWidth}>Number of Bikes</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -91,10 +103,10 @@ export default function ShippingAndTransportation() {
                                             if (order.status == 0) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.userEmail}</TableCell>
-                                                        <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikesAmount}</TableCell>
+                                                        <TableCell className={classes.orderWidth}>{order.id}</TableCell>
+                                                        <TableCell className={classes.emailWidth}>{order.userEemail}</TableCell>
+                                                        <TableCell className={classes.priceWidth}>{order.price}$</TableCell>
+                                                        <TableCell className={classes.bikeAmountWidth}>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -115,10 +127,10 @@ export default function ShippingAndTransportation() {
                                 <Table size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Order ID</TableCell>
-                                            <TableCell>Client Name</TableCell>
-                                            <TableCell>Price</TableCell>
-                                            <TableCell>Number of Bikes</TableCell>
+                                            <TableCell className={classes.orderWidth}>Order ID</TableCell>
+                                            <TableCell className={classes.emailWidth}>Client Name</TableCell>
+                                            <TableCell className={classes.priceWidth}>Price</TableCell>
+                                            <TableCell className={classes.bikeAmountWidth}>Number of Bikes</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -126,10 +138,10 @@ export default function ShippingAndTransportation() {
                                             if (order.status == 1) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.userEmail}</TableCell>
-                                                        <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikesAmount}</TableCell>
+                                                        <TableCell className={classes.orderWidth}>{order.id}</TableCell>
+                                                        <TableCell className={classes.emailWidth}>{order.userEmail}</TableCell>
+                                                        <TableCell className={classes.priceWidth}>{order.price}$</TableCell>
+                                                        <TableCell className={classes.bikeAmountWidth}>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -150,10 +162,10 @@ export default function ShippingAndTransportation() {
                                 <Table size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Order ID</TableCell>
-                                            <TableCell>Client Name</TableCell>
-                                            <TableCell>Price</TableCell>
-                                            <TableCell>Number of Bikes</TableCell>
+                                            <TableCell className={classes.orderWidth}>Order ID</TableCell>
+                                            <TableCell className={classes.emailWidth}>Client Name</TableCell>
+                                            <TableCell className={classes.priceWidth}>Price</TableCell>
+                                            <TableCell className={classes.bikeAmountWidth}>Number of Bikes</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -161,10 +173,10 @@ export default function ShippingAndTransportation() {
                                             if (order.status == 2) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.userEmail}</TableCell>
-                                                        <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikesAmount}</TableCell>
+                                                        <TableCell className={classes.orderWidth}>{order.id}</TableCell>
+                                                        <TableCell className={classes.emailWidth}>{order.userEemail}</TableCell>
+                                                        <TableCell className={classes.priceWidth}>{order.price}$</TableCell>
+                                                        <TableCell className={classes.bikeAmountWidth}>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -186,10 +198,10 @@ export default function ShippingAndTransportation() {
                                 <Table size="small">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Order ID</TableCell>
-                                            <TableCell>Client Name</TableCell>
-                                            <TableCell>Price</TableCell>
-                                            <TableCell>Number of Bikes</TableCell>
+                                            <TableCell className={classes.orderWidth}>Order ID</TableCell>
+                                            <TableCell className={classes.emailWidth}>Client Name</TableCell>
+                                            <TableCell className={classes.priceWidth}>Price</TableCell>
+                                            <TableCell className={classes.bikeAmountWidth}>Number of Bikes</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -197,10 +209,10 @@ export default function ShippingAndTransportation() {
                                             if (order.status == 3) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.userEmail}</TableCell>
-                                                        <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikesAmount}</TableCell>
+                                                        <TableCell className={classes.orderWidth}>{order.id}</TableCell>
+                                                        <TableCell className={classes.emailWidth}>{order.userEmail}</TableCell>
+                                                        <TableCell className={classes.priceWidth}>{order.price}$</TableCell>
+                                                        <TableCell className={classes.bikeAmountWidth}>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}

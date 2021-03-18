@@ -23,26 +23,28 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MainListItems from "./listItemsClient";
 
-import {Auth} from "../../Auth"
+import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import QualityManagement from "../qualitymanagement/quality_management"
+import Sales from "../client/sales/Sales"
+import ShippingAndTransportationClient from "../client/ShippingAndTransportationClient";
 
 function Copyright() {
   return (
     <>
-    <div>    
-      <p align = "center">
-        <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
-      </p>
-    </div>
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://localhost:4000/">
-        Adrenaline
+      <div>
+        <p align="center">
+          <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG" />
+        </p>
+      </div>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://localhost:4000/">
+          Adrenaline
       </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
     </>
   );
 }
@@ -134,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   1          -> Sales
   2          -> QualityManagement
   */
-const pages = [<Dashboard key={0}/>,<Sales key={1}/>, <QualityManagement key={2}/>];
+const pages = [<Dashboard key={0} />, <Sales key={1} />, <QualityManagement key={2} />, <ShippingAndTransportationClient key={3} />];
 
 const url = "http://localhost:4000";
 
