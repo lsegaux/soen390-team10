@@ -104,7 +104,7 @@ export default function ShippingAndTransportation() {
                                                 return (
                                                     <TableRow key={index}>
                                                         <TableCell className={classes.orderWidth}>{order.id}</TableCell>
-                                                        <TableCell className={classes.emailWidth}>{order.userEemail}</TableCell>
+                                                        <TableCell className={classes.emailWidth}>{order.userEmail}</TableCell>
                                                         <TableCell className={classes.priceWidth}>{order.price}$</TableCell>
                                                         <TableCell className={classes.bikeAmountWidth}>{order.bikesAmount}</TableCell>
                                                     </TableRow>)

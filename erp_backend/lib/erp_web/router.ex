@@ -74,6 +74,7 @@ defmodule ErpWeb.Router do
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
 
+    get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
   end
 
