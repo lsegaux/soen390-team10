@@ -14,6 +14,7 @@ import { Auth } from "./Auth";
 import Inventory from "./components/production/inventory";
 import Sales from "./components/client/sales/Sales";
 import ShippingAndTransportation from "./components/employee/ShippingAndTransportation";
+import ShippingAndTransportationClient from "./components/client/ShippingAndTransportationClient";
 
 function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
   return (
@@ -55,6 +56,7 @@ export default () => {
             <Route path={"/materialmanager/edit/:id"} component={EditParts} />
             <Route exact path={"/sales"} component={Sales} />
             <Route exact path={"/shipping"} component={ShippingAndTransportation} />
+            <Route exact path={"/shippingClient"} component={ShippingAndTransportationClient} />
           </PrivateRoute>
         </Switch>
       </BrowserRouter>
