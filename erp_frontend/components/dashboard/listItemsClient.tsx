@@ -8,52 +8,21 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import CardTravelIcon from '@material-ui/icons/CardTravel';
 
 
 export default function MainListItems({setCurrentPage}){
  return <div>
- <ListItem button onClick= {()=>setCurrentPage(0)}>
-   <ListItemIcon>
-     <DashboardIcon />
-   </ListItemIcon>
-   <ListItemText primary="Dashboard" />
- </ListItem>
  <ListItem button onClick= {()=>setCurrentPage(1)}>
    <ListItemIcon>
      <BarChartIcon />
    </ListItemIcon>
-   <ListItemText primary="Vendors" />
+   <ListItemText primary="Sales" />
  </ListItem>
  <ListItem button onClick= {()=>setCurrentPage(2)}>
-   <ListItemIcon>
-     <ShoppingCartIcon />
-   </ListItemIcon>
-   <ListItemText primary="Accounting" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(3)}>
    <ListItemIcon>
      <AssignmentTurnedInIcon />
    </ListItemIcon>
    <ListItemText primary="Quality Management" />
- </ListItem>
- <ListItem button onClick= {()=>setCurrentPage(4)}>
-   <ListItemIcon>
-     <CardTravelIcon />
-   </ListItemIcon>
-   <ListItemText primary="Packaging" />
- </ListItem>
- <ListItem button>
-   <ListItemIcon>
-     <PeopleIcon />
-   </ListItemIcon>
-   <ListItemText primary="Customers" />
- </ListItem>
- <ListItem button>
-   <ListItemIcon>
-     <BarChartIcon />
-   </ListItemIcon>
-   <ListItemText primary="Reports" />
  </ListItem>
 </div>
 
