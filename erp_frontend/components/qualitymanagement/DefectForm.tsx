@@ -191,6 +191,9 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         let requestSet = (formRequest !== "");
         let defectSet = (formDefectType !== "");
 
+        let descriptionNonEmpty = (formDescription !== "");
+        let commentNonEmpty = (formComment !== "");
+
         //Check the order id exists
         //Either check for client or vendors table, not both, depending on user type
         let orderIDExists = false;
@@ -202,7 +205,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             }
         });
        
-        return requestSet && defectSet && orderIDExists;
+        return requestSet && defectSet && orderIDExists && descriptionNonEmpty && commentNonEmpty;
     }
 
     //clear defect form
@@ -237,13 +240,13 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             <TableRow>
                 <TableCell colSpan = {4}>
                 <label style = {{color:"white", fontWeight:"bold"}}>Provide description of defect:</label><br/>
-                <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormDescription(e.target.value)}/>
+                <textarea className = {classes.DefectTextArea} maxLength = {255} onChange={(e)=>setFormDescription(e.target.value)}/>
                 </TableCell>
             </TableRow> 
             <TableRow>
                 <TableCell colSpan = {4}>
                     <label style = {{color:"white", fontWeight:"bold"}}>Make any comments:</label><br/>
-                    <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormComment(e.target.value)}/>
+                    <textarea className = {classes.DefectTextArea} maxLength = {255} onChange={(e)=>setFormComment(e.target.value)}/>
                 </TableCell>
             </TableRow>       
         </TableBody> 
