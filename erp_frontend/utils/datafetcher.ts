@@ -82,6 +82,7 @@ export function dispatchPackage(id, weight, callback) {
     }).then(res => {
         if (res.status === 200) {
             callback(true)
+            alert('The order was dispatched.')
         }
     }).catch(err => {
         console.error(err);
