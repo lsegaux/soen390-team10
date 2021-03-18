@@ -19,11 +19,11 @@ defmodule Erp.Production do
     with {:ok, plants} <- query_plants(),
     {:ok, parts} <- query_parts(),
     {:ok, materials} <- query_materials(),
-    {:ok, bikes} <- query_bikes() 
+    {:ok, bikes} <- query_bikes()
     do
       format_response(plants, parts, materials, bikes)
     else
-      :error -> {:error, :db_error}
+      err -> err
     end
   end
 
@@ -136,7 +136,7 @@ defmodule Erp.Production do
       {:error, %Ecto.Changeset{}}
   """
   defp add_plants(plants) do
-    plants |> Enum.reduce(%{}, fn(plant, map) -> 
+    plants |> Enum.reduce(%{}, fn(plant, map) ->
       Map.put(map, plant.plant_id, %{
         location: plant.name,
         parts: [],
@@ -156,7 +156,7 @@ defmodule Erp.Production do
       {:error, %Ecto.Changeset{}}
   """
   defp add_parts(res, partsList) do
-    Enum.reduce(partsList, res, fn(x, map) -> 
+    Enum.reduce(partsList, res, fn(x, map) ->
       xplant = x.plant_id
       updated = Map.replace(map[xplant], :parts, [%{type: x.name, quantity: x.quantity, price: x.price, material: x.material} | Map.get(map[xplant], :parts)])
       Map.replace(map, xplant, updated)
@@ -172,7 +172,7 @@ defmodule Erp.Production do
       {:error, %Ecto.Changeset{}}
   """
   defp add_materials(res, materialsList) do
-    Enum.reduce(materialsList, res, fn(y, map) -> 
+    Enum.reduce(materialsList, res, fn(y, map) ->
       yplant = y.plant_id
       updated = Map.replace(map[yplant], :materials,  [%{type: y.name, quantity: y.quantity} | Map.get(map[yplant], :materials)])
       Map.replace(map, yplant, updated)
@@ -188,7 +188,7 @@ defmodule Erp.Production do
       {:error, %Ecto.Changeset{}}
   """
   defp add_bikes(res, bikesList) do
-    Enum.reduce(bikesList, res, fn(z, map) -> 
+    Enum.reduce(bikesList, res, fn(z, map) ->
       if NaiveDateTime.compare(z.start_time, NaiveDateTime.add(NaiveDateTime.utc_now(), -3600, :second)) == :gt do
         zplant = z.plant_id
         updated = Map.replace(map[zplant], :bikesBeingBuilt, map[zplant].bikesBeingBuilt + 1)

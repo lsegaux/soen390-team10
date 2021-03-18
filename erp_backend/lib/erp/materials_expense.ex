@@ -38,7 +38,7 @@ A module that provides methods that allow for managing materials costs.
     Repo.insert %MaterialsExpense{amount: float, processed: false}
   end
 
-  @doc """
+    @doc """
   Gets a materials epense
   Raises `Ecto.NoResultsError` if the User does not exist.
   ## Examples
@@ -47,7 +47,7 @@ A module that provides methods that allow for managing materials costs.
       iex> get_materialsexpense!(asdasd)
       ** (Ecto.NoResultsError)
   """
-  def get_materialsexpense!(id), do: Repo.get!(MaterialsExpense, id)
+  def get_materialsexpense(id), do: Repo.get!(MaterialsExpense, id)
 
 
   @doc """

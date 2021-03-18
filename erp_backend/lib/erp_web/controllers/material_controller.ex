@@ -5,9 +5,6 @@ A module that acts as the controller for managing materials.
   use ErpWeb, :controller
   import Ecto.Query, warn: false
 
-  alias Erp.Repo
-
-  alias Erp.Production
   alias Erp.Production.Material
 
   @doc false

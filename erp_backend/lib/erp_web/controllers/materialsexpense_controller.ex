@@ -5,14 +5,11 @@ A module that acts as the controller for managing materials expenses.
   use ErpWeb, :controller
   import Ecto.Query, warn: false
 
-  alias Erp.Repo
-
-  alias Erp.Production
   alias Erp.Production.MaterialsExpense
 
   @doc false
   def show(conn, %{"id" => expense_id}) do
-    materialsexpense = Erp.Production.MaterialsExpense.get_materialsexpense!(expense_id)
+    materialsexpense = Erp.Production.MaterialsExpense.get_materialsexpense(expense_id)
     render(conn, "show.json", materialsexpense: materialsexpense)
   end
 
@@ -36,7 +33,7 @@ A module that acts as the controller for managing materials expenses.
     Process a materials expense by ID.
     """
   def process_expense(conn, %{"id" => expense_id}) do
-    materialsexpense = MaterialsExpense.get_materialsexpense!(expense_id)
+    materialsexpense = MaterialsExpense.get_materialsexpense(expense_id)
 
     with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.process_expense(materialsexpense, true) do
       render(conn, "show.json", materialsexpense: materialsexpense)

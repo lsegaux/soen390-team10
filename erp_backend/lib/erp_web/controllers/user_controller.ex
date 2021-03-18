@@ -53,6 +53,16 @@ A module that acts as the controller for primary user actions.
   @doc """
   Update a user by ID.
   """
+  def employee_test(conn, _) do
+    send_resp(conn, 200, "you're an employee")
+  end
+
+  @doc false
+  def client_test(conn, _) do
+    send_resp(conn, 200, "every logged user can see this")
+  end
+
+  @doc false
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
 
