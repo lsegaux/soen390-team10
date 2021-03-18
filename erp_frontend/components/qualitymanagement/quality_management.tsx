@@ -172,7 +172,7 @@ export default function QualityManagement() {
                 }
             }
           }).then((res)=>{
-            if (res.status == 200) window.location.href = '/dashboard'
+            if (res.status == 200) window.location.href = '/employee'
           }).catch(err => {
               console.error(err);
               alert("Status was not updated due to some error.");
@@ -191,7 +191,7 @@ export default function QualityManagement() {
                 }
             }
           }).then((res)=>{
-            if (res.status == 200) window.location.href = '/dashboard'
+            if (res.status == 200) window.location.href = '/employee'
           }).catch(err => {
               console.error(err);
               alert("Status was not updated due to some error.");
@@ -216,7 +216,7 @@ export default function QualityManagement() {
                 }
             }
           }).then((res)=>{
-            if (res.status == 200) window.location.href = '/dashboard'
+            if (res.status == 200) window.location.href = '/employee'
           }).catch(err => {
               console.error(err);
               alert("Request status was not updated due to some error.");
@@ -235,7 +235,7 @@ export default function QualityManagement() {
                 }
             }
           }).then((res)=>{
-            if (res.status == 200) window.location.href = '/dashboard'
+            if (res.status == 200) window.location.href = '/employee'
           }).catch(err => {
               console.error(err);
               alert("Status was not updated due to some error.");

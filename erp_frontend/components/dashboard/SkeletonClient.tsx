@@ -142,7 +142,7 @@ const url = "http://localhost:4000";
 export default function SkeletonClient() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(()=>{
     //To use the user email throughout the application

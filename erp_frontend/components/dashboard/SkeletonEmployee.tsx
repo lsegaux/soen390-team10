@@ -143,7 +143,7 @@ const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <Qu
 export default function SkeletonEmployee() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(0);
 
   
 
