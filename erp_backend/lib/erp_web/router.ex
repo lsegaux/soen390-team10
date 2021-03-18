@@ -1,4 +1,7 @@
 defmodule ErpWeb.Router do
+@moduledoc """
+A module for managing endpoints and routing requests to the appropriate controllers.
+"""
   use ErpWeb, :router
 
   alias Erp.Guardian

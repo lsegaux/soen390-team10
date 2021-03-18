@@ -1,4 +1,7 @@
 defmodule OrderControllerTest do
+@moduledoc """
+A module for manages tests for the system orders (transactions).
+"""
   use ErpWeb.ConnCase
 
   alias Erp.Accounting

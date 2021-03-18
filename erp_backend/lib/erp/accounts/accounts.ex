@@ -11,6 +11,7 @@ defmodule Erp.Accounts do
   alias Erp.Guardian
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
+  @doc false
   def token_sign_in(email, password) do
     case email_password_auth(email, password) do
       {:ok, user} ->
@@ -20,11 +21,21 @@ defmodule Erp.Accounts do
     end
   end
 
+  @doc false
   defp email_password_auth(email, password) when is_binary(email) and is_binary(password) do
     with {:ok, user} <- get_by_email(email),
     do: verify_password(password, user)
   end
 
+  @doc """
+  Gets a single user by email.
+  Raises `Ecto.NoResultsError` if the User does not exist.
+  ## Examples
+      iex> get_user!(user@hotmail.com)
+      %User{}
+      iex> get_user!(user@homtail.com)
+      ** (Ecto.NoResultsError)
+  """
   defp get_by_email(email) when is_binary(email) do
     case Repo.get_by(User, email: email) do
       nil ->
@@ -34,7 +45,13 @@ defmodule Erp.Accounts do
         {:ok, user}
     end
   end
-
+  
+  @doc """
+  Verifies a user password.
+  ## Examples
+      iex> verify_password(password, SampleUser@hotmail.com)
+      [%User{}, ...]
+  """
   defp verify_password(password, %User{} = user) when is_binary(password) do
     if checkpw(password, user.password_hash) do
       {:ok, user}

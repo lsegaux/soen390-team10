@@ -1,12 +1,11 @@
 defmodule Erp.Sale do
-  @moduledoc """
-  The Sale context.
-  """
+  @moduledoc false
 
   import Erp.Email
   alias Erp.Repo
   alias Erp.Sales.Order
 
+    @doc false
   def add_sale(params, user) do
     order = %Order{
       price: params["price"]/1,

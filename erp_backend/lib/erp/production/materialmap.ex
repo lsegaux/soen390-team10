@@ -1,8 +1,11 @@
 defmodule Erp.Production.Materialmap do
+  @moduledoc """
+  Mapping Materials.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
-  #each part has a list of materials
+  #Each part has a list of materials
   schema "materialmaps" do
     field :quantity, :integer
     field :part_id, :id

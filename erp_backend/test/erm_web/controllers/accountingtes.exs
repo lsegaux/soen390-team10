@@ -1,4 +1,7 @@
 defmodule Erp.AccountingTest do
+@moduledoc """
+A module for manages tests for the accounting module.
+"""
   use Erp.DataCase
 
   alias Erp.Accounting

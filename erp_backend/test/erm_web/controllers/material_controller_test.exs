@@ -1,4 +1,7 @@
 defmodule ErpWeb.MaterialControllerPage do
+@moduledoc """
+A module for manages tests for materials
+"""
   use ErpWeb.ConnCase
 
   test "GET /", %{conn: conn} do

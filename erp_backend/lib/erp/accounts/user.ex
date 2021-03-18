@@ -5,6 +5,7 @@ defmodule Erp.Accounts.User do
 
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
+  @doc false
   schema "users" do
     field :email, :string
     field :first_name, :string
@@ -28,6 +29,9 @@ defmodule Erp.Accounts.User do
     |> put_password_hash
   end
 
+  @doc """
+  Hash an inputted password for database storage.
+  """
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}}

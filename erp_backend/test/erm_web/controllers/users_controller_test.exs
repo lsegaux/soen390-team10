@@ -1,4 +1,7 @@
 defmodule UserControllerTest do
+@moduledoc """
+A module for manages tests for users.
+"""
   use ErpWeb.ConnCase
 
   alias Erp.Accounting

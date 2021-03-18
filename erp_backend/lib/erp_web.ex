@@ -17,6 +17,7 @@ defmodule ErpWeb do
   and import those modules here.
   """
 
+  @doc false
   def controller do
     quote do
       use Phoenix.Controller, namespace: ErpWeb
@@ -27,6 +28,7 @@ defmodule ErpWeb do
     end
   end
 
+  @doc false
   def view do
     quote do
       use Phoenix.View,
@@ -42,6 +44,7 @@ defmodule ErpWeb do
     end
   end
 
+  @doc false
   def router do
     quote do
       use Phoenix.Router
@@ -51,6 +54,7 @@ defmodule ErpWeb do
     end
   end
 
+  @doc false
   def channel do
     quote do
       use Phoenix.Channel
@@ -58,6 +62,7 @@ defmodule ErpWeb do
     end
   end
 
+  @doc false
   defp view_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)

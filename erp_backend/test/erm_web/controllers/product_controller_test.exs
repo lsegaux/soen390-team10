@@ -1,4 +1,7 @@
 defmodule ProductControllerTest do
+@moduledoc """
+A module for manages tests for products.
+"""
   use ExUnit.Case
 
   alias Erp.Sales

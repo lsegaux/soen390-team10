@@ -1,4 +1,7 @@
 defmodule Erp.QualityManagementTest do
+@moduledoc """
+A module for manages tests for quality management
+"""
   use Erp.DataCase
 
   alias Erp.QualityManagement
