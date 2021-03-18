@@ -5,8 +5,6 @@ defmodule Erp.Repo.Migrations.CreateMaterialsexpenses do
     create table(:materialsexpenses) do
       add :amount, :float
       add :processed, :boolean
-      add :company, :string
-
       timestamps()
     end
 

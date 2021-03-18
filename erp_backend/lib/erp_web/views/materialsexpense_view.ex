@@ -10,7 +10,8 @@ defmodule ErpWeb.MaterialsExpenseView do
   def render("materialsexpense.json", %{materialsexpense: materialsexpense}) do
     %{id: materialsexpense.id,
       amount: materialsexpense.amount,
-      processed: materialsexpense.processed}
+      processed: materialsexpense.processed,
+      company: materialsexpense.company}
   end
 
   def render("show.json", %{materialsexpense: materialsexpense}) do

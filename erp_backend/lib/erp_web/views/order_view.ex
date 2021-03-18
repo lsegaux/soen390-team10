@@ -12,7 +12,9 @@ defmodule ErpWeb.OrderView do
       price: order.price,
       time: order.time,
       bikesAmount: order.bikesAmount,
-      userEmail: order.userEmail}
+      userEmail: order.userEmail,
+      status: order.status,
+      id: order.id}
   end
 
   def render("show.json", %{order: order}) do

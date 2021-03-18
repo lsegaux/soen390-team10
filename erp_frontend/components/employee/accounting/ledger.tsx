@@ -85,7 +85,7 @@ export default function BasicTable() {
                 {row.userEmail}
               </TableCell>
               <TableCell>{row.bikesAmount}</TableCell>
-              <TableCell>{row.price}</TableCell>
+              <TableCell>{row.price + "$"}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}
@@ -113,7 +113,7 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
               {row.company}
               </TableCell>
-              <TableCell>{row.amount}</TableCell>
+              <TableCell>{row.amount + "$"}</TableCell>
             </TableRow>
           ))}
         </TableBody>

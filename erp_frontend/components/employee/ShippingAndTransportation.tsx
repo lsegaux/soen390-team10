@@ -88,13 +88,13 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            if (order.status = "received") {
+                                            if (order.status == 0) {
                                                 return (
                                                     <TableRow key={index}>
                                                         <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.userEmail}</TableCell>
                                                         <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                        <TableCell>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -123,13 +123,13 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            if (order.status = "packaged") {
+                                            if (order.status == 1) {
                                                 return (
                                                     <TableRow key={index}>
                                                         <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.userEmail}</TableCell>
                                                         <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                        <TableCell>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -158,13 +158,13 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            if (order.status = "inTransit") {
+                                            if (order.status == 2) {
                                                 return (
                                                     <TableRow key={index}>
                                                         <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.userEmail}</TableCell>
                                                         <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                        <TableCell>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}
@@ -194,13 +194,13 @@ export default function ShippingAndTransportation() {
                                     </TableHead>
                                     <TableBody>
                                         {orderArr.map((order, index) => {
-                                            if (order.status = "delivered") {
+                                            if (order.status == 3) {
                                                 return (
                                                     <TableRow key={index}>
                                                         <TableCell>{order.id}</TableCell>
-                                                        <TableCell>{order.email}</TableCell>
+                                                        <TableCell>{order.userEmail}</TableCell>
                                                         <TableCell>{order.price}$</TableCell>
-                                                        <TableCell>{order.bikeAmount}</TableCell>
+                                                        <TableCell>{order.bikesAmount}</TableCell>
                                                     </TableRow>)
                                             }
                                         })}

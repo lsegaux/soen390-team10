@@ -48,6 +48,7 @@ defmodule ErpWeb.Router do
     post "/production/expense/process/:id", MaterialsExpenseController, :process_expense
 
     get "/accounting/ledger", OrderController, :show_all_orders
+    get "/shipping/order/:id", OrderController, :show 
     get "/sendemail", EmailController, :send_email
 
   end
