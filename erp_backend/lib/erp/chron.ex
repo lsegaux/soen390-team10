@@ -53,7 +53,7 @@ defmodule Erp.Chron do
     # update the records
     cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -120, :second) # 2 minutes, for demo purposes
     
-    update_query = from(o in Order, where: o.status == 1 and o.time < ^cutoff_time, select: %{id: o.id, userEmail: o.userEmail}, update: [set: [status: 2]])
+    update_query = from(o in Order, where: o.status == 1 and o.time < ^cutoff_time, select: [:id, :userEmail], update: [set: [status: 2]])
     {_ok, updated} = Repo.update_all(update_query, [])
 
     # add the packages to expenses and email users
@@ -68,10 +68,7 @@ defmodule Erp.Chron do
 
   defp update_shipped_orders() do
     cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -240, :second) # 4 minutes, for demo purposes
-    query = from(o in Order, where: o.status == 2 and o.time < ^cutoff_time, select: %{
-        id: o.id, 
-        userEmail: o.userEmail,
-        }, update: [set: [status: 3]])
+    query = from(o in Order, where: o.status == 2 and o.time < ^cutoff_time, select: [:id, :userEmail], update: [set: [status: 3]])
     {_ok, updated} = Repo.update_all(query, [])
 
     # email users
