@@ -8,6 +8,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import CardTravelIcon from '@material-ui/icons/CardTravel';
 
 
 export default function MainListItems({setCurrentPage}){
@@ -35,6 +36,12 @@ export default function MainListItems({setCurrentPage}){
      <AssignmentTurnedInIcon />
    </ListItemIcon>
    <ListItemText primary="Quality Management" />
+ </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(4)}>
+   <ListItemIcon>
+     <CardTravelIcon />
+   </ListItemIcon>
+   <ListItemText primary="Packaging" />
  </ListItem>
  <ListItem button>
    <ListItemIcon>

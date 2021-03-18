@@ -26,7 +26,8 @@ import {Auth} from "../../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../../vendor/Vendor";
 import Accounting from "../accounting/accountingdash";
-import QualityManagement from "../../qualitymanagement/quality_management"
+import QualityManagement from "../../qualitymanagement/quality_management";
+import Packaging from "../../packaging/Packaging";
 
 function Copyright() {
   return (
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
   2          -> Accounting
   3          -> Quality Management
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>];
+const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Packaging key={4}/>];
 
 export default function Skeleton() {
   const classes = useStyles();
