@@ -351,7 +351,7 @@ export default function Sales() {
             url: "http://localhost:4000/api/v1/sale",
             headers: { 
                 "Content-Type": "application/json",
-                "Authorization": localStorage.getItem('jwt'),
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
              },
             data: {
                 "sale": {
