@@ -18,7 +18,7 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "../dashboard/listItems";
+//import { mainListItems, secondaryListItems } from "../../dashboard/listItemsEmployee";
 import AccountsPayable from './accountspayable';
 import AccountsReceivable from './accountsreceivable';
 import Ledger from './ledger';
