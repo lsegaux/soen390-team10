@@ -13,6 +13,7 @@ A module that provides methods that allow for managing materials costs.
   schema "materialsexpenses" do
     field :amount, :float
     field :processed, :boolean
+    field :company, :string
 
     timestamps()
   end
@@ -24,7 +25,7 @@ A module that provides methods that allow for managing materials costs.
     |> validate_required([ :amount, :processed])
   end
 
-  @doc """
+    @doc """
   Creates an expense.
   ## Examples
       iex> create_expense(%{field: value})
@@ -32,9 +33,9 @@ A module that provides methods that allow for managing materials costs.
       iex> create_expense(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def create_expense(amount) do
+  def create_expense(amount, company_name) do
     float = Float.parse(amount) |> elem(0)
-    Repo.insert %MaterialsExpense{amount: float, processed: false}
+    Repo.insert %MaterialsExpense{amount: float, processed: false, company: company_name}
   end
 
   @doc """

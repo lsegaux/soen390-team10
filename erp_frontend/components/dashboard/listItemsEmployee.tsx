@@ -9,6 +9,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import CardTravelIcon from '@material-ui/icons/CardTravel';
 
 
 export default function MainListItems({setCurrentPage}){
@@ -39,14 +40,26 @@ export default function MainListItems({setCurrentPage}){
  </ListItem>
  <ListItem button onClick= {()=>setCurrentPage(4)}>
    <ListItemIcon>
-     <DynamicFeedIcon />
+     <LayersIcon />
    </ListItemIcon>
    <ListItemText primary="Inventory" />
+ </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(5)}>
+   <ListItemIcon>
+     <CardTravelIcon />
+   </ListItemIcon>
+   <ListItemText primary="Packaging" />
+ </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(6)}>
+   <ListItemIcon>
+     <CardTravelIcon />
+   </ListItemIcon>
+   <ListItemText primary="Shipping" />
  </ListItem>
 </div>
 
 }
-  
+
 
 
 

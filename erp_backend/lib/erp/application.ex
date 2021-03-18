@@ -16,9 +16,10 @@ defmodule Erp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Erp.PubSub},
       # Start the Endpoint (http/https)
-      ErpWeb.Endpoint
+      ErpWeb.Endpoint,
       # Start a worker by calling: Erp.Worker.start_link(arg)
       # {Erp.Worker, arg}
+      Erp.Chron
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -14,6 +14,7 @@ defmodule Erp.Sales.Order do
   schema "orders" do
     field :price, :float
     field :time, :naive_datetime
+    field :status, :integer # 0 is created, 1 is packaged, 2 is shipped and 3 is delivered
     field :bikesAmount, :integer
     field :userEmail, :string
     timestamps()

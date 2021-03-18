@@ -23,27 +23,28 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MainListItems from "./listItemsClient";
 
-import {Auth} from "../../Auth"
+import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import QualityManagement from "../qualitymanagement/quality_management"
 import Sales from "../client/sales/Sales"
+import ShippingAndTransportationClient from "../client/ShippingAndTransportationClient";
 
 function Copyright() {
   return (
     <>
-    <div>    
-      <p align = "center">
-        <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
-      </p>
-    </div>
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://localhost:4000/">
-        Adrenaline
+      <div>
+        <p align="center">
+          <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG" />
+        </p>
+      </div>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://localhost:4000/">
+          Adrenaline
       </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
     </>
   );
 }
@@ -133,9 +134,9 @@ const useStyles = makeStyles((theme) => ({
   Page index -> Page name
   0          -> Dashboard
   1          -> Sales
-  2          -> QualityManagement
+  2          -> QualityManagement 
   */
-const pages = [<Dashboard key={0}/>,<Sales key={1}/>, <QualityManagement key={2}/>];
+const pages = [<Dashboard key={0} />, <Sales key={1} />, <QualityManagement key={2} />, <ShippingAndTransportationClient key={3} />];
 
 const url = "http://localhost:4000";
 
@@ -145,25 +146,25 @@ export default function SkeletonClient() {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(()=>{
-    //To use the user email throughout the application
-    //Do: localStorage.getItem("email")
-    //For user role:
-    //Do: localStorage.getItem("role")
-    axios({
-      method: 'get',
-      url: `${url}/api/v1/my_user1`,
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-     },
-  }).then(res => {
-      if (res.status === 200) {
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("role", res.data.role);
-      }
-  }).catch(err => {
-      console.error(err);
-  });
+      //To use the user email throughout the application
+      //Do: localStorage.getItem("email")
+      //For user role:
+      //Do: localStorage.getItem("role")
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/my_user1`,
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      },
+    }).then(res => {
+        if (res.status === 200) {
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("role", res.data.role);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
 
   }, [])
   
@@ -209,7 +210,7 @@ export default function SkeletonClient() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" onClick={() => {Auth.logout()}}>
+          <IconButton color="inherit" onClick={() => { Auth.logout() }}>
             <Typography>Logout</Typography>
           </IconButton>
         </Toolbar>
@@ -228,19 +229,19 @@ export default function SkeletonClient() {
         </div>
         <Divider />
         <List>
-          <MainListItems setCurrentPage={setCurrentPage}/>
+          <MainListItems setCurrentPage={setCurrentPage} />
         </List>
-        
+
       </Drawer>
-      
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            {pages.map((item,i)=>{
-              if (currentPage == i) return item
-            })}
+          {pages.map((item, i) => {
+            if (currentPage == i) return item
+          })}
         </Container>
-        <Box pt='4'><Copyright/></Box>
+        <Box pt='4'><Copyright /></Box>
       </main>
     </div>
   );

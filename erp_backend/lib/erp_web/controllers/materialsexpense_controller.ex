@@ -40,11 +40,11 @@ A module that acts as the controller for managing materials expenses.
     end
   end
 
-  @doc """
+    @doc """
   Create a new materials expense.
   """
-  def create(conn, %{"amount" => amount}) do
-    with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.create_expense(amount) do
+  def create(conn, %{"amount" => amount, "company" => company}) do
+    with {:ok, %MaterialsExpense{} = materialsexpense} <- MaterialsExpense.create_expense(amount, company) do
       render(conn, "materialsexpense.json", materialsexpense: materialsexpense)
     end
   end

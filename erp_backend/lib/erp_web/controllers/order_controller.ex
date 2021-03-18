@@ -7,6 +7,7 @@ A module that acts as the controller for managing orders (customer transactions)
 
   @doc false
   def show(conn, %{"id" => id}) do
+    id = Integer.parse(id)
     order = Erp.Sales.Order.get_order!(id)
     render(conn, "show.json", order: order)
   end

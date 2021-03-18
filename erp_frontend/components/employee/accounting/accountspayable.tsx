@@ -66,7 +66,7 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {row.vendorName}
               </TableCell>
-              <TableCell align="right">{row.amountDue}</TableCell>
+              <TableCell align="right">{row.amountDue + "$"}</TableCell>
             </TableRow>
           ))}
         </TableBody>

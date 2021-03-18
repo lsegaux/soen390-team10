@@ -2,7 +2,7 @@
  * Template credit: https://material-ui.com/getting-started/templates/
  */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,30 +23,32 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MainListItems from "./listItemsEmployee";
 
-import {Auth} from "../../Auth"
+import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
 import QualityManagement from "../qualitymanagement/quality_management"
 import Inventory from "../production/inventory"
+import ShippingAndTransportation from "../employee/ShippingAndTransportation";
+import Packaging from "../packaging/Packaging"
 
 function Copyright() {
   return (
-  <>
-  <div>    
-    <p align = "center">
-      <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
-    </p>
-  </div>
-  <Typography variant="body2" color="textSecondary" align="center">
-    {"Copyright © "}
-    <Link color="inherit" href="https://localhost:4000/">
-      Adrenaline
+    <>
+      <div>
+        <p align="center">
+          <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG" />
+        </p>
+      </div>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://localhost:4000/">
+          Adrenaline
     </Link>{" "}
-    {new Date().getFullYear()}
-    {"."}
-  </Typography>
-  </>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </>
   );
 }
 
@@ -138,33 +140,34 @@ const useStyles = makeStyles((theme) => ({
   2          -> Accounting
   3          -> Quality Management
   4          -> Inventory Management
+  5          -> Packaging
   */
-const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Inventory key={4}/>];
+const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <Inventory key={4} />, <ShippingAndTransportation key={5} />, <Packaging key={6}/>];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
-  useEffect (() => {
+  useEffect(() => {
 
     axios({
       method: 'get',
       url: `http://localhost:4000/api/v1/my_user1`,
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-     },
-  }).then(res2 => {
+      },
+    }).then(res2 => {
       if (res2.status === 200) {
-          localStorage.setItem("email", res2.data.email);
-          localStorage.setItem("role", res2.data.role);
+        localStorage.setItem("email", res2.data.email);
+        localStorage.setItem("role", res2.data.role);
       }
-  }).catch(err2 => {
+    }).catch(err2 => {
       console.error(err2);
-  });
+    });
   }, [])
-  
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -207,7 +210,7 @@ export default function SkeletonEmployee() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit" onClick={() => {Auth.logout()}}>
+          <IconButton color="inherit" onClick={() => { Auth.logout() }}>
             <Typography>Logout</Typography>
           </IconButton>
         </Toolbar>
@@ -226,19 +229,19 @@ export default function SkeletonEmployee() {
         </div>
         <Divider />
         <List>
-          <MainListItems setCurrentPage={setCurrentPage}/>
+          <MainListItems setCurrentPage={setCurrentPage} />
         </List>
-        
+
       </Drawer>
-      
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            {pages.map((item,i)=>{
-              if (currentPage == i) return item
-            })}
+          {pages.map((item, i) => {
+            if (currentPage == i) return item
+          })}
         </Container>
-        <Box pt='4'><Copyright/></Box>
+        <Box pt='4'><Copyright /></Box>
       </main>
     </div>
   );

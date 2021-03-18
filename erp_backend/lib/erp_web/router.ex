@@ -36,6 +36,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/packaging/order_boxes", BoxController, :order_boxes
     post "/packaging/create_package", PackagingController, :create_package
     post "/packaging/reduce_quantity", BoxController, :reduce_quantity
+    
 
     get  "/production", ProductionController, :get_production_info
     get  "/production/plants", PlantController, :show_all_plants
@@ -60,8 +61,8 @@ A module for managing endpoints and routing requests to the appropriate controll
   scope "/api/v1", ErpWeb do
     pipe_through [:api, :jwt_authenticated]
 
-    get "/client_test", UserController, :client_test
     post "/sale", SaleController, :process_sale
+    get "/client_test", UserController, :client_test
     get  "/my_user1", UserController, :show
     get  "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
@@ -76,6 +77,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
 
+    get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
   end
 

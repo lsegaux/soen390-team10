@@ -10,7 +10,7 @@ alias Erp.Accounts.User
 
 data = [
   %{
-    "email" => "nic@mail.com",
+    "email" => "nicolasmacbeth+erpTest@gmail.com",
   },
   %{
     "email" => "test@mail.com"
