@@ -27,7 +27,7 @@ defmodule Erp.Chron do
   end
 
   defp schedule_chron() do
-    Process.send_after(self(), :work, 5 * 1000) # run every minute
+    Process.send_after(self(), :work, 60 * 1000) # run every minute
     # change time later!!!
   end
 
