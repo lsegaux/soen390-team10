@@ -2,7 +2,8 @@
  * Template credit: https://material-ui.com/getting-started/templates/
  */
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -132,11 +133,50 @@ const useStyles = makeStyles((theme) => ({
   */
 const pages = [<Dashboard key={0}/>,<Vendor key={1}/>,<Accounting key={2}/>, <QualityManagement key={3}/>, <Packaging key={4}/>];
 
+const url = 'http://localhost:4000';
+
 export default function Skeleton() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(3);
 
+  useEffect(()=>{
+    //To use the user email throughout the application
+    //Do: localStorage.getItem("email")
+    //For user role:
+    //Do: localStorage.getItem("role")
+    axios({
+      method: 'get',
+      url: `${url}/api/v1/my_user`,
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+     },
+  }).then(res => {
+      if (res.status === 200) {
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("role", res.data.role);
+      }
+  }).catch(err => {
+    axios({
+      method: 'get',
+      url: `${url}/api/v1/my_user1`,
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+     },
+  }).then(res => {
+      if (res.status === 200) {
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("role", res.data.role);
+      }
+  }).catch(err => {
+      console.error(err);
+  });
+      console.error(err);
+  });
+
+  }, [])
   
 
   const handleDrawerOpen = () => {

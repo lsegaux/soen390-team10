@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
 import axios from 'axios';
 
@@ -69,72 +69,135 @@ const defectTypes = ["Damaged product", "Incomplete order shipped", "Wrong produ
 const requestActions = ["Replace product", "Refund", "See comments"];
 
 export default function DefectForm({open, closePopup, clientOrders, vendorOrders}){
+    //Styling
     const classes = useStyles(useTheme());
+
+    //Anchor for all dropdown menus
     const [anchorElDefect, setAnchorElDefect] = useState<null | HTMLElement>(null);
     const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
 
+    //Defect form information
     const [formOrderID, setFormOrderID] = useState(-1);
     const [formDefectType, setFormDefectType] = useState("");
     const [formRequest, setFormRequest] = useState("");
     const [formDescription, setFormDescription] = useState("");
     const [formComment, setFormComment] = useState("");
 
-
+    //Handle report submission for both client and non-clients
     function handleSubmit(event){
       event.preventDefault();
-
-      /**
-       * Add items to our internal stock in the database
-       * 
-       */
-       console.log(formOrderID,formDefectType,formRequest,formDescription, formComment);
-
-       clearDefectVariables();
-       closePopup();
+        if (localStorage.getItem("role") === "Client"){
+            addClientDefect();
+        }else{
+            addVendorDefect();
+        }     
     }
 
+    //Add client defect to backend
+    function addClientDefect(){
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/client_claim/newClaim`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                client_claim:{
+                    claim_id:1, //The number doesn't matter
+                    name:localStorage.getItem("email"),
+                    comments: formComment,
+                    defecttype: formDefectType,
+                    description: formDescription,
+                    orderid: formOrderID,
+                    requeststatus: "N/A",
+                    status: "Pending review",
+                    clientrequest: formRequest
+                }
+            }
+          }).then((res)=>{
+              if (res.status == 200){
+                clearDefectVariables();
+                closePopup();
+                window.location.href ='/dashboard';
+              }
+          }).catch(err => {
+              console.error(err);
+              alert("Defect was not added due to some error.");
+          });
+    }
+
+    //Add vendor defect to backend
+    function addVendorDefect(){
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/vendor_claim/newClaim`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                vendor_claim:{
+                    claim_id:0, //The number doesn't matter
+                    name:"Wilson Inc.",
+                    comments: formComment,
+                    defecttype: formDefectType,
+                    description: formDescription,
+                    orderid: formOrderID,
+                    requeststatus: "N/A",
+                    status: "Pending review",
+                    vendorrequest: formRequest
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200){
+              clearDefectVariables();
+              closePopup();
+              window.location.href ='/dashboard';
+            }
+        }).catch(err => {
+              console.error(err);
+              alert("Defect was not added due to some error.");
+          });
+    }
+
+    //Set orderID
     function handleOrderID (e){
         setFormOrderID(e.target.value);
     }
-
+    //Open dropdown menu for defect type
     function handleClickDefect (event: React.MouseEvent<HTMLButtonElement>){
         setAnchorElDefect(event.currentTarget);
     };
-
+    //Open dropdown menu for request type
     function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>){
         setAnchorElRequest(event.currentTarget);
     };
-
+    //Set defect type
     function handleDefectType(item){
         setFormDefectType(item);
     }
-
+    //Set request type
     function handleRequestType(item){
         setFormRequest(item);
     }
-
+    //close Defect type dropdown menu
     function handleCloseDefect (){
         setAnchorElDefect(null);
     }
-
+    //close request type dropdown menu
     function handleCloseRequest (){
         setAnchorElRequest(null);
     }
-
+    //Validates the form
     function checkFormValid (){
-        if ((vendorOrders === null || clientOrders === null)) return false;
+        //if ((vendorOrders === null || clientOrders === null)) return false;
 
         //Check the dropdown menu options are not empty
         let requestSet = (formRequest !== "");
         let defectSet = (formDefectType !== "");
 
+        let descriptionNonEmpty = (formDescription !== "");
+        let commentNonEmpty = (formComment !== "");
+
         //Check the order id exists
         //Either check for client or vendors table, not both, depending on user type
         let orderIDExists = false;
-        //console.log(localStorage.getItem('userRole'));
-
-        let tempData = vendorOrders;
-
+        let tempData = (localStorage.getItem('role')==="Client")?clientOrders:vendorOrders;
         tempData.map(element => {
             if (formOrderID === element["id"].toString()){
                 orderIDExists = true;
@@ -142,9 +205,10 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             }
         });
        
-        return requestSet && defectSet && orderIDExists;
+        return requestSet && defectSet && orderIDExists && descriptionNonEmpty && commentNonEmpty;
     }
 
+    //clear defect form
     function clearDefectVariables(){
         setFormComment("");
         setFormDescription("");
@@ -176,13 +240,13 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             <TableRow>
                 <TableCell colSpan = {4}>
                 <label style = {{color:"white", fontWeight:"bold"}}>Provide description of defect:</label><br/>
-                <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormDescription(e.target.value)}/>
+                <textarea className = {classes.DefectTextArea} maxLength = {255} onChange={(e)=>setFormDescription(e.target.value)}/>
                 </TableCell>
             </TableRow> 
             <TableRow>
                 <TableCell colSpan = {4}>
                     <label style = {{color:"white", fontWeight:"bold"}}>Make any comments:</label><br/>
-                    <textarea className = {classes.DefectTextArea} maxLength = {255} onBlur={(e)=>setFormComment(e.target.value)}/>
+                    <textarea className = {classes.DefectTextArea} maxLength = {255} onChange={(e)=>setFormComment(e.target.value)}/>
                 </TableCell>
             </TableRow>       
         </TableBody> 

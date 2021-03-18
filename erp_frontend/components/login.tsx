@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, FormField, TextInput, Pane, Heading } from 'evergreen-ui'
-import axios from 'axios';
 import {loginPost} from "../utils/datafetcher"
 import { Auth } from "../Auth";
 
