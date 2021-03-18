@@ -10,7 +10,7 @@ import { Auth } from "../../../Auth"
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import Title from "../../employee/dashboard/Title";
+import Title from "../../dashboard/Title";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";

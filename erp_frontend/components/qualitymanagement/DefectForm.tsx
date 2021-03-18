@@ -116,7 +116,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
               if (res.status == 200){
                 clearDefectVariables();
                 closePopup();
-                window.location.href ='/dashboard';
+                window.location.href ='/client';
               }
           }).catch(err => {
               console.error(err);
@@ -147,7 +147,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             if (res.status == 200){
               clearDefectVariables();
               closePopup();
-              window.location.href ='/dashboard';
+              window.location.href ='/employee';
             }
         }).catch(err => {
               console.error(err);

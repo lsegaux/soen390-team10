@@ -36,7 +36,8 @@ export default function Signup(this: any) {
     .then(res => { 
         if (res.status === 200) {
           localStorage.setItem("jwt", res.data.jwt);
-          window.location.href = "/"
+
+          window.location.href = `/${userRole}`;
           return
         }
         setSignupError(true);

@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
+import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 
@@ -36,17 +37,11 @@ export default function MainListItems({setCurrentPage}){
    </ListItemIcon>
    <ListItemText primary="Quality Management" />
  </ListItem>
- <ListItem button>
+ <ListItem button onClick= {()=>setCurrentPage(4)}>
    <ListItemIcon>
-     <PeopleIcon />
+     <DynamicFeedIcon />
    </ListItemIcon>
-   <ListItemText primary="Customers" />
- </ListItem>
- <ListItem button>
-   <ListItemIcon>
-     <BarChartIcon />
-   </ListItemIcon>
-   <ListItemText primary="Reports" />
+   <ListItemText primary="Inventory" />
  </ListItem>
 </div>
 

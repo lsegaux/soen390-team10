@@ -52,7 +52,6 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/vendor_claim/newClaim", VendorClaimController, :create
     post "/quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
 
-    post "/sale", SaleController, :process_sale
     get "/sendemail", EmailController, :send_email
 
     resources "/vendorclaim", VendorClaimController
@@ -62,7 +61,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     pipe_through [:api, :jwt_authenticated]
 
     get "/client_test", UserController, :client_test
-
+    post "/sale", SaleController, :process_sale
     get  "/my_user1", UserController, :show
     get  "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
