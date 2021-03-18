@@ -6,4 +6,14 @@ defmodule Erp.AuthErrorHandler do
     send_resp(conn, 401, body)
   end
 
+  def is_employee(conn) do
+    user = Guardian.Plug.current_resource(conn)
+    user.role == "Employee"
+  end
+
+  def is_client(conn) do
+    user = Guardian.Plug.current_resource(conn)
+    user.role == "Client"
+  end
+
 end
