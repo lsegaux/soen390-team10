@@ -4,8 +4,6 @@ A module that acts as the controller for system emailing.
 """
     use ErpWeb, :controller
 
-    alias Erp.Repo
-
     @doc """
     Send a confirmation email for a bike order.
     """

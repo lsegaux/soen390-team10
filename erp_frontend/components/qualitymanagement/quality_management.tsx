@@ -3,7 +3,7 @@
  */
 
 import React, {useState ,useEffect} from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "1px 2px 1px 2px rgb(0,0,0,0.8)"
 
   },
-  orderButton:{
-    width: "40%",
-    borderColor: "rgb(0,0,0,0.8)",
-  },
   orderTextField:{
     width: "30%",
     marginLeft: "5px",
@@ -48,114 +44,82 @@ const useStyles = makeStyles((theme) => ({
 
 
 //Table headers
-const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Client Request", "Request Status"];
+const tableHeaders = ["Client", "Order ID", "Defect Type", "Description", "Comments", "Status", "Action Request", "Request Status"];
 
-//Defect Lists
-const defectListItems = ["Client Feedback List", "Vendor Defects List"];
+//Status options
+const statusOption = ["Pending Review", "In progress", "Resolved"];
 
-//QM Client defect filler data
-const clientDefectData = [
-                  {client: "John Lennon", orderID: 1, defectType: "Damaged product", 
-                    description: "The handlebar was already cracked",
-                    comment:"This is unacceptable, and I expect better!",
-                    status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Matty Banks", orderID: 2, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Eric Madlad", orderID: 3, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Yoseph Pill", orderID: 4, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Hose Green", orderID: 5, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  {client: "Purp Lee", orderID: 6, defectType: "Damaged product", 
-                  description: "The handlebar was already cracked",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Replace Part", requestStatus: "Approved"},
-                  ];
+//Status options
+const requestStatusOption = ["Decline", "Accept"];
 
-//QM Vendor defect filler data
-const vendorDefectData = [
-                  {orderID: 1, defectType: "Incomplete order shipped", 
-                    description: "Missing 2 handlebars",
-                    comment:"This is unacceptable, and I expect better!",
-                    status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 2, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 3, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 4, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 5, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  {orderID: 6, defectType: "Incomplete order shipped", 
-                  description: "Missing 2 handlebars",
-                  comment:"This is unacceptable, and I expect better!",
-                  status: "Resolved", request:"Make complaint to vendor", requestStatus: "Approved"},
-                  ];
 
 export default function QualityManagement() {
+  //Styling
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [clientQMData, setClientQMData] = useState(clientDefectData);
-  const [vendorQMData, setVendorQmData] = useState(vendorDefectData);
 
+  //Anchor for all dropdown menus
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElStatus, setAnchorElStatus] = useState<null | HTMLElement>(null);
+  const [anchorElRequest, setAnchorElRequest] = useState<null | HTMLElement>(null);
   const [listClientBool, setListClientBool] = useState(true);
 
+  //This variable keeps track of which table row was clicked on
+  const [rowSelectId,setRowSelectId] = useState(0);
+  
+  //Defect Data
+  const [clientQMData, setClientQMData] = useState([]);
+  const [vendorQMData, setVendorQMData] = useState([]);
+  
+  //Modal variable for hiding and showing
   const [openDefectModal, setOpenDefectModal] = useState(false);
 
+  //Orders data used to know if the defect id exists during submission
   const [clientOrders, setClientOrders] = useState(new Array());
   const [vendorOrders, setVendorOrders] = useState(new Array());
 
+  //Defect Lists
+  const defectListItems = (localStorage.getItem('role')=== "Client")?["My Defects"]:["Client Defect List", "Vendor Defects List"];
 
     useEffect(() => {
       let isMounted = true;
 
-      // axios({
-      //     method: 'get',
-      //     url: `${url}/api/v1/production/plants`,
-      //     headers: { "Content-Type": "application/json" },
-      // }).then(res => {
-      //     if (isMounted && res.status === 200) {
-      //         setAllPlants(res.data.data)
-      //     }
-      // }).catch(err => {
-      //     console.error(err);
-      // });
+      //Fetch vendor claims
+      axios({
+          method: 'get',
+          url: `${url}/api/v1/quality_management/vendor_claim`,
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+              setVendorQMData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
 
-      return ()=>{isMounted = false}
-   
-    }, []);
-
-    useEffect(() => {
-      let isMounted = true;
+       //Fetch client claims
+       axios({
+        method: 'get',
+        url: `${url}/api/v1/quality_management/client_claim`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+        if (isMounted && res.status === 200) {
+            setClientQMData(res.data.data);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
 
       //Fetching Customer Transactions
       axios({
         method: 'get',
         url: `${url}/api/v1/accounting/ledger`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
      }).then(res => {
         if (res.status === 200 && isMounted) {
           var rows = Array();
           for(var i=0; i<res.data.data.length; i++){
-            //Adding an orderID because the client order schema does not have an orderID attribute
-            //Ideally, this changes and the schema adopts an actual orderID attribute
+            //Adding an orderid because the client order schema does not have an orderid attribute
+            //Ideally, this changes and the schema adopts an actual orderid attribute
             rows.push({...res.data.data[i], id: (i+1)});
           }
           setClientOrders(rows);
@@ -168,7 +132,7 @@ export default function QualityManagement() {
       axios({
         method: 'get',
         url: `${url}/api/v1/production/expenses`,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
      }).then(res => {
         if (res.status === 200 && isMounted) {
           var rows = Array();
@@ -183,22 +147,137 @@ export default function QualityManagement() {
     return ()=>{isMounted = false}
   }, []);
     
+  //Defect Menu tracking
   function handleListSelect (key){
     if (key === 0) setListClientBool(true);
 
     if (key === 1) setListClientBool(false);
   }
 
+  //Update the status (only for Employees)
+  function handleStatusSelect(option){
+    
+    if (listClientBool){
+
+      //Client
+        let index = clientQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                client_claim:{
+                    status:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/employee'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }else{ //Vendors
+
+        let index = vendorQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                vendor_claim:{
+                    status:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/employee'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }
+    
+    handleClose();
+  }
+  //Update the request status (only for Employees)
+  function handleRequestSelect(option){
+
+    if (listClientBool){
+        let index = clientQMData[rowSelectId]["claim_id"];
+      //Client
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                client_claim:{
+                    requeststatus:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/employee'
+          }).catch(err => {
+              console.error(err);
+              alert("Request status was not updated due to some error.");
+          });
+    }else{ //Vendors
+        
+        let index = vendorQMData[rowSelectId]["claim_id"];
+
+        axios({
+            method: 'post',
+            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            data:{
+                vendor_claim:{
+                    requeststatus:option
+                }
+            }
+          }).then((res)=>{
+            if (res.status == 200) window.location.href = '/employee'
+          }).catch(err => {
+              console.error(err);
+              alert("Status was not updated due to some error.");
+          });
+    }
+    
+    handleClose();
+  }
+
+  //Open defect menu
   function handleClick (event: React.MouseEvent<HTMLButtonElement>){
     setAnchorEl(event.currentTarget);
   };
 
+  //Open Status menu (only for Employees)
+  function handleClickStatus (event: React.MouseEvent<HTMLButtonElement>, key){
+    setAnchorElStatus(event.currentTarget);
+    setRowSelectId(key)
+  };
 
+  //Open Request Status menu (only for Employees)
+  function handleClickRequest (event: React.MouseEvent<HTMLButtonElement>, key){
+    setAnchorElRequest(event.currentTarget);
+    setRowSelectId(key)
+  };
+
+  //Closes defect menu
   function handleClose (){
     setAnchorEl(null);
   }
 
+  //Closes Status menu (only for Employees)
+  function handleCloseStatus (){
+    setAnchorElStatus(null);
+  }
+
+  //Closes Request status menu (only for Employees)
+  function handleCloseRequest (){
+    setAnchorElRequest(null);
+  }
   
+  //Toggles Submit form modal
   function toggleReportDefect(){
     setOpenDefectModal(!openDefectModal);
   }
@@ -210,7 +289,10 @@ export default function QualityManagement() {
         <TableBody>
           <TableRow>
             <TableCell align = "center">
-            <Button className = {classes.button} onClick={handleClick}>Menu</Button>
+              {/* 
+              Defect List Menu
+              */}
+            <Button className = {classes.button} onClick={handleClick}>{listClientBool?defectListItems[0]:defectListItems[1]}</Button>
               <Menu id = "defectList" anchorEl = {anchorEl} keepMounted open = {Boolean(anchorEl)} onClose={handleClose}>
               {defectListItems.map((item, key)=>{
                 return <MenuItem key={key} onClick = {()=>{handleListSelect(key);handleClose()}}>{item}</MenuItem>
@@ -234,31 +316,61 @@ export default function QualityManagement() {
           </TableHead>
           <TableBody>
             {
-              (listClientBool?clientDefectData:vendorDefectData).map((row, key)=>{
+              //Print table based on user role, and selected list
+              (listClientBool?clientQMData:vendorQMData).map((row, key)=>{
+                if (localStorage.getItem('role') !== "Client" || localStorage.getItem('email') == row["name"])
                 return ( 
                 <TableRow key ={key}>
-                  <TableCell align = "center">{row["client"]}</TableCell>
-                  <TableCell align = "center">{row["orderID"]}</TableCell>
-                  <TableCell align = "center">{row["defectType"]}</TableCell>
+                  <TableCell align = "center">{row["name"]}</TableCell>
+                  <TableCell align = "center">{row["orderid"]}</TableCell>
+                  <TableCell align = "center">{row["defecttype"]}</TableCell>
                   <TableCell align = "center">{row["description"]}</TableCell>
-                  <TableCell align = "center">{row["comment"]}</TableCell>
-                  <TableCell align = "center">{row["status"]}</TableCell>
-                  <TableCell align = "center">{row["request"]}</TableCell>
-                  <TableCell align = "center">{row["requestStatus"]}</TableCell>
+                  <TableCell align = "center">{row["comments"]}</TableCell>
+                  <TableCell align = "center"> 
+                  {/*Employees can change the status and request status*/}
+                    {(localStorage.getItem('role')==="Employee")?
+                    <>
+                    <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
+                      <Menu anchorEl = {anchorElStatus} keepMounted open = {Boolean(anchorElStatus)} onClose={handleCloseStatus}>
+                      {statusOption.map((item, key2)=>{
+                        return <MenuItem key={key2} onClick = {()=>{handleStatusSelect(item);}}>{item}</MenuItem>
+                      })}
+                      </Menu> 
+                    </>
+                    :
+                    <>{row["status"]}</>
+                    }
+                     
+                  </TableCell>
+                  <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
+                  <TableCell align = "center">
+                    {/*Employees can change the status and request status*/}
+                  {(localStorage.getItem('role')==="Employee")?
+                    <>
+                  <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
+                      <Menu anchorEl = {anchorElRequest} keepMounted open = {Boolean(anchorElRequest)} onClose={handleCloseRequest}>
+                      {requestStatusOption.map((item, key2)=>{
+                        return <MenuItem key={key2} onClick = {()=>{handleRequestSelect(item);}}>{item}</MenuItem>
+                      })}
+                      </Menu>
+                      </>:
+                      <>{row["requeststatus"]}</>} 
+                    </TableCell>
                 </TableRow>)
               })
             }
             </TableBody> 
             <TableFooter>
               <TableRow>
-              <TableCell colSpan={4}/>
-                <TableCell align = "center">
-                  <Button className={classes.orderButton} onClick={()=>toggleReportDefect()}>Report a defect</Button>
+              <TableCell colSpan={7}/>
+                <TableCell align = "right">
+                  <Button className={classes.button} onClick={()=>toggleReportDefect()}>Report a defect</Button>
                 </TableCell>
               </TableRow>
             </TableFooter>
         </Table>
       </TableContainer>
+      {/*Submit report modal */}
       <DefectForm open={openDefectModal} closePopup={toggleReportDefect} vendorOrders = {vendorOrders} clientOrders = {clientOrders}/>
       </form>
     </div>

@@ -2,7 +2,8 @@
  * Template credit: https://material-ui.com/getting-started/templates/
  */
 
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,17 +21,20 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MainListItems from "./listItems";
+import MainListItems from "./listItemsClient";
 
-import { Auth } from "../../../Auth"
+import {Auth} from "../../Auth"
 import Dashboard from "./Dashboard";
-import Vendor from "../../vendor/Vendor";
-import Accounting from "../accounting/accountingdash";
-import QualityManagement from "../../qualitymanagement/quality_management"
-import ShippingAndTransportation from "../ShippingAndTransportation"
+import QualityManagement from "../qualitymanagement/quality_management"
 
 function Copyright() {
   return (
+    <>
+    <div>    
+      <p align = "center">
+        <img src="https://user-images.githubusercontent.com/60011793/111355331-a3049880-865d-11eb-9716-58cc795aff6a.PNG"/>
+      </p>
+    </div>
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://localhost:4000/">
@@ -39,6 +43,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
+    </>
   );
 }
 
@@ -126,18 +131,41 @@ const useStyles = makeStyles((theme) => ({
 /*
   Page index -> Page name
   0          -> Dashboard
-  1          -> Vendor
-  2          -> Accounting
-  3          -> Quality Management
+  1          -> Sales
+  2          -> QualityManagement
   */
-const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <ShippingAndTransportation key={4} />];
+const pages = [<Dashboard key={0}/>,<Sales key={1}/>, <QualityManagement key={2}/>];
 
-export default function Skeleton() {
+const url = "http://localhost:4000";
+
+export default function SkeletonClient() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(0);
 
+  useEffect(()=>{
+      //To use the user email throughout the application
+      //Do: localStorage.getItem("email")
+      //For user role:
+      //Do: localStorage.getItem("role")
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/my_user1`,
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+      },
+    }).then(res => {
+        if (res.status === 200) {
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("role", res.data.role);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
 
+  }, [])
+  
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -173,7 +201,7 @@ export default function Skeleton() {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            Dashboard - Client
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

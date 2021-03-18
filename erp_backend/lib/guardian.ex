@@ -6,17 +6,14 @@ defmodule Erp.Guardian do
     {:ok, sub}
   end
 
-  def subject_for_token(_, _) do
-    {:error, :reason_for_error}
-  end
-
   def resource_from_claims(claims) do
     id = claims["sub"]
-    resource = Erp.Accounts.get_user!(id)
-    {:ok,  resource}
+    try do
+      resource = Erp.Accounts.get_user!(id)
+      {:ok,  resource}
+    rescue
+      _ -> {:error, :reason_for_error}
+    end
   end
 
-  def resource_from_claims(_claims) do
-    {:error, :reason_for_error}
-  end
 end

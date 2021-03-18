@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button, FormField, TextInput, Pane, Heading } from 'evergreen-ui'
-import axios from 'axios';
 import {loginPost} from "../utils/datafetcher"
 import { Auth } from "../Auth";
 
@@ -23,7 +23,18 @@ export default function Login(this: any) {
       if (res.status === 200) {
         console.log(res);
         localStorage.setItem("jwt", res.data.jwt);
-        window.location.href = "/"
+        axios({
+          method: 'get',
+          url: `http://localhost:4000/api/v1/my_user1`,
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+        }).then(resRole => {
+          if (resRole.status === 200) {
+            window.location.href = `/${resRole.data.role}`
+          }
+        }).catch(err => {
+          console.error(err);
+        });
+        //window.location.href = "/"
         return
       }
       setLoginError(true);
