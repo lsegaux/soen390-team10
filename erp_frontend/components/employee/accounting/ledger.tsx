@@ -85,7 +85,7 @@ export default function BasicTable() {
                 {row.userEmail}
               </TableCell>
               <TableCell>{row.bikesAmount}</TableCell>
-              <TableCell>{row.price}</TableCell>
+              <TableCell>{row.price + "$"}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}
@@ -111,9 +111,9 @@ export default function BasicTable() {
           {vendorData.map((row) => (
             <TableRow key={row.amount}>
               <TableCell component="th" scope="row">
-              Wilson Materials Company Limited
+              {row.company}
               </TableCell>
-              <TableCell>{row.amount}</TableCell>
+              <TableCell>{row.amount + "$"}</TableCell>
             </TableRow>
           ))}
         </TableBody>

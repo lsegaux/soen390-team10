@@ -13,17 +13,19 @@ A module that contains the raw methods for emailing (called by controller).
         |> from("390teamten@gmail.com")
         |> subject("Order Confirmation")
         |> render("order_confirmation_email.html", email_address: email_address, id: id, bikesAmount: bikesAmount, price: price, time: time)
+        |> Erp.Mailer.deliver_now
     end
 
     @doc """
     Send an email notifying that a bike order has been shipped.
     """
-    def order_shipped_email(email_address, id, delivery_date) do
+    def order_shipped_email(email_address, id) do
         new_email
         |> to(email_address)
         |> from("390teamten@gmail.com")
         |> subject("Order has been shipped.")
-        |> render("order_shipped_email.html", email_address: email_address, id: id, delivery_date: delivery_date)
+        |> render("order_shipped_email.html", email_address: email_address, id: id)
+        |> Erp.Mailer.deliver_now
     end
 
     @doc """
@@ -35,5 +37,6 @@ A module that contains the raw methods for emailing (called by controller).
         |> from("390teamten@gmail.com")
         |> subject("Order has been delivered.")
         |> render("order_delivered_email.html", email_address: email_address, id: id, delivery_date: delivery_date)
+        |> Erp.Mailer.deliver_now
     end
 end

@@ -95,7 +95,7 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
        if(success){
             axios({
                 method: 'post',
-                url: `${url}/api/v1/production/expense/create/amount/${total}`,
+                url: `${url}/api/v1/production/expense/create/amount/${total}/Wilson-Materials-Inc.`,
                 headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             }).then(res => {
                 if (res.status === 200) {

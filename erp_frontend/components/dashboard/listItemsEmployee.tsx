@@ -50,10 +50,16 @@ export default function MainListItems({setCurrentPage}){
    </ListItemIcon>
    <ListItemText primary="Packaging" />
  </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(6)}>
+   <ListItemIcon>
+     <CardTravelIcon />
+   </ListItemIcon>
+   <ListItemText primary="Shipping" />
+ </ListItem>
 </div>
 
 }
-  
+
 
 
 

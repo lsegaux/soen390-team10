@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
@@ -20,13 +20,13 @@ function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
         return Auth.isAuthenticated() ? (
           children
         ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location },
-              }}
-            />
-          );
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        );
       }}
     />
   );
@@ -35,23 +35,23 @@ function PrivateRoute({ children, ...rest }: { children: any; path: string }) {
 
 
 export default () => {
-/*  
-  const url = "http://localhost:4000";
-
-  useEffect (()=>{
-    axios({
-    method: 'get',
-    url: `${url}/api/v1/my_user1`,
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-  }).then(res => {
-    if (res.status === 200) {
-      //setRole(res.data.role);
-    }
-  }).catch(err => {
-    console.error(err);
-  });
-  }, []);
-*/
+  /*  
+    const url = "http://localhost:4000";
+  
+    useEffect (()=>{
+      axios({
+      method: 'get',
+      url: `${url}/api/v1/my_user1`,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+      if (res.status === 200) {
+        //setRole(res.data.role);
+      }
+    }).catch(err => {
+      console.error(err);
+    });
+    }, []);
+  */
   return (
     <>
       <BrowserRouter>

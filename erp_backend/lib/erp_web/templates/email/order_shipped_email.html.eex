@@ -8,7 +8,7 @@
       <p>Hello!</p>
       <p>Adrenaline has shipped your order!</p>
       <p>Order ID: <%= @id %></p>
-      <p>Estimated delivery date: <%= @delivery_date %></p>
+      <p>We will send you an email when your order has been delivered!</p>
       <br/>
       <p>The Adrenaline Team.</p>
   </body>

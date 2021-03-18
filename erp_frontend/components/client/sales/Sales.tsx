@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Auth } from "../../../Auth"
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
@@ -188,7 +183,7 @@ var plants = [
             }
         ]
     }
-    ]
+]
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -209,8 +204,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         contentSales: {
             flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
+            height: "100%",
+            overflow: "auto"
         },
         containerSales: {
             paddingTop: theme.spacing(4),
@@ -358,7 +353,10 @@ export default function Sales() {
         axios({
             method: 'post',
             url: "http://localhost:4000/api/v1/sale",
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+             },
             data: {
                 "sale": {
                     price: parseFloat(totalPrice.toFixed(2)),
@@ -374,7 +372,7 @@ export default function Sales() {
             }
         }).catch(err => {
             console.error(err);
-        });  
+        });
     }
 
     function validateBikeAmt() {
@@ -393,19 +391,6 @@ export default function Sales() {
 
     return (
         <div className={classes.sales}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButtonSales} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.titleSales}>
-                        Sales
-          </Typography>
-                    <IconButton color="inherit" onClick={() => { Auth.logout() }}>
-                        <Typography>Logout</Typography>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
             <main className={classes.contentSales}>
                 <Container maxWidth="lg" className={classes.containerSales}>
                     <Grid container spacing={3}>
@@ -464,15 +449,8 @@ export default function Sales() {
                                             <TextField
                                                 autoFocus
                                                 margin="dense"
+                                                id="name"
                                                 label="Name of cardholder"
-                                                type="string"
-                                                fullWidth
-                                            />
-                                            <TextField
-                                                autoFocus
-                                                margin="dense"
-                                                id="email"
-                                                label="Email of cardholder"
                                                 type="string"
                                                 fullWidth
                                                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCardPerson(e.target.value)}
