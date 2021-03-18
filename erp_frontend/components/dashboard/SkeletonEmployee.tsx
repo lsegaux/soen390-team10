@@ -2,7 +2,8 @@
  * Template credit: https://material-ui.com/getting-started/templates/
  */
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -145,6 +146,24 @@ export default function SkeletonEmployee() {
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
+  useEffect (() => {
+
+    axios({
+      method: 'get',
+      url: `http://localhost:4000/api/v1/my_user1`,
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+     },
+  }).then(res2 => {
+      if (res2.status === 200) {
+          localStorage.setItem("email", res2.data.email);
+          localStorage.setItem("role", res2.data.role);
+      }
+  }).catch(err2 => {
+      console.error(err2);
+  });
+  }, [])
   
 
   const handleDrawerOpen = () => {

@@ -151,19 +151,6 @@ export default function SkeletonClient() {
     //Do: localStorage.getItem("role")
     axios({
       method: 'get',
-      url: `${url}/api/v1/my_user`,
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-     },
-  }).then(res => {
-      if (res.status === 200) {
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("role", res.data.role);
-      }
-  }).catch(err => {
-    axios({
-      method: 'get',
       url: `${url}/api/v1/my_user1`,
       headers: { 
         "Content-Type": "application/json",
@@ -175,8 +162,6 @@ export default function SkeletonClient() {
           localStorage.setItem("role", res.data.role);
       }
   }).catch(err => {
-      console.error(err);
-  });
       console.error(err);
   });
 
