@@ -80,7 +80,7 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
                axios({
                  method: 'post',
                  url: `${url}/api/v1/production/material/update/material_id/${data[i]["material_id"]}/quantity/${data[i]["quantity"] + order[i]}`,
-                 headers: { "Content-Type": "application/json" },
+                 headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
                }).then(res => {
                    if (res.status === 200) {
                    }
@@ -96,7 +96,7 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
             axios({
                 method: 'post',
                 url: `${url}/api/v1/production/expense/create/amount/${total}`,
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             }).then(res => {
                 if (res.status === 200) {
                 }

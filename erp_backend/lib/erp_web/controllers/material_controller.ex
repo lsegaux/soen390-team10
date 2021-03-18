@@ -2,9 +2,6 @@ defmodule ErpWeb.MaterialController do
   use ErpWeb, :controller
   import Ecto.Query, warn: false
 
-  alias Erp.Repo
-
-  alias Erp.Production
   alias Erp.Production.Material
 
   def show(conn, %{"id" => material_id}) do
