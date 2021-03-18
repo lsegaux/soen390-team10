@@ -39,6 +39,14 @@ defmodule ErpWeb.UserController do
     conn |> render("user.json", user: user)
   end
 
+  def employee_test(conn, _) do
+    send_resp(conn, 200, "you're an employee")
+  end
+
+  def client_test(conn, _) do
+    send_resp(conn, 200, "every logged user can see this")
+  end
+
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
 

@@ -102,7 +102,7 @@ class Create extends React.Component<RouteComponentProps, InputFormState> {
           <Button
             variant="outlined"
             component="a"
-            href="/dashboard"
+            href="/employee"
             style={{
               padding: "1%",
               margin: "1%",

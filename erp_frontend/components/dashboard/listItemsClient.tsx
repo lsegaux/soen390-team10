@@ -13,43 +13,19 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 export default function MainListItems({ setCurrentPage }) {
   return <div>
-    <ListItem button onClick={() => setCurrentPage(0)}>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
     <ListItem button onClick={() => setCurrentPage(1)}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Vendors" />
+      <ListItemText primary="Sales" />
     </ListItem>
     <ListItem button onClick={() => setCurrentPage(2)}>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Accounting" />
-    </ListItem>
-    <ListItem button onClick={() => setCurrentPage(3)}>
       <ListItemIcon>
         <AssignmentTurnedInIcon />
       </ListItemIcon>
       <ListItemText primary="Quality Management" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button onClick={() => setCurrentPage(4)}>
+    <ListItem button onClick={() => setCurrentPage(3)}>
       <ListItemIcon>
         <LocalShippingIcon />
       </ListItemIcon>

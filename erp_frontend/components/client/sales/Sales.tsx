@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import Title from "../../employee/dashboard/Title";
+import Title from "../../dashboard/Title";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -319,6 +319,7 @@ export default function Sales() {
     const [securityCode, setSecurityCode] = useState("");
     const [expiration, setExpiration] = useState("");
     const [cardPerson, setCardPerson] = useState("");
+    const [partsMissing, setPartsMissing] = useState([""]);
 
     const classes = useStyles();
 
@@ -335,7 +336,10 @@ export default function Sales() {
         let qty = bikeParts[index]["types"][value]["quantity"]
         let price = bikeParts[index]["types"][value]["price"];
         if (qty < bikeQty) {
-            alert(`This part is out of stock (only ${qty} left).`);
+            // alert(`This part is out of stock (only ${qty} left).`);
+            let temp : string[] = partsMissing
+            temp.push(partName + ": " + qty)
+            setPartsMissing(temp)
             return;
         }
         setTotalPrice(totalPrice + price);
@@ -349,7 +353,7 @@ export default function Sales() {
         axios({
             method: 'post',
             url: "http://localhost:4000/api/v1/sale",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data: {
                 "sale": {
                     price: parseFloat(totalPrice.toFixed(2)),
@@ -391,7 +395,13 @@ export default function Sales() {
                             <Paper className={classes.paperSales}>
                                 <Title>Build a bike</Title>
                                 <br></br>
-                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" onMouseLeave={(e: { target: { value: React.SetStateAction<string>; }; }) => handleBikeQty(e.target.value)} />
+                                {partsMissing.map((item) => {
+                                    <p style={{color: "red"}}>{item}</p>
+                                })}
+                                <TextField id="filled-basic" label="Enter quantity of bikes" variant="filled" 
+                                onMouseLeave={
+                                    (e) => handleBikeQty((e.target as any).value)
+                                } />
                                 <Typography>Please select type of material for each category.</Typography>
                                 <br></br>
                                 <Table size="small">
@@ -407,7 +417,7 @@ export default function Sales() {
                                             return (
                                                 <TableRow key={index}>
                                                     <TableCell>{bikePart.partName}</TableCell>
-                                                    <RadioGroup onChange={(e: { target: { value: React.SetStateAction<String>; }; }) => buttonChange(e.target.value, bikePart.partName, index)}>
+                                                    <RadioGroup onChange={(e) => buttonChange(e.target.value, bikePart.partName, index)}>
                                                         {bikePart.material.map((material, indexMaterial) => (
                                                             <TableCell key={bikePart.types + material} colSpan={materialLastIndex === indexMaterial ? 40 : 1}>
                                                                 <FormControlLabel value={material}

@@ -26,7 +26,7 @@ defmodule Erp.Production.MaterialsExpense do
     Repo.insert %MaterialsExpense{amount: float, processed: false}
   end
 
-  def get_materialsexpense!(id), do: Repo.get!(MaterialsExpense, id)
+  def get_materialsexpense(id), do: Repo.get!(MaterialsExpense, id)
 
   def list_materialsexpenses() do
     Repo.all(MaterialsExpense)
