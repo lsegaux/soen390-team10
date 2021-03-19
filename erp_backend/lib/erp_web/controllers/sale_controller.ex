@@ -1,4 +1,4 @@
-adefmodule ErpWeb.SaleController do
+defmodule ErpWeb.SaleController do
 @moduledoc """
 A module that acts as the controller for system sales.
 """

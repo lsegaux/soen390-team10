@@ -65,7 +65,7 @@ export function reduceBoxes(id, order_id, callback) {
 }
 
 
-export function dispatchPackage(id, weight, callback) {
+export function dispatchPackage(id, weight, plantId, callback) {
     axios({
         method: 'post',
         url: `${domain}/api/v1/packaging/create_package`,
@@ -73,7 +73,7 @@ export function dispatchPackage(id, weight, callback) {
         data: {
             "package": {
                 "order_id": id, 
-                "plant_id": id,
+                "plant_id": plantId,
                 "user_email": "",
                 "weight": weight, 
                 "shipped": false

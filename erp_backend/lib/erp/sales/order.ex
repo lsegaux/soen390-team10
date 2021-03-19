@@ -9,7 +9,7 @@ defmodule Erp.Sales.Order do
   alias Erp.Repo
   alias Erp.Sales.Order
 
-  @primary_key false
+  #@primary_key false
   @doc false
   schema "orders" do
     field :price, :float

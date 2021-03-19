@@ -46,35 +46,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ShippingAndTransportationClient() {
 
+    const orderStatusReference = {
+        0: 'Created',
+        1: 'Packaged',
+        2: 'Shipped',
+        3: 'Delivered'
+    }
+
     const [orderId, setOrderId] = useState('');
     const [openOrder, setOpenOrder] = useState(false);
     const [orderArr, setOrderArr] = useState(Array());
     const [orderDetail, setOrderDetail] = useState(Object());
     const url = 'http://localhost:4000';
-
-
-    useEffect(() => {
-        console.log("use effect works")
-    }, []);
-
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: `${url}/api/v1/accounting/order/${orderId}`,
-            headers: { "Content-Type": "application/json" },
-        }).then(res => {
-            if (res.status === 200) {
-                console.log(res.data.data)
-                var rows = Object();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    rows.push(res.data.data[i]);
-                }
-                setOrderDetail(rows);
-            }
-        }).catch(err => {
-            console.error(err);
-        });
-    }, [orderId]);
 
     const handleOpen = () => {
         setOpenOrder(true);
@@ -83,6 +66,24 @@ export default function ShippingAndTransportationClient() {
     const handleClose = () => {
         setOpenOrder(false);
     };
+
+    const handleRequest = () => {
+        axios({
+            method: 'get',
+            url: `${url}/api/v1/accounting/order/${orderId}`,
+            headers: { "Content-Type": "application/json" },
+        }).then(res => {
+            if (res.status === 200) {
+                setOrderDetail(res.data.data);
+                handleOpen()
+            } else {
+                alert('Package details not found for current user.');
+            }
+        }).catch(err => {
+            console.error(err);
+            alert('Package details not found for current user.');
+        });
+    }
 
     const classes = useStyles();
 
@@ -99,7 +100,7 @@ export default function ShippingAndTransportationClient() {
                                 </Typography>
                                 <form align="center" className={classes.rootShippingClient} noValidate autoComplete="off">
                                     <TextField id="filled-basic" label="Enter order ID" variant="filled" onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setOrderId(e.target.value)} />
-                                    <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleOpen} >
+                                    <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleRequest} >
                                         View Order
                                 </Button>
                                 </form>
@@ -113,13 +114,16 @@ export default function ShippingAndTransportationClient() {
                                 {'Order ID: ' + orderDetail.id}
                             </Typography>
                             <Typography gutterBottom>
-                                {'Email:' + orderDetail.email}
+                                {'Email: ' + orderDetail.userEmail}
                             </Typography>
                             <Typography gutterBottom>
-                                {'Price:' + orderDetail.price}
+                                {'Price: ' + orderDetail.price + '$'}
                             </Typography>
                             <Typography gutterBottom>
-                                {'Number of Bikes:' + orderDetail.bikeAmount}
+                                {'Number of Bikes: ' + orderDetail.bikesAmount}
+                            </Typography>
+                            <Typography gutterBottom>
+                                {'Order status: ' + orderStatusReference[orderDetail.status]}
                             </Typography>
                         </DialogContent>
 
