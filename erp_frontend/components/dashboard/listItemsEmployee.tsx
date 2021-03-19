@@ -4,12 +4,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CardTravelIcon from '@material-ui/icons/CardTravel';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 
 export default function MainListItems({setCurrentPage}){
@@ -52,7 +51,7 @@ export default function MainListItems({setCurrentPage}){
  </ListItem>
  <ListItem button onClick= {()=>setCurrentPage(6)}>
    <ListItemIcon>
-     <CardTravelIcon />
+     <LocalShippingIcon />
    </ListItemIcon>
    <ListItemText primary="Shipping" />
  </ListItem>

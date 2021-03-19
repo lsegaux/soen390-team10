@@ -142,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
   4          -> Inventory Management
   5          -> Packaging
   */
-const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <Inventory key={4} />, <ShippingAndTransportation key={5} />, <Packaging key={6}/>];
+const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <Inventory key={4} />, <Packaging key={5}/>, <ShippingAndTransportation key={6} />];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();
