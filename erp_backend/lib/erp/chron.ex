@@ -14,11 +14,17 @@ defmodule Erp.Chron do
     GenServer.start_link(__MODULE__, %{})
   end
 
+  @doc """
+  Initiate worker
+  """
   def init(state) do
     schedule_chron() # Schedule work to be performed at some point
     {:ok, state}
   end
 
+  @doc """
+  Handle message sending for processes
+  """
   def handle_info(:work, state) do
     update_database()
 
@@ -26,13 +32,17 @@ defmodule Erp.Chron do
     {:noreply, state}
   end
 
+  @doc """
+  Chron job scheduler
+  """
   defp schedule_chron() do
     Process.send_after(self(), :work, 60 * 1000) # run every minute
     # change time later!!!
   end
 
-  # DB updating methods
-
+  @doc """
+  Update databases with new data at scheduled times
+  """
   defp update_database() do
     # handle order created -> packaged (0 -> 1)
     update_created_orders()
@@ -44,11 +54,17 @@ defmodule Erp.Chron do
     update_shipped_orders()
   end
 
+  @doc """
+  Update status 0 orders
+  """
   defp update_created_orders() do
     query = from(o in Order, join: p in Package, on: o.id == p.order_id and o.status == 0, update: [set: [status: 1]])
     Repo.update_all(query, [])
   end
 
+  @doc """
+  Update status 1 orders
+  """
   defp update_packaged_orders() do
     # update the records
     cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -120, :second) # 2 minutes, for demo purposes
@@ -66,6 +82,9 @@ defmodule Erp.Chron do
     end
   end
 
+  @doc """
+  Update status 2 orders
+  """
   defp update_shipped_orders() do
     cutoff_time = NaiveDateTime.add(NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second), -240, :second) # 4 minutes, for demo purposes
     query = from(o in Order, where: o.status == 2 and o.time < ^cutoff_time, select: [:id, :userEmail], update: [set: [status: 3]])
