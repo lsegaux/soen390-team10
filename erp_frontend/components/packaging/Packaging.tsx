@@ -142,7 +142,7 @@ export default function Packaging() {
   function handleSubmitDispatchPackage(event){
     event.preventDefault();
     
-    dispatchPackage(orderId, weight, () => {
+    dispatchPackage(orderId, weight, selectPlantIndex, () => {
       refreshData(null)
     })
   }
