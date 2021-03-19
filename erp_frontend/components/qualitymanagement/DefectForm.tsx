@@ -101,7 +101,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 client_claim:{
-                    claim_id:1, //The number doesn't matter
+                    claim_id: vendorOrders.length + 1, //The number doesn't matter
                     name:localStorage.getItem("email"),
                     comments: formComment,
                     defecttype: formDefectType,
@@ -132,7 +132,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 vendor_claim:{
-                    claim_id:0, //The number doesn't matter
+                    claim_id: vendorOrders.length + 1, //The number does matter
                     name:"Wilson Inc.",
                     comments: formComment,
                     defecttype: formDefectType,
