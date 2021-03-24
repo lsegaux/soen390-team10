@@ -27,7 +27,7 @@ import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
-import QualityManagement from "../qualitymanagement/quality_management"
+import QualityManagementEmployee from "../qualitymanagement/quality_management_employee"
 import Inventory from "../production/inventory"
 import ShippingAndTransportation from "../employee/ShippingAndTransportation";
 import Packaging from "../packaging/Packaging"
@@ -142,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
   4          -> Inventory Management
   5          -> Packaging
   */
-const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagement key={3} />, <Inventory key={4} />, <Packaging key={5}/>, <ShippingAndTransportation key={6} />];
+const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, <QualityManagementEmployee key={3} />, <Inventory key={4} />, <Packaging key={5}/>, <ShippingAndTransportation key={6} />];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();
@@ -160,8 +160,6 @@ export default function SkeletonEmployee() {
       },
     }).then(res2 => {
       if (res2.status === 200) {
-        localStorage.setItem("email", res2.data.email);
-        localStorage.setItem("role", res2.data.role);
       }
     }).catch(err2 => {
       console.error(err2);
