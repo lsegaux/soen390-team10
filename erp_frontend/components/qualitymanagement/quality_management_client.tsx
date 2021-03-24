@@ -90,10 +90,8 @@ export default function QualityManagementClient() {
         if (res.status === 200 && isMounted) {
           var rows = Array();
           for(var i=0; i<res.data.data.length; i++){
-            //Adding an orderid because the client order schema does not have an orderid attribute
-            //Ideally, this changes and the schema adopts an actual orderid attribute
-            rows.push({...res.data.data[i], id: (i+1)});
-          }
+            rows.push({...res.data.data[i]});
+          }         
           setRespectiveOrders(rows);
         }
      }).catch(err => {
