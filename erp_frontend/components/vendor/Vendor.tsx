@@ -49,66 +49,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-//Remove once we can retrieve the data from the database
-//Note for later: dynamic keys are set: {["key"]:"data"}
-const hardData = {
-  ["montreal"]:{
-    materialList: [{
-      name: "Bolt",
-      stock: 12,
-      vendor:"Wilson Inc.",
-      pricePerUnit:0.49
-    },
-    {
-      name: "Metal rod",
-      stock: 6,
-      vendor:"Wilson Inc.",
-      pricePerUnit:6.49
-    },{
-      name: "Cloth",
-      stock: 121,
-      vendor:"Wilson Inc.",
-      pricePerUnit:0.49
-    },
-    {
-      name: "Plastic Rod",
-      stock: 12,
-      vendor:"Wilson Inc.",
-      pricePerUnit:6.49
-    },
-  ]
-  },["toronto"]:{
-    materialList: [{
-      name: "Cloth",
-      stock: 121,
-      vendor:"Wilson Inc.",
-      pricePerUnit:0.49
-    },
-    {
-      name: "Plastic Rod",
-      stock: 12,
-      vendor:"Wilson Inc.",
-      pricePerUnit:6.49
-    },
-    {
-      name: "Bolt",
-      stock: 12,
-      vendor:"Wilson Inc.",
-      pricePerUnit:0.49
-    },
-    {
-      name: "Metal rod",
-      stock: 6,
-      vendor:"Wilson Inc.",
-      pricePerUnit:6.49
-    }
-  ]}
-};
-
-//Helper function to process the data from the database
-/*function formatRow(name,stock,vendor,price){
-  return {name:name,stock:stock,vendor:vendor,pricePerUnit:price}
-}*/
 
 //Table headers
 const tableHeaders = ["Material", "Internal Stock", "Vendor", "Price Per Unit", "Order Material"];
@@ -184,9 +124,6 @@ export default function Vendor() {
    
     }, []);
     
-    // useEffect(() => {}, [])
-
-
   function handlePlantSelect (name){
     setSelectedPlantIndex(name);
   }

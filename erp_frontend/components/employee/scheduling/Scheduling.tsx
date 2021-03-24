@@ -99,7 +99,7 @@ export default function Scheduling() {
 
       //To do:
       //When retrieve machines when plant is changes
-      
+
       // axios({
       //   method: 'get',
       //   url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
@@ -216,7 +216,7 @@ export default function Scheduling() {
                   <TableCell align = "center">{row["status"]}</TableCell>
                   <TableCell align = "center">{row["start_time"]}</TableCell>
                   <TableCell align = "center">{row["end_time"]}</TableCell>
-                  <TableCell align = "center">{row["cost"]}</TableCell>
+                  <TableCell align = "center">{row["cost"].toFixed(2)}</TableCell>
                   <TableCell align = "center">
                     <Button className = {classes.button} onClick={()=>handleForceStop(row)}>Force Stop</Button>
                   </TableCell>
