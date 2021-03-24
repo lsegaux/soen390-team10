@@ -69,6 +69,9 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
 
     resources "/clientclaim", ClientClaimController
+    
+    get "/accounting/order/:id", OrderController, :show
+    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/api/v1", ErpWeb do
@@ -76,9 +79,6 @@ A module for managing endpoints and routing requests to the appropriate controll
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
-
-    get "/accounting/order/:id", OrderController, :show
-    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/", ErpWeb do

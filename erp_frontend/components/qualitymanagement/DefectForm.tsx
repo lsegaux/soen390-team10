@@ -102,7 +102,6 @@ export default function DefectForm({open, closePopup, respectiveOrders, role, re
             data:{
                 client_claim:{
                     claim_id:respectiveClaimSize.length,
-                    name:"client@gmail.com",
                     comments: formComment,
                     defecttype: formDefectType,
                     description: formDescription,
