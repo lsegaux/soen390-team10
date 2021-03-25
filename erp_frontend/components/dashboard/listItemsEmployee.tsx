@@ -9,6 +9,7 @@ import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CardTravelIcon from '@material-ui/icons/CardTravel';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 
 export default function MainListItems({setCurrentPage}){
@@ -54,6 +55,12 @@ export default function MainListItems({setCurrentPage}){
      <LocalShippingIcon />
    </ListItemIcon>
    <ListItemText primary="Shipping" />
+ </ListItem>
+ <ListItem button onClick= {()=>setCurrentPage(7)}>
+   <ListItemIcon>
+     <ScheduleIcon />
+   </ListItemIcon>
+   <ListItemText primary="Scheduling" />
  </ListItem>
 </div>
 
