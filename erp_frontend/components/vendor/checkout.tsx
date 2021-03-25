@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import axios from 'axios';
 
@@ -74,6 +74,8 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
        */
       let success = true;
 
+      //Not great practice to have a looped query
+      //Refactoring this such that it is one query would be better
        for(let i = 0; i < order.length; i++){
            let success = true;
            if(order[i] !== 0 && success){
@@ -95,8 +97,9 @@ export default function Checkout({open, closePopup, order, data, clearOrder}){
        if(success){
             axios({
                 method: 'post',
-                url: `${url}/api/v1/production/expense/create/amount/${total}/Wilson-Materials-Inc.`,
+                url: `${url}/api/v1/production/expense/create/amount/${total}`,
                 headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+                params: {"company": "Wilson-Materials-Inc."},
             }).then(res => {
                 if (res.status === 200) {
                 }
