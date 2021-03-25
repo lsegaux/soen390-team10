@@ -6,10 +6,7 @@ import React, {useState ,useEffect} from "react";
 import { makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -50,11 +47,9 @@ export default function QualityManagementClient() {
   //Styling
   const classes = useStyles();
 
-  //Anchor for all dropdown menus
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   //Defect Data
   const [clientQMData, setClientQMData] = useState([]);
+  const [countAllQMData,setCountAllQMData] = useState(0)
   
   //Modal variable for hiding and showing
   const [openDefectModal, setOpenDefectModal] = useState(false);
@@ -75,11 +70,25 @@ export default function QualityManagementClient() {
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
     }).then(res => {
         if (isMounted && res.status === 200) {
-            setClientQMData(res.data.data);
+          setCountAllQMData(res.data.data.length);
         }
     }).catch(err => {
         console.error(err);
     });
+
+    //Fetch client claims
+    axios({
+      method: 'get',
+      url: `${url}/api/v1/quality_management/client_claim/client`,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+  }).then(res => {
+      if (isMounted && res.status === 200) {
+        setClientQMData(res.data.data);
+      }
+  }).catch(err => {
+      console.error(err);
+  });
+    // 
 
       //Fetching Customer Transactions
       axios({
@@ -100,12 +109,7 @@ export default function QualityManagementClient() {
     
     return ()=>{isMounted = false}
   }, []);
-
-  //Open defect menu
-  function handleClick (event: React.MouseEvent<HTMLButtonElement>){
-    setAnchorEl(event.currentTarget);
-  };
-  
+ 
   //Toggles Submit form modal
   function toggleReportDefect(){
     setOpenDefectModal(!openDefectModal);
@@ -118,7 +122,7 @@ export default function QualityManagementClient() {
         <TableBody>
           <TableRow>
             <TableCell align = "center">
-              <Button className = {classes.button} onClick={handleClick}>{defectListItems[0]}</Button>
+              <Button className = {classes.button}>{defectListItems[0]}</Button>
             </TableCell>
           </TableRow>
         </TableBody>
@@ -162,7 +166,7 @@ export default function QualityManagementClient() {
         </Table>
       </TableContainer>
       {/*Submit report modal */}
-      <DefectForm open={openDefectModal} closePopup={toggleReportDefect} respectiveOrders = {respectiveOrders} role="Client" respectiveClaimSize = {clientQMData.length}/>
+      <DefectForm open={openDefectModal} closePopup={toggleReportDefect} respectiveOrders = {respectiveOrders} role="Client" respectiveClaimSize = {countAllQMData}/>
       </form>
     </div>
    

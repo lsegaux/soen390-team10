@@ -54,6 +54,17 @@ A module for managing client claims on defective products.
   end
 
   @doc """
+  Get a list of all client claims with the same email.
+  """
+  def show_client_claims_from_email(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    
+    clientclaim = QualityManagement.list_clientclaim_from_email(user.email)
+
+    render(conn, "index.json", clientclaim: clientclaim)
+  end
+
+  @doc """
   Edit a singular client claim (update by ID)
   """
   def edit(conn, %{"id" => id}) do
