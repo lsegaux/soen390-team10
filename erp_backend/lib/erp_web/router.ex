@@ -68,6 +68,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
 
+    resources "/tasks", TaskController
     resources "/clientclaim", ClientClaimController
   end
 
