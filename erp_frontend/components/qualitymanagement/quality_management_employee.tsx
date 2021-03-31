@@ -53,7 +53,7 @@ const statusOption = ["Pending Review", "In progress", "Resolved"];
 const requestStatusOption = ["Decline", "Accept"];
 
 
-export default function QualityManagement() {
+export default function QualityManagementEmployee() {
   //Styling
   const classes = useStyles();
 
@@ -74,11 +74,10 @@ export default function QualityManagement() {
   const [openDefectModal, setOpenDefectModal] = useState(false);
 
   //Orders data used to know if the defect id exists during submission
-  const [clientOrders, setClientOrders] = useState(new Array());
-  const [vendorOrders, setVendorOrders] = useState(new Array());
+  const [respectiveOrders, setRespectiveOrders] = useState(new Array());
 
   //Defect Lists
-  const defectListItems = (localStorage.getItem('role')=== "Client")?["My Defects"]:["Client Defect List", "Vendor Defects List"];
+  const defectListItems = ["Client Defect List", "Vendor Defects List"];
 
     useEffect(() => {
       let isMounted = true;
@@ -109,25 +108,6 @@ export default function QualityManagement() {
         console.error(err);
     });
 
-      //Fetching Customer Transactions
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/accounting/ledger`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-     }).then(res => {
-        if (res.status === 200 && isMounted) {
-          var rows = Array();
-          for(var i=0; i<res.data.data.length; i++){
-            //Adding an orderid because the client order schema does not have an orderid attribute
-            //Ideally, this changes and the schema adopts an actual orderid attribute
-            rows.push({...res.data.data[i], id: (i+1)});
-          }
-          setClientOrders(rows);
-        }
-     }).catch(err => {
-        console.error(err);
-    });
-
       //Fetching Vendor Transactions
       axios({
         method: 'get',
@@ -139,7 +119,7 @@ export default function QualityManagement() {
           for(var i=0; i<res.data.data.length; i++){
             rows.push(res.data.data[i]);
           }
-          setVendorOrders(rows);
+          setRespectiveOrders(rows);
         }
      }).catch(err => {
         console.error(err);
@@ -318,7 +298,6 @@ export default function QualityManagement() {
             {
               //Print table based on user role, and selected list
               (listClientBool?clientQMData:vendorQMData).map((row, key)=>{
-                if (localStorage.getItem('role') !== "Client" || localStorage.getItem('email') == row["name"])
                 return ( 
                 <TableRow key ={key}>
                   <TableCell align = "center">{row["name"]}</TableCell>
@@ -326,35 +305,22 @@ export default function QualityManagement() {
                   <TableCell align = "center">{row["defecttype"]}</TableCell>
                   <TableCell align = "center">{row["description"]}</TableCell>
                   <TableCell align = "center">{row["comments"]}</TableCell>
-                  <TableCell align = "center"> 
-                  {/*Employees can change the status and request status*/}
-                    {(localStorage.getItem('role')==="Employee")?
-                    <>
+                  <TableCell align = "center">   
                     <Button className = {classes.button} onClick={(e)=>handleClickStatus(e,key)}>{row["status"]}</Button>
                       <Menu anchorEl = {anchorElStatus} keepMounted open = {Boolean(anchorElStatus)} onClose={handleCloseStatus}>
                       {statusOption.map((item, key2)=>{
                         return <MenuItem key={key2} onClick = {()=>{handleStatusSelect(item);}}>{item}</MenuItem>
                       })}
                       </Menu> 
-                    </>
-                    :
-                    <>{row["status"]}</>
-                    }
-                     
                   </TableCell>
                   <TableCell align = "center">{listClientBool?row["clientrequest"]:row["vendorrequest"]}</TableCell>
                   <TableCell align = "center">
-                    {/*Employees can change the status and request status*/}
-                  {(localStorage.getItem('role')==="Employee")?
-                    <>
                   <Button className = {classes.button} onClick={(e)=>handleClickRequest(e,key)}>{row["requeststatus"]}</Button>
                       <Menu anchorEl = {anchorElRequest} keepMounted open = {Boolean(anchorElRequest)} onClose={handleCloseRequest}>
                       {requestStatusOption.map((item, key2)=>{
                         return <MenuItem key={key2} onClick = {()=>{handleRequestSelect(item);}}>{item}</MenuItem>
                       })}
                       </Menu>
-                      </>:
-                      <>{row["requeststatus"]}</>} 
                     </TableCell>
                 </TableRow>)
               })
@@ -371,7 +337,7 @@ export default function QualityManagement() {
         </Table>
       </TableContainer>
       {/*Submit report modal */}
-      <DefectForm open={openDefectModal} closePopup={toggleReportDefect} vendorOrders = {vendorOrders} clientOrders = {clientOrders}/>
+      <DefectForm open={openDefectModal} closePopup={toggleReportDefect} respectiveOrders = {respectiveOrders} role="Employee" respectiveClaimSize = {vendorQMData.length}/>
       </form>
     </div>
    

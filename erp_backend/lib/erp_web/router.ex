@@ -65,10 +65,15 @@ A module for managing endpoints and routing requests to the appropriate controll
     get "/client_test", UserController, :client_test
     get  "/my_user1", UserController, :show
     get  "/quality_management/client_claim", ClientClaimController, :show_all_client_claim
+    get  "/quality_management/client_claim/client", ClientClaimController, :show_client_claims_from_email
+
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
 
     resources "/clientclaim", ClientClaimController
+    
+    get "/accounting/order/:id", OrderController, :show
+    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/api/v1", ErpWeb do
@@ -76,9 +81,6 @@ A module for managing endpoints and routing requests to the appropriate controll
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
-
-    get "/accounting/order/:id", OrderController, :show
-    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/", ErpWeb do

@@ -23,7 +23,11 @@ A module for managing client claims on defective products.
   Create a new client claim.
   """
   def create(conn, %{"client_claim" => client_claim_params}) do
-    case QualityManagement.create_client_claim(client_claim_params) do
+    user = Guardian.Plug.current_resource(conn)
+
+    temp = Map.put(client_claim_params, "name" , user.email)
+    
+    case QualityManagement.create_client_claim(temp) do
       {:ok, client_claim} ->
         conn
         |> redirect(to: Routes.client_claim_path(conn, :show, client_claim))
@@ -46,6 +50,17 @@ A module for managing client claims on defective products.
   """
   def show_all_client_claim(conn, _params) do
     clientclaim = QualityManagement.list_clientclaim()
+    render(conn, "index.json", clientclaim: clientclaim)
+  end
+
+  @doc """
+  Get a list of all client claims with the same email.
+  """
+  def show_client_claims_from_email(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    
+    clientclaim = QualityManagement.list_clientclaim_from_email(user.email)
+
     render(conn, "index.json", clientclaim: clientclaim)
   end
 

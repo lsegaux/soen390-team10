@@ -68,7 +68,7 @@ const defectTypes = ["Damaged product", "Incomplete order shipped", "Wrong produ
 //Request action
 const requestActions = ["Replace product", "Refund", "See comments"];
 
-export default function DefectForm({open, closePopup, clientOrders, vendorOrders}){
+export default function DefectForm({open, closePopup, respectiveOrders, role, respectiveClaimSize}){
     //Styling
     const classes = useStyles(useTheme());
 
@@ -86,7 +86,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
     //Handle report submission for both client and non-clients
     function handleSubmit(event){
       event.preventDefault();
-        if (localStorage.getItem("role") === "Client"){
+        if (role === "Client"){
             addClientDefect();
         }else{
             addVendorDefect();
@@ -101,8 +101,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 client_claim:{
-                    claim_id:1, //The number doesn't matter
-                    name:localStorage.getItem("email"),
+                    claim_id:respectiveClaimSize.length,
                     comments: formComment,
                     defecttype: formDefectType,
                     description: formDescription,
@@ -132,7 +131,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
             data:{
                 vendor_claim:{
-                    claim_id:0, //The number doesn't matter
+                    claim_id: respectiveClaimSize.length,
                     name:"Wilson Inc.",
                     comments: formComment,
                     defecttype: formDefectType,
@@ -185,7 +184,7 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
     }
     //Validates the form
     function checkFormValid (){
-        //if ((vendorOrders === null || clientOrders === null)) return false;
+        
 
         //Check the dropdown menu options are not empty
         let requestSet = (formRequest !== "");
@@ -197,8 +196,8 @@ export default function DefectForm({open, closePopup, clientOrders, vendorOrders
         //Check the order id exists
         //Either check for client or vendors table, not both, depending on user type
         let orderIDExists = false;
-        let tempData = (localStorage.getItem('role')==="Client")?clientOrders:vendorOrders;
-        tempData.map(element => {
+        
+        respectiveOrders.map(element => {
             if (formOrderID === element["id"].toString()){
                 orderIDExists = true;
                 return;
