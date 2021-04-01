@@ -118,6 +118,21 @@ defmodule Erp.QualityManagement do
   end
 
   @doc """
+  Returns the list of clientclaim based of user email.
+
+  ## Examples
+
+      iex> list_clientclaim()
+      [%ClientClaim{}, ...]
+
+  """
+  def list_clientclaim_from_email(email) do
+    query = from client in ClientClaim,
+          where: client.name == ^email
+    Repo.all(query)
+  end
+
+  @doc """
   Gets a single client_claim.
 
   Raises `Ecto.NoResultsError` if the Client claim does not exist.

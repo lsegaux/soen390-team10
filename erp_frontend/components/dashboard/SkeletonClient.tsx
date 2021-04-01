@@ -25,7 +25,7 @@ import MainListItems from "./listItemsClient";
 
 import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
-import QualityManagement from "../qualitymanagement/quality_management"
+import QualityManagementClient from "../qualitymanagement/quality_management_client"
 import Sales from "../client/sales/Sales"
 import ShippingAndTransportationClient from "../client/ShippingAndTransportationClient";
 
@@ -136,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   1          -> Sales
   2          -> QualityManagement 
   */
-const pages = [<Dashboard key={0} />, <Sales key={1} />, <QualityManagement key={2} />, <ShippingAndTransportationClient key={3} />];
+const pages = [<Dashboard key={0} />, <Sales key={1} />, <QualityManagementClient key={2} />, <ShippingAndTransportationClient key={3} />];
 
 const url = "http://localhost:4000";
 
@@ -146,10 +146,6 @@ export default function SkeletonClient() {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(()=>{
-      //To use the user email throughout the application
-      //Do: localStorage.getItem("email")
-      //For user role:
-      //Do: localStorage.getItem("role")
       axios({
         method: 'get',
         url: `${url}/api/v1/my_user1`,
@@ -159,8 +155,6 @@ export default function SkeletonClient() {
       },
     }).then(res => {
         if (res.status === 200) {
-            localStorage.setItem("email", res.data.email);
-            localStorage.setItem("role", res.data.role);
         }
     }).catch(err => {
         console.error(err);

@@ -5,8 +5,6 @@ export class Auth {
     
     static logout() {
         localStorage.removeItem('jwt')
-        localStorage.removeItem("email");
-        localStorage.removeItem("role");
         window.location.href = "/"
     }
 }
