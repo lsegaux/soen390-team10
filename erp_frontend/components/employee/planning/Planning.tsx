@@ -14,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
-import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -60,36 +60,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function generate(element:any) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-        key: value,
-        }),
-    );
-}
-
-
 export default function Planning(){
 
-    // function setDefaultDate() {
-    //     var d = new Date(),
-    //         month = '' + (d.getMonth() + 1),
-    //         day = '' + d.getDate(),
-    //         year = d.getFullYear();
-    
-    //     if (month.length < 2) 
-    //         month = '0' + month;
-    //     if (day.length < 2) 
-    //         day = '0' + day;
-    
-    //     console.log("date ", d);
-    //     console.log([year, month, day].join('-'));
-    //     return [year, month, day].join('-');
-    // }
-    
     const classes = useStyles();
     const [dense, setDense] = useState(false);
-    const [secondary, setSecondary] = useState(false);
     const [openTaskForm, setOpenTaskForm] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
@@ -105,8 +79,8 @@ export default function Planning(){
     let count = 0;
     const task1 = { description: "shipping many boxes", 
                     employee_name: "john", 
-                    start_time: new Date(2021,3,28),
-                    end_time: new Date(2021,4,1,23,59),
+                    start_time: new Date(2021,3,2),
+                    end_time: new Date(2021,3,5,23,59),
                     status: true,
                     task_name: "ship box",
                     task_type: "Shipping",
@@ -115,38 +89,14 @@ export default function Planning(){
     
     const task2 = { description: "packaging many boxes", 
                     employee_name: "david", 
-                    start_time: new Date(2021,4,4),
-                    end_time: new Date(2021,4,10,23,59),
+                    start_time: new Date(2021,3,4),
+                    end_time: new Date(2021,3,10,23,59),
                     status: false,
                     task_name: "package box",
                     task_type: "Shipping",
                     order_ID: count++
                     }
     const data = [task1, task2]
-
-    // let d1 = new Date();
-    // console.log(d1)
-    // let d2 = new Date();
-    // d2.setDate(d2.getDate() + 5);
-    // let d3 = new Date();
-    // d3.setDate(d3.getDate() + 8);
-    // let d4 = new Date();
-    // d4.setDate(d4.getDate() + 20);
-    // let data = [
-    //   {
-    //     id: 1,
-    //     start: d1,
-    //     end: d2,
-    //     name: "Demo Task 1"
-    //   },
-    //   {
-    //     id: 2,
-    //     start: d3,
-    //     end: d4,
-    //     name: "Demo Task 2",
-    //     color: "orange"
-    //   }
-    // ];
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setTaskType(event.target.value as string);
@@ -171,7 +121,6 @@ export default function Planning(){
     }
 
     const populateGantt = (data) => {
-        console.log("ganttt ", data)
         const ganttData = new Array();
         for(let i = 0; i < data.length; i++) {
             let obj = {
@@ -186,6 +135,7 @@ export default function Planning(){
 
         setGantt(ganttData);
     }
+
     //fetching tasks
     useEffect(() => {
         // let isMounted = true;
@@ -212,9 +162,10 @@ export default function Planning(){
         //TESTING
         setTasks(data)
         populateGantt(data)
+        //END OF TESTING
       }, []);
 
-    const handleSave = () => {
+    const handleAdd = () => {
         if(taskName == '' || taskDescription == '' || taskType == '' || startDate == '' || endDate == '') {
             return alert("Please make sure all fields are complete before saving.");
         }
@@ -251,7 +202,7 @@ export default function Planning(){
         //     console.error(err);
         // });
 
-        //TEST REMOVE
+        //TEST
         var rows = Array();
         for(var i=0; i<tasks.length; i++){
             rows.push(tasks[i]);
@@ -267,6 +218,7 @@ export default function Planning(){
         })
         setTasks(rows);
         populateGantt(rows);
+        //END OF TEST
     }
 
     
@@ -338,7 +290,7 @@ export default function Planning(){
                         </input>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleSave} color="primary">
+                            <Button onClick={handleAdd} color="primary">
                                 Save Task
                             </Button>
                         </DialogActions>
@@ -346,16 +298,17 @@ export default function Planning(){
                 </Typography>
                 <div className={classes.demo}>
                     <List dense={dense}>
-                    {generate(
-                        <ListItem>
+                    {tasks.map((task) => {
+                        return (
+                            <ListItem>
                         <ListItemAvatar>
                             <Avatar>
                             <FolderIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="task"
-                            secondary={secondary ? 'Secondary text' : "deadline: feb 3rd"}
+                            primary={task.task_name}
+                            secondary={task.empoyee_name}
                         />
                         <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit">
@@ -365,8 +318,8 @@ export default function Planning(){
                             <DeleteIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
-                        </ListItem>,
-                    )}
+                        </ListItem>)
+                    })}
                     </List>
                 </div>
                 </Grid>
