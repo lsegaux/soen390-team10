@@ -20,6 +20,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from "axios";
 //@ts-ignore
 import TimeLine from "react-gantt-timeline";
@@ -72,31 +74,36 @@ export default function Planning(){
     const [endDate, setEndDate] = useState("");
     const [tasks, setTasks] = useState(Array());
     const [gantt, setGantt] = useState(Array());
+    const [openTaskInfo, setOpenTaskInfo] = useState(false);
+    const [currentTask, setCurrentTask] = useState(Object());
+    const [openTaskEdit, setOpenTaskEdit] = useState(false);
+    const [openTaskDelete, setOpenTaskDelete] = useState(false);
+    const [checked, setChecked] = useState(false);
 
     const taskTypeArr = ["Shipping", "Packaging", "Accounting", "Quality Management"]; 
 
     //FAKE DATA
-    let count = 0;
-    const task1 = { description: "shipping many boxes", 
-                    employee_name: "john", 
-                    start_time: new Date(2021,3,2),
-                    end_time: new Date(2021,3,5,23,59),
-                    status: true,
-                    task_name: "ship box",
-                    task_type: "Shipping",
-                    task_ID: count++
-                    }
+    // let count = 0;
+    // const task1 = { description: "shipping many boxes", 
+    //                 employee_name: "john", 
+    //                 start_time: new Date(2021,3,2),
+    //                 end_time: new Date(2021,3,5,23,59),
+    //                 status: true,
+    //                 task_name: "ship box",
+    //                 task_type: "Shipping",
+    //                 task_ID: count++
+    //                 }
     
-    const task2 = { description: "packaging many boxes", 
-                    employee_name: "david", 
-                    start_time: new Date(2021,3,4),
-                    end_time: new Date(2021,3,10,23,59),
-                    status: false,
-                    task_name: "package box",
-                    task_type: "Shipping",
-                    task_ID: count++
-                    }
-    const data = [task1, task2]
+    // const task2 = { description: "packaging many boxes", 
+    //                 employee_name: "david", 
+    //                 start_time: new Date(2021,3,4),
+    //                 end_time: new Date(2021,3,10,23,59),
+    //                 status: false,
+    //                 task_name: "package box",
+    //                 task_type: "Packaging",
+    //                 task_ID: count++
+    //                 }
+    // const data = [task1, task2]
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setTaskType(event.target.value as string);
@@ -108,6 +115,11 @@ export default function Planning(){
 
     const handleClose = () => {
         setOpenTaskForm(false);
+        setTaskName("");
+        setTaskDescription("");
+        setTaskType("");
+        setStartDate("");
+        setEndDate("");
     }
 
     const formatStartDate = (date) => {
@@ -138,30 +150,30 @@ export default function Planning(){
 
     //fetching tasks
     useEffect(() => {
-        // let isMounted = true;
+        let isMounted = true;
   
-        // axios({
-        //     method: 'get',
-        //     //missing
-        //     url: "",
-        //     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-        // }).then(res => {
-        //     if (isMounted && res.status === 200) {
-        //         var rows = Array();
-        //         for(var i=0; i<res.data.data.length; i++){
-        //             rows.push(res.data.data[i]);
-        //         }
-        //         setTasks(rows);
-        //         populateGantt(rows);
-        //     }
-        // }).catch(err => {
-        //     console.error(err);
-        // });
-        // return ()=>{isMounted = false}
+        axios({
+            method: 'get',
+            //missing
+            url: "",
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+        }).then(res => {
+            if (isMounted && res.status === 200) {
+                var rows = Array();
+                for(var i=0; i<res.data.data.length; i++){
+                    rows.push(res.data.data[i]);
+                }
+                setTasks(rows);
+                populateGantt(rows);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
+        return ()=>{isMounted = false}
     
         //TESTING
-        setTasks(data)
-        populateGantt(data)
+        // setTasks(data)
+        // populateGantt(data)
         //END OF TESTING
       }, []);
 
@@ -170,58 +182,200 @@ export default function Planning(){
             return alert("Please make sure all fields are complete before saving.");
         }
         setOpenTaskForm(false);
-        // axios({
-        //     method: 'post',
-        //     //missing url
-        //     url: "??",
-        //     headers: { 
-        //         "Content-Type": "application/json",
-        //         "Authorization": "Bearer " + localStorage.getItem('jwt')
-        //      },
-        //     data: {
-        //         "task": {
-        //             description: taskDescription,
-        //             endTime: formatStartDate(endDate),
-        //             startTime: formatEndDate(startDate),
-        //             status: false,
-        //             taskName: taskName,
-        //             taskType: taskType,
-        //         }
-        //     }
-        // }).then(res => {
-        //     if (res.status === 200) {
-        //         alert("Your task has been added!");
-        //         var rows = Array();
-        //         for(var i=0; i<res.data.data.length; i++){
-        //             rows.push(res.data.data[i]);
-        //         }
-        //         setTasks(rows);
-        //         populateGantt(rows);
-        //     }
-        // }).catch(err => {
-        //     console.error(err);
-        // });
+        axios({
+            method: 'post',
+            //missing url
+            url: "??",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+             },
+            data: {
+                "task": {
+                    description: taskDescription,
+                    endTime: formatStartDate(endDate),
+                    startTime: formatEndDate(startDate),
+                    status: false,
+                    taskName: taskName,
+                    taskType: taskType,
+                }
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                alert("Your task has been added!");
+                var rows = Array();
+                for(var i=0; i<res.data.data.length; i++){
+                    rows.push(res.data.data[i]);
+                }
+                setTasks(rows);
+                populateGantt(rows);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
 
         //TEST
-        var rows = Array();
-        for(var i=0; i<tasks.length; i++){
-            rows.push(tasks[i]);
-        }
-        rows.push({ description: taskDescription, 
-        employee_name: "dina" + count+1, 
-        start_time: formatStartDate(startDate),
-        end_time: formatEndDate(endDate),
-        status: false,
-        task_name: taskName,
-        task_type: taskType,
-        task_ID: count++
-        })
-        setTasks(rows);
-        populateGantt(rows);
+        // var rows = Array();
+        // for(var i=0; i<tasks.length; i++){
+        //     rows.push(tasks[i]);
+        // }
+        // rows.push({ description: taskDescription, 
+        // employee_name: "dina" + count+1, 
+        // start_time: formatStartDate(startDate),
+        // end_time: formatEndDate(endDate),
+        // status: false,
+        // task_name: taskName,
+        // task_type: taskType,
+        // task_ID: count++
+        // })
+        // setTasks(rows);
+        // populateGantt(rows);
         //END OF TEST
+
+        setTaskName("");
+        setTaskDescription("");
+        setTaskType("");
+        setStartDate("");
+        setEndDate("");
     }
 
-    
+    function handleOpenTask(task) {
+        setOpenTaskInfo(true);
+        setCurrentTask(task);
+    }
+
+    const handleCloseTask = () => {
+        setOpenTaskInfo(false);
+        setCurrentTask(Object());
+    }
+
+    function handleOpenEdit(task) {
+        setChecked(task.status);
+        setTaskName(task.task_name);
+        setTaskDescription(task.description);
+        setTaskType(task.task_type);
+        setStartDate(task.start_time);
+        setEndDate(task.end_time);
+        setOpenTaskEdit(true);
+        setCurrentTask(task);
+    }
+
+    const handleCloseEdit = () => {
+        setTaskName("");
+        setTaskDescription("");
+        setTaskType("");
+        setStartDate("");
+        setEndDate("");
+        setOpenTaskEdit(false);
+        setCurrentTask(Object());
+    }
+
+    function handleOpenDelete(task) {
+        setOpenTaskDelete(true);
+        setCurrentTask(task);
+    }
+
+    const handleCloseDelete = () => {
+        setOpenTaskDelete(false);
+        setCurrentTask(Object());
+    }
+
+    const handleCheckbox = event => {
+        setChecked(event.target.checked);
+    };
+
+    const handleEdit = () => {
+        if(taskName == '' || taskDescription == '' || taskType == '' || startDate == '' || endDate == '') {
+            return alert("Please make sure all fields are complete before saving.");
+        }
+        setOpenTaskEdit(false);
+        axios({
+            method: 'post',
+            //missing url
+            url: "??",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+             },
+            data: {
+                "task": {
+                    description: taskDescription,
+                    endTime: formatStartDate(endDate),
+                    startTime: formatEndDate(startDate),
+                    status: checked,
+                    taskName: taskName,
+                    taskType: taskType,
+                    taskID: currentTask.taskID
+                }
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                alert("Your task has been modified!");
+                var rows = Array();
+                for(var i=0; i<res.data.data.length; i++){
+                    rows.push(res.data.data[i]);
+                }
+                setTasks(rows);
+                populateGantt(rows);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
+        
+        setTaskName("");
+        setTaskDescription("");
+        setTaskType("");
+        setStartDate("");
+        setEndDate("");
+        setCurrentTask(Object());
+    }
+
+    const handleDelete = () => {
+        setOpenTaskDelete(false);
+        axios({
+            method: 'post',
+            //missing url
+            url: "??",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+             },
+            data: {
+                "task": {
+                    taskID: currentTask.taskID
+                }
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                alert("Your task has been modified!");
+                var rows = Array();
+                for(var i=0; i<res.data.data.length; i++){
+                    rows.push(res.data.data[i]);
+                }
+                setTasks(rows);
+                populateGantt(rows);
+            }
+        }).catch(err => {
+            console.error(err);
+        });
+    }
+
+    function setDefaultDate(d) {
+        if(d==undefined) {
+            return undefined;
+        }
+        var month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    } 
+
   return (
     <>
     <style>
@@ -237,7 +391,7 @@ export default function Planning(){
                     <AddIcon />
                     </IconButton>
                     <Dialog open={openTaskForm} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Task Details</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Task Form</DialogTitle>
                         <DialogContent>
                         <TextField
                             autoFocus
@@ -266,9 +420,9 @@ export default function Planning(){
                             fullWidth
                             onChange={handleChange}
                             >
-                            {taskTypeArr.map((task) => {
+                            {taskTypeArr.map((type) => {
                                 return (
-                                    <MenuItem value={task}>{task}</MenuItem>)
+                                    <MenuItem value={type}>{type}</MenuItem>)
                             })}
                             </Select>
                         </FormControl>
@@ -303,20 +457,123 @@ export default function Planning(){
                             <ListItem>
                         <ListItemAvatar>
                             <Avatar>
-                            <FolderIcon />
+                                <IconButton onClick={ () => handleOpenTask(task)}>
+                                    <FolderIcon />
+                                </IconButton>
                             </Avatar>
                         </ListItemAvatar>
+                        <Dialog open={openTaskInfo && currentTask != undefined} onClose={handleCloseTask} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Task Details</DialogTitle>
+                            <DialogContent>
+                                <Typography>{"Task Name: " + currentTask.task_name}</Typography>
+                                <Typography>{"Task Description: " + currentTask.description}</Typography>
+                                <Typography>{"Task Type: " + currentTask.task_type}</Typography>
+                                <Typography>{"Start Date: " + setDefaultDate(currentTask.start_time)}</Typography>
+                                <Typography>{"End Date: " + setDefaultDate(currentTask.end_time)}</Typography>
+                                <Typography>{"Assignee: " + currentTask.employee_name}</Typography>
+                                <Typography>{"Status: " + (currentTask.status ? " Complete" : " In progress")}</Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCloseTask} color="primary">
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                         <ListItemText
                             primary={task.task_name}
                             secondary={task.empoyee_name}
                         />
                         <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="edit">
-                            <EditIcon />
+                            <IconButton edge="end" aria-label="edit" onClick={ () => handleOpenEdit(task)}>
+                                <EditIcon />
                             </IconButton>
-                            <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
+                            <Dialog open={openTaskEdit} onClose={handleCloseEdit} aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Edit Task</DialogTitle>
+                                <DialogContent>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Task Name"
+                                    defaultValue={currentTask.task_name}
+                                    type="string"
+                                    fullWidth
+                                    onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskName(e.target.value)}
+                                />
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Description"
+                                    defaultValue={currentTask.description}
+                                    type="string"
+                                    fullWidth
+                                    onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskDescription(e.target.value)}
+                                />
+                                <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">Task Type</InputLabel>
+                                    <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    defaultValue={taskType}
+                                    fullWidth
+                                    onChange={handleChange}
+                                    >
+                                    {taskTypeArr.map((type) => {
+                                        return (
+                                            <MenuItem value={type}>{type}</MenuItem>)
+                                    })}
+                                    </Select>
+                                </FormControl>
+                                <br/>
+                                <label htmlFor="start">Start Date: </label>
+                                <input 
+                                    type="date" 
+                                    id="start" 
+                                    name="start"
+                                    defaultValue={setDefaultDate(currentTask.start_time)}
+                                    onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setStartDate(e.target.value)}>
+                                </input>
+                                <br/><br/>
+                                <label htmlFor="end">End Date: </label>
+                                <input 
+                                    type="date" 
+                                    id="end" 
+                                    name="end"
+                                    defaultValue={setDefaultDate(currentTask.end_time)} 
+                                    onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEndDate(e.target.value)}>
+                                </input>
+                                <br/>
+                                <FormControlLabel
+                                    value="complete"
+                                    control={<Checkbox color="primary" checked={checked} onChange={handleCheckbox}/>}
+                                    label="Task Complete "
+                                    labelPlacement="start"
+                                />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleEdit} color="primary">
+                                        Save Changes
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            <IconButton edge="end" aria-label="delete" onClick={ () => handleOpenDelete(task)}>
+                                <DeleteIcon />
                             </IconButton>
+                            <Dialog open={openTaskDelete && currentTask != undefined} onClose={handleCloseDelete} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">Delete Task</DialogTitle>
+                                    <DialogContent>
+                                    <Typography>{"Do you want to delete the following task:  " + currentTask.task_name}</Typography>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleDelete} color="primary">
+                                            Delete
+                                        </Button>
+                                        <Button onClick={handleCloseDelete} color="primary">
+                                            Cancel
+                                        </Button>
+                                    </DialogActions>
+                            </Dialog>
                         </ListItemSecondaryAction>
                         </ListItem>)
                     })}
