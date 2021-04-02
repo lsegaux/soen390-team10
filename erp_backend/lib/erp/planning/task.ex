@@ -1,6 +1,11 @@
 defmodule Erp.Planning.Task do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, warn: false
+
+
+  alias Erp.Repo
+  alias Erp.Planning.Task
 
   schema "tasks" do
     field :description, :string
@@ -12,6 +17,10 @@ defmodule Erp.Planning.Task do
     field :task_type, :string
 
     timestamps()
+  end
+
+  def list_tasks() do
+    Repo.all(Task)
   end
 
   @doc false

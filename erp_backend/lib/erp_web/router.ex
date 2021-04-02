@@ -79,7 +79,7 @@ A module for managing endpoints and routing requests to the appropriate controll
 
   scope "/api/v1", ErpWeb do
     pipe_through :api
-
+get "/planning", PlanningController, :show_all_tasks
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
   end
