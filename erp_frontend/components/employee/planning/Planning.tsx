@@ -84,7 +84,7 @@ export default function Planning(){
                     status: true,
                     task_name: "ship box",
                     task_type: "Shipping",
-                    order_ID: count++
+                    task_ID: count++
                     }
     
     const task2 = { description: "packaging many boxes", 
@@ -94,7 +94,7 @@ export default function Planning(){
                     status: false,
                     task_name: "package box",
                     task_type: "Shipping",
-                    order_ID: count++
+                    task_ID: count++
                     }
     const data = [task1, task2]
 
@@ -124,7 +124,7 @@ export default function Planning(){
         const ganttData = new Array();
         for(let i = 0; i < data.length; i++) {
             let obj = {
-                    id: data[i].order_ID,
+                    id: data[i].task_ID,
                     start: data[i].start_time,
                     end: data[i].end_time,
                     name: data[i].task_name,
@@ -214,7 +214,7 @@ export default function Planning(){
         status: false,
         task_name: taskName,
         task_type: taskType,
-        order_ID: count++
+        task_ID: count++
         })
         setTasks(rows);
         populateGantt(rows);
