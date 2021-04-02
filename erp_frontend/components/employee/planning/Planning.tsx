@@ -20,6 +20,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import axios from "axios";
 //@ts-ignore
 import TimeLine from "react-gantt-timeline";
 
@@ -69,27 +70,39 @@ function generate(element:any) {
 
 
 export default function Planning(){
+
+    // function setDefaultDate() {
+    //     var d = new Date(),
+    //         month = '' + (d.getMonth() + 1),
+    //         day = '' + d.getDate(),
+    //         year = d.getFullYear();
+    
+    //     if (month.length < 2) 
+    //         month = '0' + month;
+    //     if (day.length < 2) 
+    //         day = '0' + day;
+    
+    //     console.log("date ", d);
+    //     console.log([year, month, day].join('-'));
+    //     return [year, month, day].join('-');
+    // }
+    
     const classes = useStyles();
     const [dense, setDense] = useState(false);
     const [secondary, setSecondary] = useState(false);
     const [openTaskForm, setOpenTaskForm] = useState(false);
-    const [year, setYear] = useState(0);
-    const [month, setMonth] = useState(0);
-    const [day, setDay] = useState(0);
-    const [hour, setHour] = useState(0);
-    const [minute, setMinute] = useState(0);
-    const [AMPM, setAMPM] = useState("AM");
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
-    const [age, setAge] = React.useState('');
-    const [value, setValue] = React.useState(null);
+    const [taskType, setTaskType] = React.useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [tasks, setTasks] = useState(Array());
+    const [gantt, setGantt] = useState(Array());
 
-    const handleDate = (value) => {
-        console.log("hey", value)
-    }
+    const taskTypeArr = ["Shipping", "Packaging", "Accounting", "Quality Management"]; 
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setAge(event.target.value as string);
+        setTaskType(event.target.value as string);
     };
 
     const handleOpen = () => {
@@ -100,8 +113,51 @@ export default function Planning(){
         setOpenTaskForm(false);
     }
 
+    const formatDate = (date) => {
+        const arrDate = date.split('-');
+        return new Date(arrDate[0], arrDate[1]-1, arrDate[2]);
+    }
+
+    const updateGantt = (response) => {
+
+    }
+
     const handleSave = () => {
-        console.log("saved");
+        if(taskName == '' || taskDescription == '' || taskType == '' || startDate == '' || endDate == '') {
+            return alert("Please make sure all fields are complete before saving.");
+        }
+        setOpenTaskForm(false);
+        // axios({
+        //     method: 'post',
+        //     //missing url
+        //     url: "??",
+        //     headers: { 
+        //         "Content-Type": "application/json",
+        //         "Authorization": "Bearer " + localStorage.getItem('jwt')
+        //      },
+        //     data: {
+        //         "task": {
+        //             description: taskDescription,
+        //             employeeJWT: localStorage.getItem('jwt'),
+        //             endTime: formatDate(endDate),
+        //             startTime: formatDate(startDate),
+        //             status: false,
+        //             taskName: taskName,
+        //             taskType: taskType,
+        //         }
+        //     }
+        // }).then(res => {
+        //     if (res.status === 200) {
+        //         alert("Your task has been added!");
+        //         var rows = Array();
+        //         for(var i=0; i<res.data.data.length; i++){
+        //             rows.push(res.data.data[i]);
+        //         }
+        //         setTasks(rows);
+        //     }
+        // }).catch(err => {
+        //     console.error(err);
+        // });
     }
 
     
@@ -155,19 +211,6 @@ export default function Planning(){
                             fullWidth
                             onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskName(e.target.value)}
                         />
-                        <FormControl className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            onChange={handleChange}
-                            >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -177,11 +220,37 @@ export default function Planning(){
                             fullWidth
                             onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskDescription(e.target.value)}
                         />
-                        <label for="start">Start date:</label>
-                        <input type="date" id="start" name="trip-start"
-                            value="2018-07-22"
-                            min="2018-01-01" max="2018-12-31"
-                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => handleDate(e.target.value)}></input>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-label">Task Type</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={taskType}
+                            fullWidth
+                            onChange={handleChange}
+                            >
+                            {taskTypeArr.map((task) => {
+                                return (
+                                    <MenuItem value={task}>{task}</MenuItem>)
+                            })}
+                            </Select>
+                        </FormControl>
+                        <br/>
+                        <label htmlFor="start">Start Date: </label>
+                        <input 
+                            type="date" 
+                            id="start" 
+                            name="start"
+                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setStartDate(e.target.value)}>
+                        </input>
+                        <br/><br/>
+                        <label htmlFor="end">End Date: </label>
+                        <input 
+                            type="date" 
+                            id="end" 
+                            name="end" 
+                            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEndDate(e.target.value)}>
+                        </input>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleSave} color="primary">
