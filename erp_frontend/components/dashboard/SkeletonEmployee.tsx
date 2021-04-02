@@ -27,7 +27,7 @@ import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
-import QualityManagementEmployee from "../qualitymanagement/quality_management_employee"
+import QualityManagement from "../qualitymanagement/quality_management_employee"
 import Inventory from "../production/inventory"
 import ShippingAndTransportation from "../employee/ShippingAndTransportation";
 import Packaging from "../packaging/Packaging"
