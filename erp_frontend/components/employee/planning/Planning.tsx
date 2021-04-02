@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -101,6 +101,53 @@ export default function Planning(){
 
     const taskTypeArr = ["Shipping", "Packaging", "Accounting", "Quality Management"]; 
 
+    //FAKE DATA
+    let count = 0;
+    const task1 = { description: "shipping many boxes", 
+                    employee_name: "john", 
+                    start_time: new Date(2021,3,28),
+                    end_time: new Date(2021,4,1,23,59),
+                    status: true,
+                    task_name: "ship box",
+                    task_type: "Shipping",
+                    order_ID: count++
+                    }
+    
+    const task2 = { description: "packaging many boxes", 
+                    employee_name: "david", 
+                    start_time: new Date(2021,4,4),
+                    end_time: new Date(2021,4,10,23,59),
+                    status: false,
+                    task_name: "package box",
+                    task_type: "Shipping",
+                    order_ID: count++
+                    }
+    const data = [task1, task2]
+
+    // let d1 = new Date();
+    // console.log(d1)
+    // let d2 = new Date();
+    // d2.setDate(d2.getDate() + 5);
+    // let d3 = new Date();
+    // d3.setDate(d3.getDate() + 8);
+    // let d4 = new Date();
+    // d4.setDate(d4.getDate() + 20);
+    // let data = [
+    //   {
+    //     id: 1,
+    //     start: d1,
+    //     end: d2,
+    //     name: "Demo Task 1"
+    //   },
+    //   {
+    //     id: 2,
+    //     start: d3,
+    //     end: d4,
+    //     name: "Demo Task 2",
+    //     color: "orange"
+    //   }
+    // ];
+
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setTaskType(event.target.value as string);
     };
@@ -113,14 +160,59 @@ export default function Planning(){
         setOpenTaskForm(false);
     }
 
-    const formatDate = (date) => {
+    const formatStartDate = (date) => {
         const arrDate = date.split('-');
         return new Date(arrDate[0], arrDate[1]-1, arrDate[2]);
     }
 
-    const updateGantt = (response) => {
-
+    const formatEndDate = (date) => {
+        const arrDate = date.split('-');
+        return new Date(arrDate[0], arrDate[1]-1, arrDate[2],23,59);
     }
+
+    const populateGantt = (data) => {
+        console.log("ganttt ", data)
+        const ganttData = new Array();
+        for(let i = 0; i < data.length; i++) {
+            let obj = {
+                    id: data[i].order_ID,
+                    start: data[i].start_time,
+                    end: data[i].end_time,
+                    name: data[i].task_name,
+                    color: data[i].status ? "gray":"blue"
+                  }
+            ganttData.push(obj)
+        }
+
+        setGantt(ganttData);
+    }
+    //fetching tasks
+    useEffect(() => {
+        // let isMounted = true;
+  
+        // axios({
+        //     method: 'get',
+        //     //missing
+        //     url: "",
+        //     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+        // }).then(res => {
+        //     if (isMounted && res.status === 200) {
+        //         var rows = Array();
+        //         for(var i=0; i<res.data.data.length; i++){
+        //             rows.push(res.data.data[i]);
+        //         }
+        //         setTasks(rows);
+        //         populateGantt(rows);
+        //     }
+        // }).catch(err => {
+        //     console.error(err);
+        // });
+        // return ()=>{isMounted = false}
+    
+        //TESTING
+        setTasks(data)
+        populateGantt(data)
+      }, []);
 
     const handleSave = () => {
         if(taskName == '' || taskDescription == '' || taskType == '' || startDate == '' || endDate == '') {
@@ -138,9 +230,8 @@ export default function Planning(){
         //     data: {
         //         "task": {
         //             description: taskDescription,
-        //             employeeJWT: localStorage.getItem('jwt'),
-        //             endTime: formatDate(endDate),
-        //             startTime: formatDate(startDate),
+        //             endTime: formatStartDate(endDate),
+        //             startTime: formatEndDate(startDate),
         //             status: false,
         //             taskName: taskName,
         //             taskType: taskType,
@@ -154,37 +245,31 @@ export default function Planning(){
         //             rows.push(res.data.data[i]);
         //         }
         //         setTasks(rows);
+        //         populateGantt(rows);
         //     }
         // }).catch(err => {
         //     console.error(err);
         // });
+
+        //TEST REMOVE
+        var rows = Array();
+        for(var i=0; i<tasks.length; i++){
+            rows.push(tasks[i]);
+        }
+        rows.push({ description: taskDescription, 
+        employee_name: "dina" + count+1, 
+        start_time: formatStartDate(startDate),
+        end_time: formatEndDate(endDate),
+        status: false,
+        task_name: taskName,
+        task_type: taskType,
+        order_ID: count++
+        })
+        setTasks(rows);
+        populateGantt(rows);
     }
 
     
-
-    let d1 = new Date();
-    console.log(d1)
-    let d2 = new Date();
-    d2.setDate(d2.getDate() + 5);
-    let d3 = new Date();
-    d3.setDate(d3.getDate() + 8);
-    let d4 = new Date();
-    d4.setDate(d4.getDate() + 20);
-    let data = [
-      {
-        id: 1,
-        start: d1,
-        end: d2,
-        name: "Demo Task 1"
-      },
-      {
-        id: 2,
-        start: d3,
-        end: d4,
-        name: "Demo Task 2",
-        color: "orange"
-      }
-    ];
   return (
     <>
     <style>
@@ -293,7 +378,7 @@ export default function Planning(){
             </div>
 
             <div>
-            <TimeLine data={data} />
+            <TimeLine data={gantt} />
                 <br/>
                 <br/>
             </div>
