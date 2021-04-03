@@ -10,7 +10,6 @@ alias Erp.Planning.Task
 
 data = [
   %{
-    "ID" => 0,
     "task_name" => "Fix Order #02314",
     "task_type" => "Warranty",
     "description" => "Warranty claim for order #02314 was approved and needs to be taken care of",
@@ -20,7 +19,6 @@ data = [
     "status" => true,
   },
   %{
-    "ID" => 1,
     "task_name" => "Discuss payroll with Jerry",
     "task_type" => "Administrative",
     "description" => "Jerry had an issue with his payroll, I'm going to help him out",
@@ -30,7 +28,6 @@ data = [
     "status" => true,
   },
   %{
-    "ID" => 2,
     "task_name" => "Monthly inventory with staff",
     "task_type" => "Inventory",
     "description" => "The inventory session that takes place every month to verify that our inventory corresponds with out expected values",
@@ -43,7 +40,6 @@ data = [
 
 Enum.each data, fn(task) ->
 
-  task_id = Map.get(task, "ID")
   task_name = Map.get(task, "task_name")
   task_type= Map.get(task, "task_type")
   description = Map.get(task, "description")
@@ -53,7 +49,6 @@ Enum.each data, fn(task) ->
   status = Map.get(task, "status")
 
   Repo.insert! %Task{
-    id: task_id,  
     task_name: task_name,
     task_type: task_type,
     description: description,
