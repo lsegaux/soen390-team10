@@ -9,9 +9,20 @@ defmodule ErpWeb.TaskController do
     render(conn, "index.html", tasks: tasks)
   end
 
-  def new(conn, _params) do
-    changeset = Planning.change_task(%Task{})
-    render(conn, "new.html", changeset: changeset)
+  def new(conn, %{"task" => task_params}) do
+    user = Guardian.Plug.current_resource(conn)
+   
+    case Planning.add_task(task_params, user) do
+          {:ok} ->
+            json(conn, %{success: ":)"})
+          {:error, error} ->
+            {:error, error}
+    end
+  end
+
+  def show_all_tasks(conn, _params) do
+    tasks = Erp.Planning.list_tasks()
+    render(conn, "index.json", tasks: tasks)
   end
 
   def create(conn, %{"task" => task_params}) do

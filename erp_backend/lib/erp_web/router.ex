@@ -76,8 +76,8 @@ A module for managing endpoints and routing requests to the appropriate controll
     get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
 
-    get "/planning", PlanningController, :show_all_tasks
-    post "/planning/createtask", PlanningController, :new
+    get "/planning", TaskController, :show_all_tasks
+    post "/planning/createtask", TaskController, :new
   end
 
   scope "/api/v1", ErpWeb do

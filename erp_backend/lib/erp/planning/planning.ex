@@ -1,4 +1,4 @@
-defmodule Erp.Planning.Planning do
+defmodule Erp.Planning do
   @moduledoc """
   The Planning context.
   """
@@ -36,6 +36,36 @@ defmodule Erp.Planning.Planning do
 
   """
   def get_task!(id), do: Repo.get!(Task, id)
+
+  def some_action(conn, params) do
+    if Guardian.Plug.authenticated?(conn) do
+      user = Guardian.Plug.current_resource(conn)
+    end
+  end
+
+  @doc false
+  def add_task(params, user) do
+    endTime = NaiveDateTime.from_iso8601(params["endTime"])
+    startTime = NaiveDateTime.from_iso8601(params["startTime"])
+
+    endTimeTruncated = NaiveDateTime.truncate(elem(startTime, 1), :second)
+    startTimeTruncated = NaiveDateTime.truncate(elem(endTime, 1), :second)
+
+
+    %Task{
+      description: params["description"],
+      end_time: endTimeTruncated,
+      start_time: startTimeTruncated,
+      employee_name: user.email,
+      status: params["status"],
+      task_name: params["taskName"],
+      task_type: params["taskType"]
+    }
+    |> Repo.insert()
+    
+    {:ok}
+  end
+
 
   @doc """
   Creates a task.
