@@ -27,11 +27,12 @@ import { Auth } from "../../Auth"
 import Dashboard from "./Dashboard";
 import Vendor from "../vendor/Vendor";
 import Accounting from "../employee/accounting/accountingdash";
-import QualityManagementEmployee from "../qualitymanagement/quality_management_employee"
+import QualityManagement from "../qualitymanagement/quality_management_employee"
 import Inventory from "../production/inventory"
 import ShippingAndTransportation from "../employee/ShippingAndTransportation";
 import Packaging from "../packaging/Packaging"
 import Scheduling from "../employee/scheduling/Scheduling"
+import Planning from "../employee/planning/Planning"
 
 function Copyright() {
   return (
@@ -144,11 +145,12 @@ const useStyles = makeStyles((theme) => ({
   5          -> Packaging
   6          -> Shipping/Transportation
   7          -> Scheduling
+  8          -> Planning
   */
 
 const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, 
-               <QualityManagementEmployee key={3} />, <Inventory key={4} />, <Packaging key={5}/>, 
-               <ShippingAndTransportation key={6} />, <Scheduling key = {7}></Scheduling>];
+               <QualityManagement key={3} />, <Inventory key={4} />, <Packaging key={5}/>, 
+               <ShippingAndTransportation key={6} />, <Scheduling key = {7}></Scheduling>, <Planning key ={8}></Planning>];
 
 export default function SkeletonEmployee() {
   const classes = useStyles();

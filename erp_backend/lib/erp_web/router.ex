@@ -70,6 +70,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/client_claim/newClaim", ClientClaimController, :create
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
 
+    resources "/tasks", TaskController
     resources "/clientclaim", ClientClaimController
     
     get "/accounting/order/:id", OrderController, :show
@@ -78,7 +79,7 @@ A module for managing endpoints and routing requests to the appropriate controll
 
   scope "/api/v1", ErpWeb do
     pipe_through :api
-
+get "/planning", PlanningController, :show_all_tasks
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
   end
