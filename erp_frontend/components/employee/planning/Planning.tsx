@@ -185,7 +185,7 @@ export default function Planning(){
         axios({
             method: 'post',
             //missing url
-            url: "??",
+            url: "http://localhost:4000/api/v1/planning/createtask",
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem('jwt')

@@ -1,4 +1,4 @@
-defmodule Erp.Planning do
+defmodule Erp.Planning.Planning do
   @moduledoc """
   The Planning context.
   """
