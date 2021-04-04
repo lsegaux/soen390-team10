@@ -4,10 +4,11 @@ defmodule Erp.Machine do
   import Ecto.Query, warn: false
 
   alias Erp.Repo
+  alias Erp.Machine
 
   @derive {Jason.Encoder, only: [:machine_id, :plant_id, :job, :status, :start_time, :end_time, :cost_per_hour]}
-  @primary_key {:machine_id
-  @derive {Phoenix.Param, key: :machine_id}, :integer, []}
+  @primary_key {:machine_id, :integer, []}
+  @derive {Phoenix.Param, key: :machine_id}
   schema "machines" do
     field :plant_id, :id
     field :job, :string

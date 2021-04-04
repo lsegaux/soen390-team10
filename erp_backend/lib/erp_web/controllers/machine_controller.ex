@@ -11,7 +11,7 @@ defmodule ErpWeb.MachineController do
   Get machine by id.
   """
   def show(conn, %{"id" => machine_id}) do
-    machine = Erp.Production.Machine.get_machine!(machine_id)
+    machine = Erp.Machine.get_machine!(machine_id)
     render(conn, "show.json", machine: machine)
   end
 
@@ -19,7 +19,7 @@ defmodule ErpWeb.MachineController do
   Show all machines.
   """
   def show_all_machines(conn, _params) do
-    machines = Erp.Production.Machine.list_machines()
+    machines = Erp.Machine.list_machines()
     render(conn, "index.json", machines: machines)
   end
 
@@ -27,7 +27,7 @@ defmodule ErpWeb.MachineController do
   Get a list of machines that correlate to a plant ID.
   """
   def get_machines_by_plant_id(conn, %{"id" => plant_id}) do
-    machines = Erp.Production.Machine.get_machines_by_plant_id(plant_id)
+    machines = Erp.Machine.get_machines_by_plant_id(plant_id)
     render(conn, "index.json", machines: machines)
   end
 
@@ -41,3 +41,4 @@ defmodule ErpWeb.MachineController do
       render(conn, "show.json", machine: machine)
     end
   end
+end
