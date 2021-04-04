@@ -18,6 +18,10 @@ defmodule Erp.Planning.Task do
     timestamps()
   end
 
+  def delete_task(%Task{} = task) do
+    Repo.delete(task)
+  end
+
   @doc false
   def changeset(task, attrs) do
     task

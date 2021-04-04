@@ -48,8 +48,8 @@ defmodule Erp.Planning do
     endTime = NaiveDateTime.from_iso8601(params["endTime"])
     startTime = NaiveDateTime.from_iso8601(params["startTime"])
 
-    endTimeTruncated = NaiveDateTime.truncate(elem(startTime, 1), :second)
-    startTimeTruncated = NaiveDateTime.truncate(elem(endTime, 1), :second)
+    endTimeTruncated = NaiveDateTime.truncate(elem(endTime, 1), :second)
+    startTimeTruncated = NaiveDateTime.truncate(elem(startTime, 1), :second)
 
 
     %Task{
@@ -117,6 +117,7 @@ defmodule Erp.Planning do
   """
   def delete_task(%Task{} = task) do
     Repo.delete(task)
+    {:ok}
   end
 
   @doc """

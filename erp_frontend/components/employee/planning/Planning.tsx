@@ -151,18 +151,24 @@ export default function Planning(){
     //fetching tasks
     useEffect(() => {
         let isMounted = true;
-  
         axios({
             method: 'get',
-            //missing
-            url: "",
+            url: "http://localhost:4000/api/v1/planning",
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
         }).then(res => {
+            
             if (isMounted && res.status === 200) {
                 var rows = Array();
                 for(var i=0; i<res.data.data.length; i++){
+                    //Formatting time returned by server to function with Gantt Chart
+                    var formattedStartTime = new Date(res.data.data[i].start_time);
+                    var formattedEndTime = new Date(res.data.data[i].end_time);
+                    res.data.data[i].start_time = formattedStartTime;
+                    res.data.data[i].end_time = formattedEndTime;
+                    //Pushing the data to the rows variable.
                     rows.push(res.data.data[i]);
                 }
+                //Setting the state and populating Gantt Chart.
                 setTasks(rows);
                 populateGantt(rows);
             }
@@ -195,20 +201,25 @@ export default function Planning(){
                     description: taskDescription,
                     endTime: formatStartDate(endDate),
                     startTime: formatEndDate(startDate),
-                    status: false,
+                    status: true,
                     taskName: taskName,
                     taskType: taskType,
                 }
             }
         }).then(res => {
+            console.log(res)
             if (res.status === 200) {
                 alert("Your task has been added!");
+                /*
+                
                 var rows = Array();
                 for(var i=0; i<res.data.data.length; i++){
                     rows.push(res.data.data[i]);
                 }
                 setTasks(rows);
                 populateGantt(rows);
+                */
+                window.location.reload();
             }
         }).catch(err => {
             console.error(err);
@@ -291,8 +302,7 @@ export default function Planning(){
         setOpenTaskEdit(false);
         axios({
             method: 'post',
-            //missing url
-            url: "??",
+            url: "http://localhost:4000/api/v1/planning/edittask",
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem('jwt')
@@ -305,7 +315,7 @@ export default function Planning(){
                     status: checked,
                     taskName: taskName,
                     taskType: taskType,
-                    taskID: currentTask.taskID
+                    id: currentTask.id
                 }
             }
         }).then(res => {
@@ -331,19 +341,18 @@ export default function Planning(){
     }
 
     const handleDelete = () => {
+        console.log(currentTask);
         setOpenTaskDelete(false);
         axios({
             method: 'post',
             //missing url
-            url: "??",
+            url: "http://localhost:4000/api/v1/planning/deletetask",
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem('jwt')
              },
             data: {
-                "task": {
-                    taskID: currentTask.taskID
-                }
+                "taskID": currentTask.id
             }
         }).then(res => {
             if (res.status === 200) {

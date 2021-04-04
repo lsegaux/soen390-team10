@@ -20,11 +20,6 @@ defmodule ErpWeb.TaskController do
     end
   end
 
-  def show_all_tasks(conn, _params) do
-    tasks = Erp.Planning.list_tasks()
-    render(conn, "index.json", tasks: tasks)
-  end
-
   def create(conn, %{"task" => task_params}) do
     case Planning.create_task(task_params) do
       {:ok, task} ->
@@ -48,7 +43,7 @@ defmodule ErpWeb.TaskController do
     render(conn, "edit.html", task: task, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "task" => task_params}) do
+  def update_task(conn, %{"taskID" => id, "task" => task_params}) do
     task = Planning.get_task!(id)
 
     case Planning.update_task(task, task_params) do
@@ -62,12 +57,19 @@ defmodule ErpWeb.TaskController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    task = Planning.get_task!(id)
-    {:ok, _task} = Planning.delete_task(task)
+  def show_all_tasks(conn, _params) do
+    tasks = Erp.Planning.list_tasks()
+    render(conn, "index.json", tasks: tasks)
+    end
 
-    conn
-    |> put_flash(:info, "Task deleted successfully.")
-    |> redirect(to: Routes.task_path(conn, :index))
+  def delete(conn, %{"taskID" => id}) do
+    task = Planning.get_task!(id)
+    {:ok, _task} = case Planning.delete_task(task) do
+      {:ok} ->
+        json(conn, %{success: ":)"})
+      {:error, error} ->
+        {:error, error}
+    end
+
   end
 end
