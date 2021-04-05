@@ -425,7 +425,7 @@ export default function Planning(){
                             <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={taskType}
+                            value={taskType ? taskType : " "}
                             fullWidth
                             onChange={handleChange}
                             >
@@ -504,7 +504,7 @@ export default function Planning(){
                                     margin="dense"
                                     id="name"
                                     label="Task Name"
-                                    defaultValue={currentTask.task_name}
+                                    value={currentTask.task_name}
                                     type="string"
                                     fullWidth
                                     onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskName(e.target.value)}
@@ -514,7 +514,7 @@ export default function Planning(){
                                     margin="dense"
                                     id="name"
                                     label="Description"
-                                    defaultValue={currentTask.description}
+                                    value={currentTask.description}
                                     type="string"
                                     fullWidth
                                     onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskDescription(e.target.value)}
@@ -524,7 +524,7 @@ export default function Planning(){
                                     <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    defaultValue={taskType}
+                                    value={taskType ? taskType : " "}
                                     fullWidth
                                     onChange={handleChange}
                                     >
