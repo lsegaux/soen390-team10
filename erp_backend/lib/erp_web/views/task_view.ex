@@ -13,11 +13,12 @@ defmodule ErpWeb.TaskView do
   def render("task.json", %{task: task}) do
     %{id: task.id,
       task_name: task.task_name,
-      task_description: task.description,
+      description: task.description,
       start_time: task.start_time,
       end_time: task.end_time,
       employee_name: task.employee_name,
-      status: task.status}
+      status: task.status,
+      task_type: task.task_type}
   end
 
 end

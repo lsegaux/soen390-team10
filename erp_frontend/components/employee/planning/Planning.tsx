@@ -25,6 +25,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from "axios";
 //@ts-ignore
 import TimeLine from "react-gantt-timeline";
+import { format } from "path";
 
 const css = `
 .horizontalSpace {
@@ -82,29 +83,6 @@ export default function Planning(){
 
     const taskTypeArr = ["Shipping", "Packaging", "Accounting", "Quality Management"]; 
 
-    //FAKE DATA
-    // let count = 0;
-    // const task1 = { description: "shipping many boxes", 
-    //                 employee_name: "john", 
-    //                 start_time: new Date(2021,3,2),
-    //                 end_time: new Date(2021,3,5,23,59),
-    //                 status: true,
-    //                 task_name: "ship box",
-    //                 task_type: "Shipping",
-    //                 task_ID: count++
-    //                 }
-    
-    // const task2 = { description: "packaging many boxes", 
-    //                 employee_name: "david", 
-    //                 start_time: new Date(2021,3,4),
-    //                 end_time: new Date(2021,3,10,23,59),
-    //                 status: false,
-    //                 task_name: "package box",
-    //                 task_type: "Packaging",
-    //                 task_ID: count++
-    //                 }
-    // const data = [task1, task2]
-
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setTaskType(event.target.value as string);
     };
@@ -123,13 +101,21 @@ export default function Planning(){
     }
 
     const formatStartDate = (date) => {
-        const arrDate = date.split('-');
-        return new Date(arrDate[0], arrDate[1]-1, arrDate[2]);
+        //If the start date is not yet in ISO 8601 format...
+        if(date.length<=12){
+            const arrDate = date.split('-');
+            return new Date(arrDate[0], arrDate[1]-1, arrDate[2]);
+        }
+        return date;
     }
 
     const formatEndDate = (date) => {
-        const arrDate = date.split('-');
-        return new Date(arrDate[0], arrDate[1]-1, arrDate[2],23,59);
+        //If the end date is not yet in ISO 8601 format...
+        if(date.length<=12){
+            const arrDate = date.split('-');
+            return new Date(arrDate[0], arrDate[1]-1, arrDate[2],23,59);
+        }
+        return date;
     }
 
     const populateGantt = (data) => {
@@ -199,49 +185,30 @@ export default function Planning(){
             data: {
                 "task": {
                     description: taskDescription,
-                    endTime: formatStartDate(endDate),
-                    startTime: formatEndDate(startDate),
-                    status: true,
+                    endTime: formatEndDate(endDate),
+                    startTime: formatStartDate(startDate),
+                    status: false,
                     taskName: taskName,
                     taskType: taskType,
                 }
             }
         }).then(res => {
-            console.log(res)
             if (res.status === 200) {
                 alert("Your task has been added!");
-                /*
-                
                 var rows = Array();
                 for(var i=0; i<res.data.data.length; i++){
+                    var formattedStartTime = new Date(res.data.data[i].start_time);
+                    var formattedEndTime = new Date(res.data.data[i].end_time);
+                    res.data.data[i].start_time = formattedStartTime;
+                    res.data.data[i].end_time = formattedEndTime;
                     rows.push(res.data.data[i]);
                 }
                 setTasks(rows);
                 populateGantt(rows);
-                */
-                window.location.reload();
             }
         }).catch(err => {
             console.error(err);
         });
-
-        //TEST
-        // var rows = Array();
-        // for(var i=0; i<tasks.length; i++){
-        //     rows.push(tasks[i]);
-        // }
-        // rows.push({ description: taskDescription, 
-        // employee_name: "dina" + count+1, 
-        // start_time: formatStartDate(startDate),
-        // end_time: formatEndDate(endDate),
-        // status: false,
-        // task_name: taskName,
-        // task_type: taskType,
-        // task_ID: count++
-        // })
-        // setTasks(rows);
-        // populateGantt(rows);
-        //END OF TEST
 
         setTaskName("");
         setTaskDescription("");
@@ -310,8 +277,8 @@ export default function Planning(){
             data: {
                 "task": {
                     description: taskDescription,
-                    endTime: formatStartDate(endDate),
-                    startTime: formatEndDate(startDate),
+                    endTime: formatEndDate(endDate),
+                    startTime: formatStartDate(startDate),
                     status: checked,
                     taskName: taskName,
                     taskType: taskType,
@@ -323,6 +290,11 @@ export default function Planning(){
                 alert("Your task has been modified!");
                 var rows = Array();
                 for(var i=0; i<res.data.data.length; i++){
+                    //Formatting time returned by server to function with Gantt Chart
+                    var formattedStartTime = new Date(res.data.data[i].start_time);
+                    var formattedEndTime = new Date(res.data.data[i].end_time);
+                    res.data.data[i].start_time = formattedStartTime;
+                    res.data.data[i].end_time = formattedEndTime;
                     rows.push(res.data.data[i]);
                 }
                 setTasks(rows);
@@ -341,11 +313,9 @@ export default function Planning(){
     }
 
     const handleDelete = () => {
-        console.log(currentTask);
         setOpenTaskDelete(false);
         axios({
             method: 'post',
-            //missing url
             url: "http://localhost:4000/api/v1/planning/deletetask",
             headers: { 
                 "Content-Type": "application/json",
@@ -359,6 +329,11 @@ export default function Planning(){
                 alert("Your task has been modified!");
                 var rows = Array();
                 for(var i=0; i<res.data.data.length; i++){
+                    //Formatting time returned by server to function with Gantt Chart
+                    var formattedStartTime = new Date(res.data.data[i].start_time);
+                    var formattedEndTime = new Date(res.data.data[i].end_time);
+                    res.data.data[i].start_time = formattedStartTime;
+                    res.data.data[i].end_time = formattedEndTime;
                     rows.push(res.data.data[i]);
                 }
                 setTasks(rows);
@@ -425,9 +400,10 @@ export default function Planning(){
                             <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={taskType ? taskType : " "}
+                            value={taskType}
                             fullWidth
                             onChange={handleChange}
+                            defaultValue=''
                             >
                             {taskTypeArr.map((type) => {
                                 return (
@@ -504,7 +480,7 @@ export default function Planning(){
                                     margin="dense"
                                     id="name"
                                     label="Task Name"
-                                    value={currentTask.task_name}
+                                    defaultValue={currentTask.task_name}
                                     type="string"
                                     fullWidth
                                     onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskName(e.target.value)}
@@ -514,7 +490,7 @@ export default function Planning(){
                                     margin="dense"
                                     id="name"
                                     label="Description"
-                                    value={currentTask.description}
+                                    defaultValue={currentTask.description}
                                     type="string"
                                     fullWidth
                                     onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTaskDescription(e.target.value)}
@@ -524,9 +500,10 @@ export default function Planning(){
                                     <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={taskType ? taskType : " "}
+                                    value={taskType}
                                     fullWidth
                                     onChange={handleChange}
+                                    defaultValue=''
                                     >
                                     {taskTypeArr.map((type) => {
                                         return (

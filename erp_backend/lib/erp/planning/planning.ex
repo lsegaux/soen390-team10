@@ -43,46 +43,38 @@ defmodule Erp.Planning do
     end
   end
 
-  @doc false
-  def add_task(params, user) do
-    endTime = NaiveDateTime.from_iso8601(params["endTime"])
-    startTime = NaiveDateTime.from_iso8601(params["startTime"])
+  @doc """
+  Creates a task.
+
+  ## Examples
+
+      iex> add_task(%{field: value}, user)
+      {:ok, %Task{}}
+
+      iex> add_task(%{field: bad_value}, user)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def add_task(task_params, user) do
+    endTime = NaiveDateTime.from_iso8601(task_params["endTime"])
+    startTime = NaiveDateTime.from_iso8601(task_params["startTime"])
 
     endTimeTruncated = NaiveDateTime.truncate(elem(endTime, 1), :second)
     startTimeTruncated = NaiveDateTime.truncate(elem(startTime, 1), :second)
 
 
     %Task{
-      description: params["description"],
+      description: task_params["description"],
       end_time: endTimeTruncated,
       start_time: startTimeTruncated,
       employee_name: user.email,
-      status: params["status"],
-      task_name: params["taskName"],
-      task_type: params["taskType"]
+      status: task_params["status"],
+      task_name: task_params["taskName"],
+      task_type: task_params["taskType"]
     }
     |> Repo.insert()
     
     {:ok}
-  end
-
-
-  @doc """
-  Creates a task.
-
-  ## Examples
-
-      iex> create_task(%{field: value})
-      {:ok, %Task{}}
-
-      iex> create_task(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_task(attrs \\ %{}) do
-    %Task{}
-    |> Task.changeset(attrs)
-    |> Repo.insert()
   end
 
   @doc """
@@ -97,10 +89,17 @@ defmodule Erp.Planning do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_task(%Task{} = task, attrs) do
+  def update_task(%Task{} = task, task_params) do
+    endTime = NaiveDateTime.from_iso8601(task_params["endTime"])
+    startTime = NaiveDateTime.from_iso8601(task_params["startTime"])
+    endTimeTruncated = NaiveDateTime.truncate(elem(endTime, 1), :second)
+    startTimeTruncated = NaiveDateTime.truncate(elem(startTime, 1), :second)
+
     task
-    |> Task.changeset(attrs)
+    |> Task.changeset(%{task_name: task_params["taskName"], task_type: task_params["taskType"], status: task_params["status"], description: task_params["description"], start_time: startTimeTruncated, end_time: endTimeTruncated})
     |> Repo.update()
+
+    {:ok}
   end
 
   @doc """
