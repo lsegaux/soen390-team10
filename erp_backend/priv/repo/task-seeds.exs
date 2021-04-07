@@ -11,7 +11,7 @@ alias Erp.Planning.Task
 data = [
   %{
     "task_name" => "Fix Order #02314",
-    "task_type" => "Warranty",
+    "task_type" => "Quality Management",
     "description" => "Warranty claim for order #02314 was approved and needs to be taken care of",
     "start_time" => ~N[2021-03-30 23:00:07],
     "end_time" => ~N[2021-04-05 23:00:07],
@@ -20,7 +20,7 @@ data = [
   },
   %{
     "task_name" => "Discuss payroll with Jerry",
-    "task_type" => "Administrative",
+    "task_type" => "Accounting",
     "description" => "Jerry had an issue with his payroll, I'm going to help him out",
     "start_time" => ~N[2021-04-07 23:00:07],
     "end_time" => ~N[2021-05-05 23:00:07],
@@ -28,8 +28,8 @@ data = [
     "status" => true,
   },
   %{
-    "task_name" => "Monthly inventory with staff",
-    "task_type" => "Inventory",
+    "task_name" => "Ship Out Order #11645",
+    "task_type" => "Accounting",
     "description" => "The inventory session that takes place every month to verify that our inventory corresponds with out expected values",
     "start_time" => ~N[2021-03-30 23:00:07],
     "end_time" => ~N[2021-04-10 23:00:07],
