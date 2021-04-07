@@ -438,7 +438,9 @@ export default function Planning(){
                 <div className={classes.demo}>
                     <List dense={dense}>
                     {tasks.map((task) => {
+                        console.log(task);
                         return (
+                            <div key={task.task_name}>
                             <ListItem>
                         <ListItemAvatar>
                             <Avatar>
@@ -561,7 +563,8 @@ export default function Planning(){
                                     </DialogActions>
                             </Dialog>
                         </ListItemSecondaryAction>
-                        </ListItem>)
+                        </ListItem>
+                        </div>)
                     })}
                     </List>
                 </div>
