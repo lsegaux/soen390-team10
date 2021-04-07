@@ -1,10 +1,10 @@
-defmodule Erp.Machine do
+defmodule Erp.Scheduling.Machine do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
 
   alias Erp.Repo
-  alias Erp.Machine
+  alias Erp.Scheduling.Machine
 
   @derive {Jason.Encoder, only: [:machine_id, :plant_id, :job, :status, :start_time, :end_time, :cost_per_hour]}
   @primary_key {:machine_id, :integer, []}

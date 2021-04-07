@@ -5,13 +5,13 @@ defmodule ErpWeb.MachineController do
   use ErpWeb, :controller
   import Ecto.Query, warn: false
 
-  alias Erp.Machine
+  alias Erp.Scheduling.Machine
 
   @doc """
   Get machine by id.
   """
   def show(conn, %{"id" => machine_id}) do
-    machine = Erp.Machine.get_machine!(machine_id)
+    machine = Erp.Scheduling.Machine.get_machine!(machine_id)
     render(conn, "show.json", machine: machine)
   end
 
@@ -19,7 +19,7 @@ defmodule ErpWeb.MachineController do
   Show all machines.
   """
   def show_all_machines(conn, _params) do
-    machines = Erp.Machine.list_machines()
+    machines = Erp.Scheduling.Machine.list_machines()
     render(conn, "index.json", machines: machines)
   end
 
@@ -27,7 +27,7 @@ defmodule ErpWeb.MachineController do
   Get a list of machines that correlate to a plant ID.
   """
   def get_machines_by_plant_id(conn, %{"id" => plant_id}) do
-    machines = Erp.Machine.get_machines_by_plant_id(plant_id)
+    machines = Erp.Scheduling.Machine.get_machines_by_plant_id(plant_id)
     render(conn, "index.json", machines: machines)
   end
 

@@ -5,7 +5,7 @@
 
 
 alias Erp.Repo
-alias Erp.Machine
+alias Erp.Scheduling.Machine
 
 data = [
   %{
