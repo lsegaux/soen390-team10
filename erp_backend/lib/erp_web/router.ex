@@ -36,7 +36,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/packaging/order_boxes", BoxController, :order_boxes
     post "/packaging/create_package", PackagingController, :create_package
     post "/packaging/reduce_quantity", BoxController, :reduce_quantity
-    
+
 
     get  "/production", ProductionController, :get_production_info
     get  "/production/plants", PlantController, :show_all_plants
@@ -52,6 +52,10 @@ A module for managing endpoints and routing requests to the appropriate controll
     get  "/quality_management/vendor_claim", VendorClaimController, :show_all_vendor_claim
     post "/quality_management/vendor_claim/newClaim", VendorClaimController, :create
     post "/quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
+
+    get "/scheduling/machines", MachineController, :show_all_machines
+    get "/scheduling/machines/plant_id/:id", MachineController, :get_machines_by_plant_id
+    post "/scheduling/machines/machine_id/:id/status/:status", MachineController, :update_status
 
     get "/sendemail", EmailController, :send_email
 
@@ -72,7 +76,7 @@ A module for managing endpoints and routing requests to the appropriate controll
 
     resources "/tasks", TaskController
     resources "/clientclaim", ClientClaimController
-    
+
     get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
 
