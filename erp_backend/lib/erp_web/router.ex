@@ -59,6 +59,12 @@ A module for managing endpoints and routing requests to the appropriate controll
 
     get "/sendemail", EmailController, :send_email
 
+    resources "/tasks", TaskController
+    get "/planning", TaskController, :show_all_tasks
+    post "/planning/edittask", TaskController, :update_task
+    post "/planning/deletetask", TaskController, :delete
+    post "/planning/createtask", TaskController, :new
+
     resources "/vendorclaim", VendorClaimController
   end
 
@@ -78,6 +84,7 @@ A module for managing endpoints and routing requests to the appropriate controll
 
     get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
+
   end
 
   scope "/api/v1", ErpWeb do

@@ -20,5 +20,6 @@ defmodule Erp.QualityManagement.VendorClaim do
     vendor_claim
     |> cast(attrs, [:name, :orderid, :defecttype, :description, :comments, :status, :vendorrequest, :requeststatus])
     |> validate_required([:name, :orderid, :defecttype, :description, :comments, :status, :vendorrequest, :requeststatus])
+    |> unique_constraint(:orderid)
   end
 end
