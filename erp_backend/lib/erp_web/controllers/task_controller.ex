@@ -29,7 +29,7 @@ defmodule ErpWeb.TaskController do
 
     task = Planning.get_task!(task_params["id"])
 
-    {:ok, _task} = case Planning.update_task(task, task_params) do
+    case Planning.update_task(task, task_params) do
       {:ok} ->
         tasks = Erp.Planning.list_tasks()
         render(conn, "index.json", tasks: tasks)
@@ -40,7 +40,7 @@ defmodule ErpWeb.TaskController do
 
   def delete(conn, %{"taskID" => id}) do
     task = Planning.get_task!(id)
-    {:ok, _task} = case Planning.delete_task(task) do
+    case Planning.delete_task(task) do
       {:ok} ->
         tasks = Erp.Planning.list_tasks()
         render(conn, "index.json", tasks: tasks)
