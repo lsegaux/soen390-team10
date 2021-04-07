@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import HomePage from "./components/homepage";

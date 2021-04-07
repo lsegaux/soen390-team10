@@ -5,7 +5,6 @@ import {
   Line,
   XAxis,
   YAxis,
-  Label,
   ResponsiveContainer,
 } from "recharts";
 import Title from "./Title";

@@ -15,7 +15,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
+import { RadioGroup, Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
 import axios from 'axios';
 
 var bikeAssembled = {};
