@@ -25,7 +25,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from "axios";
 //@ts-ignore
 import TimeLine from "react-gantt-timeline";
-import { format } from "path";
 
 const css = `
 .horizontalSpace {
@@ -405,9 +404,9 @@ export default function Planning(){
                             onChange={handleChange}
                             defaultValue=''
                             >
-                            {taskTypeArr.map((type) => {
+                            {taskTypeArr.map((type, key) => {
                                 return (
-                                    <MenuItem value={type}>{type}</MenuItem>)
+                                    <MenuItem key = {key} value={type}>{type}</MenuItem>)
                             })}
                             </Select>
                         </FormControl>
@@ -438,7 +437,6 @@ export default function Planning(){
                 <div className={classes.demo}>
                     <List dense={dense}>
                     {tasks.map((task) => {
-                        console.log(task);
                         return (
                             <div key={task.task_name}>
                             <ListItem>
@@ -507,9 +505,9 @@ export default function Planning(){
                                     onChange={handleChange}
                                     defaultValue=''
                                     >
-                                    {taskTypeArr.map((type) => {
+                                    {taskTypeArr.map((type, key) => {
                                         return (
-                                            <MenuItem value={type}>{type}</MenuItem>)
+                                            <MenuItem key={key} value={type}>{type}</MenuItem>)
                                     })}
                                     </Select>
                                 </FormControl>
