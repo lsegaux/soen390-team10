@@ -10,7 +10,6 @@ import Link from "@material-ui/core/Link";
 import AccountsPayable from './accountspayable';
 import AccountsReceivable from './accountsreceivable';
 import Ledger from './ledger';
-import {Auth} from "../../../Auth"
 
 function Copyright() {
   return (

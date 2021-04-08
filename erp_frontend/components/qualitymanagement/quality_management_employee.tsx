@@ -4,13 +4,9 @@
 
 import React, {useState ,useEffect} from "react";
 import { makeStyles} from "@material-ui/core/styles";
-import axios from "axios";
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -20,8 +16,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
 
 import DefectForm from './DefectForm';
-
-const url = 'http://localhost:4000';
+import { getVendorTransactions, getClaims, updateDefectStatusClient, updateDefectStatusVendor, updateRequestStatusClient, updateRequestStatusVendor } from "../../utils/datafetcher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,47 +78,20 @@ export default function QualityManagementEmployee() {
       let isMounted = true;
 
       //Fetch vendor claims
-      axios({
-          method: 'get',
-          url: `${url}/api/v1/quality_management/vendor_claim`,
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-              setVendorQMData(res.data.data);
-          }
-      }).catch(err => {
-          console.error(err);
-      });
+      getClaims('vendor_claim', res => setVendorQMData(res.data))
 
        //Fetch client claims
-       axios({
-        method: 'get',
-        url: `${url}/api/v1/quality_management/client_claim`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-    }).then(res => {
-        if (isMounted && res.status === 200) {
-            setClientQMData(res.data.data);
-        }
-    }).catch(err => {
-        console.error(err);
-    });
+      getClaims('client_claim', res => setClientQMData(res.data)) 
 
       //Fetching Vendor Transactions
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/production/expenses`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-     }).then(res => {
-        if (res.status === 200 && isMounted) {
-          var rows = Array();
-          for(var i=0; i<res.data.data.length; i++){
-            rows.push(res.data.data[i]);
+      getVendorTransactions(res => {
+        var rows = Array();
+          for(var i=0; i<res.data.length; i++){
+            rows.push(res.data[i]);
           }
           setRespectiveOrders(rows);
-        }
-     }).catch(err => {
-        console.error(err);
-    });
+      })
+
     return ()=>{isMounted = false}
   }, []);
     
@@ -142,40 +110,12 @@ export default function QualityManagementEmployee() {
       //Client
         let index = clientQMData[rowSelectId]["claim_id"];
 
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                client_claim:{
-                    status:option
-                }
-            }
-          }).then((res)=>{
-            if (res.status == 200) window.location.href = '/employee'
-          }).catch(err => {
-              console.error(err);
-              alert("Status was not updated due to some error.");
-          });
+        updateDefectStatusClient(index, option, res => window.location.href = res)
+
     }else{ //Vendors
 
         let index = vendorQMData[rowSelectId]["claim_id"];
-
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                vendor_claim:{
-                    status:option
-                }
-            }
-          }).then((res)=>{
-            if (res.status == 200) window.location.href = '/employee'
-          }).catch(err => {
-              console.error(err);
-              alert("Status was not updated due to some error.");
-          });
+        updateDefectStatusVendor(index, option, res => window.location.href = res)
     }
     
     handleClose();
@@ -186,40 +126,11 @@ export default function QualityManagementEmployee() {
     if (listClientBool){
         let index = clientQMData[rowSelectId]["claim_id"];
       //Client
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/client_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                client_claim:{
-                    requeststatus:option
-                }
-            }
-          }).then((res)=>{
-            if (res.status == 200) window.location.href = '/employee'
-          }).catch(err => {
-              console.error(err);
-              alert("Request status was not updated due to some error.");
-          });
+      updateRequestStatusClient(index, option, res => window.location.href = res)
     }else{ //Vendors
         
         let index = vendorQMData[rowSelectId]["claim_id"];
-
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/vendor_claim/updateDefectStatus/id/${index}`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                vendor_claim:{
-                    requeststatus:option
-                }
-            }
-          }).then((res)=>{
-            if (res.status == 200) window.location.href = '/employee'
-          }).catch(err => {
-              console.error(err);
-              alert("Status was not updated due to some error.");
-          });
+      updateRequestStatusVendor(index, option, res => window.location.href = res)
     }
     
     handleClose();

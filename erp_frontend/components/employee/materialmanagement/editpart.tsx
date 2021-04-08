@@ -1,6 +1,5 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -35,16 +34,6 @@ class Edit extends React.Component<RouteComponentProps<any>, InputFormState> {
     this.setState({ materials: e.target.value.split(",") });
   }
 
-  public componentDidMount(): void {
-    axios.get(`http://localhost:3000/parts/${this.state.id}`).then((data) => {
-      this.setState({
-        name: data.data.name,
-        types: data.data.types,
-        materials: data.data.materials,
-      });
-    });
-  }
-
   public onFormSubmission(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = {
@@ -52,11 +41,6 @@ class Edit extends React.Component<RouteComponentProps<any>, InputFormState> {
       types: this.state.types,
       materials: this.state.materials,
     };
-    axios
-      .patch(`http://localhost:3000/parts/${this.state.id}`, formData)
-      .then((data) => {
-        this.props.history.push("/");
-      });
   }
 
   public render() {

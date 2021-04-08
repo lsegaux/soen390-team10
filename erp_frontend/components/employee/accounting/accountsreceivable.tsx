@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import axios from "axios";
+import { getLedger } from '../../../utils/datafetcher';
 
 const useStyles = makeStyles({
   table: {
@@ -22,21 +22,13 @@ export default function BasicTable() {
   const [data, setData] = useState(Array());
 
   useEffect(() => {
-       axios({
-          method: 'get',
-          url: `${url}/api/v1/accounting/ledger`,
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-       }).then(res => {
-          if (res.status === 200) {
-            var rows = Array();
-            for(var i=0; i<res.data.data.length; i++){
-              rows.push(res.data.data[i]);
-            }
-            setData(rows);
-          }
-       }).catch(err => {
-          console.error(err);
-      });
+    getLedger(res => {
+      var rows = Array();
+      for (var i = 0; i < res.data.length; i++) {
+          rows.push(res.data[i]);
+      }
+      setData(rows);
+  })
   }, []);
 
   return (

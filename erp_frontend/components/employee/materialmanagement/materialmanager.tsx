@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
-import axios from "axios";
 import Chip from "@material-ui/core/Chip";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,20 +23,6 @@ export default class MaterialManager extends React.Component<
   constructor(props: RouteComponentProps) {
     super(props);
     this.state = { parts: [] };
-  }
-  //TODO: Change the hostname to contact the back-end once endpoints are made to access actual database data.
-  public componentDidMount(): void {
-    axios.get(`http://localhost:3000/parts`).then((data) => {
-      this.setState({ parts: data.data });
-    });
-  }
-  //TODO: Change the hostname to contact the back-end once endpoints are made to access actual database data.
-  public deletePart(id: number) {
-    axios.delete(`http://localhost:3000/parts/${id}`).then((data) => {
-      const index = this.state.parts.findIndex((part) => part.id === id);
-      this.state.parts.splice(index, 1);
-      this.props.history.push("/");
-    });
   }
 
   public render() {
@@ -112,7 +97,6 @@ export default class MaterialManager extends React.Component<
                             </Button>
                             <Button
                               variant="outlined"
-                              onClick={() => this.deletePart(part.id)}
                             >
                               Delete
                             </Button>

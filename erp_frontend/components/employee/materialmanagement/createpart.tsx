@@ -1,6 +1,5 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -48,10 +47,10 @@ class Create extends React.Component<RouteComponentProps, InputFormState> {
       materials: this.state.materials,
     };
 
-    //TODO: Change the hostname to contact the back-end once endpoints are made to access actual database data.
-    axios.post(`http://localhost:3000/parts`, formData).then((data) => {
-      this.props.history.push("/");
-    });
+    // //TODO: Change the hostname to contact the back-end once endpoints are made to access actual database data.
+    // axios.post(`http://localhost:3000/parts`, formData).then((data) => {
+    //   this.props.history.push("/");
+    // });
   }
 
   public render() {
