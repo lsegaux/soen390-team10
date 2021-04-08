@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TypeQuantityTable from "./typeQuantityTable";
+import { getProductionStatus } from '../../utils/datafetcher';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -55,21 +56,21 @@ export default function Inventory(this: any) {
     const material3 = { "type": "steel", "quantity": 220 }
 
     const plant1 = {
-        "location": "Montreal",
+        "location": "Montreal Plant",
         "materials": [material1, material2, material3],
         "parts": [part1, part2],
         "bikesBuilt": 4,
         "bikesBeingBuilt": 3
     }
     const plant2 = {
-        "location": "Toronto",
+        "location": "Dubai Plant",
         "materials": [material2, material1, material3],
         "parts": [part2, part1],
         "bikesBuilt": 5,
         "bikesBeingBuilt": 10
     }
     const plant3 = {
-        "location": "Vancouver",
+        "location": "Toronto Plant",
         "materials": [material3, material2, material3],
         "parts": [part1, part2],
         "bikesBuilt": 100,
@@ -78,23 +79,21 @@ export default function Inventory(this: any) {
     const obj = { "plants": [plant1, plant2, plant3] }
 
 
-    const [inventoryObj, setInventoryObj] = useState(obj['plants']);
+    const [inventoryObj, setInventoryObj] = useState<any>(obj['plants']);
 
     const url = 'http://localhost:4000';
 
-    // useEffect(() => {
-    //     axios({
-    //         method: 'get',
-    //         url: `${url}/api/v1/production`,
-    //         headers: { "Content-Type": "application/json" },
-    //     }).then(res => {
-    //         if (res.status === 200) {
-    //             setInventoryObj(res.data["plants"])
-    //         }
-    //     }).catch(err => {
-    //         console.error(err);
-    //     });
-    // });
+    useEffect(() => {
+        getProductionStatus(res => {
+            let inv: Array<any>[] = [];
+            for (let key in res['productionData']) {
+                if (res['productionData'].hasOwnProperty(key)) {
+                    inv.push(res['productionData'][key])
+                }
+            }
+            setInventoryObj(inv)
+        }, []);
+    });
 
     const classes = useStyles();
 

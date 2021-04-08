@@ -48,6 +48,20 @@ export function getPlants(callback) {
     });
 }
 
+export function getProductionStatus(callback) {
+    axios({
+        method: 'get',
+        url: `${domain}/api/v1/production`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem('jwt')},
+    }).then(res => {
+        if (res.status === 200) {
+          callback(res.data)
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
 export function getPlantById(plantId, callback){
     axios({
         method: 'get',
