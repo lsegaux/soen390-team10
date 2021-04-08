@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import axios from "axios";
+import { getLedger, getVendorTransactions, getMachineExpenses } from '../../../utils/datafetcher';
 
 const useStyles = makeStyles({
   table: {
@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 export default function BasicTable() {
   const classes = useStyles();
 
-  const url = 'http://localhost:4000';
   const [customerData, setCustomerData] = useState(Array());
   const [vendorData, setVendorData] = useState(Array());
   const [machineData, setMachineData] = useState(Array());
@@ -27,55 +26,31 @@ export default function BasicTable() {
   useEffect(() => {
 
       //Fetching Customer Transactions
-       axios({
-          method: 'get',
-          url: `${url}/api/v1/accounting/ledger`,
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-       }).then(res => {
-          if (res.status === 200) {
-            var rows = Array();
-            for(var i=0; i<res.data.data.length; i++){
-              rows.push(res.data.data[i]);
-            }
-            setCustomerData(rows);
-          }
-       }).catch(err => {
-          console.error(err);
-      });
+      getLedger(res => {
+        var rows = Array();
+        for (var i = 0; i < res.data.length; i++) {
+            rows.push(res.data[i]);
+        }
+        setCustomerData(rows);
+    })
 
       //Fetching Vendor Transactions
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/production/expenses`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-        if (res.status === 200) {
-          var rows = Array();
-          for(var i=0; i<res.data.data.length; i++){
-            rows.push(res.data.data[i]);
-          }
-          setVendorData(rows);
+    getVendorTransactions(res => {
+      var rows = Array();
+        for(var i=0; i<res.data.length; i++){
+          rows.push(res.data[i]);
         }
-     }).catch(err => {
-        console.error(err);
-    });
+        setVendorData(rows);
+    })
 
     //Fetching Machine Transactions
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/scheduling/expenses`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-    }).then(res => {
-        if (res.status === 200) {
-          var rows = Array();
-          for(var i=0; i<res.data.data.length; i++){
-            rows.push(res.data.data[i]);
+      getMachineExpenses(res => {
+        var rows = Array();
+          for(var i=0; i<res.data.length; i++){
+            rows.push(res.data[i]);
           }
           setMachineData(rows);
-        }
-    }).catch(err => {
-        console.error(err);
-    });
+      })
 
   }, []);
 
@@ -103,7 +78,7 @@ export default function BasicTable() {
                 {row.userEmail}
               </TableCell>
               <TableCell>{row.bikesAmount}</TableCell>
-              <TableCell>{row.price + "$"}</TableCell>
+              <TableCell>{row.price * row.bikesAmount + "$"}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}

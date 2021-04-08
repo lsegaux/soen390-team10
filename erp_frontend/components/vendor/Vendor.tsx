@@ -4,7 +4,6 @@
 
 import React, {useState ,useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -23,8 +22,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
 
 import Checkout from '../vendor/checkout';
-
-const url = 'http://localhost:4000';
+import {getPlants, getPlantById} from '../../utils/datafetcher'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center"
   }
 }));
-
 
 //Table headers
 const tableHeaders = ["Material", "Internal Stock", "Vendor", "Price Per Unit", "Order Material"];
@@ -75,18 +72,7 @@ export default function Vendor() {
   useEffect(()=>{
       let isMounted = true;
       setOrderData(new Array(data.length).fill(0));
-
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-            setData(res.data.data);
-          }
-      }).catch(err => {
-          console.error(err);
-      });
+      getPlantById(selectPlantIndex, res => {setData(res.data)})
 
       return ()=>{isMounted = false}
 
@@ -95,31 +81,8 @@ export default function Vendor() {
     useEffect(() => {
       let isMounted = true;
 
-
-        axios({
-          method: 'get',
-          url: `${url}/api/v1/production/plants`,
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-              setAllPlants(res.data.data)
-          }
-      }).catch(err => {
-          console.error(err);
-      });
-
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-            setData(res.data.data);
-          }
-      }).catch(err => {
-          console.error(err);
-      });
-      
+      getPlants(res => {setAllPlants(res.data)})
+      getPlantById(selectPlantIndex, res => {setData(res.data)})      
       return ()=>{isMounted = false}
    
     }, []);
@@ -153,18 +116,7 @@ export default function Vendor() {
 
   function clearOrder(){
     setOrderData(new Array(data.length).fill(0));
-    
-    axios({
-      method: 'get',
-      url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-    }).then(res => {
-        if (res.status === 200) {
-          setData(res.data.data);
-        }
-    }).catch(err => {
-        console.error(err);
-    });
+    getPlantById(selectPlantIndex, res => {setData(res.data)})
   }
   return (
     <>
