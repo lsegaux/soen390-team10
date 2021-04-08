@@ -60,7 +60,8 @@ export default function ShippingAndTransportation() {
         axios({
             method: 'get',
             url: `${url}/api/v1/accounting/ledger`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("jwt") },
         }).then(res => {
             if (res.status === 200) {
                 console.log(res.data.data)
