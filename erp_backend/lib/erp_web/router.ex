@@ -57,7 +57,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     get  "/scheduling/machines/plant_id/:id", MachineController, :get_machines_by_plant_id
     post "/scheduling/machines/machine_id/:id/status/:status", MachineController, :update_status
     get  "/scheduling/expenses", MachineExpenseController, :show_all_machineexpenses
-    post "/scheduling/expense/create/amount/:amount/job/:job", MachineExpenseController, :create
+    post "/scheduling/expense/create/machine/:id/amount/:amount/job/:job", MachineExpenseController, :create
     post "/scheduling/expense/process/:id", MachineExpenseController, :process_expense
 
     get "/sendemail", EmailController, :send_email

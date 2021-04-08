@@ -7,6 +7,7 @@ defmodule Erp.Scheduling.MachineExpense do
   alias Erp.Scheduling.MachineExpense
 
   schema "machineexpenses" do
+    field :machine_id, :integer
     field :amount, :float
     field :job, :string
     field :processed, :boolean, default: false
@@ -19,6 +20,7 @@ defmodule Erp.Scheduling.MachineExpense do
     machine_expense
     |> cast(attrs, [:amount, :processed, :job])
     |> validate_required([:amount, :processed, :job])
+    |> foreign_key_constraint(:machine_id)
   end
 
   @doc """
@@ -29,9 +31,9 @@ defmodule Erp.Scheduling.MachineExpense do
       iex> create_expense(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def create_expense(amount, job) do
+  def create_expense(machine_id, amount, job) do
     float = Float.parse(amount) |> elem(0)
-    Repo.insert %MachineExpense{amount: float, job: job, processed: false}
+    Repo.insert %MachineExpense{machine_id: machine_id, amount: float, job: job, processed: false}
   end
 
   @doc """
@@ -43,7 +45,9 @@ defmodule Erp.Scheduling.MachineExpense do
       iex> get_machineexpense!(asdasd)
       ** (Ecto.NoResultsError)
   """
-  def get_machineexpense(id), do: Repo.get!(MachineExpense, id)
+  def get_machineexpense(id) do
+    Repo.get!(MachineExpense, id)
+  end
 
   @doc """
   Returns the list of machine expenses

@@ -22,7 +22,8 @@ export default function BasicTable() {
   const url = 'http://localhost:4000';
   const [customerData, setCustomerData] = useState(Array());
   const [vendorData, setVendorData] = useState(Array());
-
+  const [machineData, setMachineData] = useState(Array());
+  
   useEffect(() => {
 
       //Fetching Customer Transactions
@@ -56,6 +57,24 @@ export default function BasicTable() {
           setVendorData(rows);
         }
      }).catch(err => {
+        console.error(err);
+    });
+
+    //Fetching Machine Transactions
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/scheduling/expenses`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+        if (res.status === 200) {
+          var rows = Array();
+          for(var i=0; i<res.data.data.length; i++){
+            rows.push(res.data.data[i]);
+          }
+          setMachineData(rows);
+          console.log('rows ', rows);
+        }
+    }).catch(err => {
         console.error(err);
     });
 
@@ -114,6 +133,37 @@ export default function BasicTable() {
               {row.company}
               </TableCell>
               <TableCell>{row.amount + "$"}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <TableContainer component={Paper}>
+        <br></br>
+        <br></br>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Machine Expenses
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Machine Id</TableCell>
+            <TableCell>Job</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell align="right">Time</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {machineData.map((row, key) => (
+            <TableRow key={key}>
+              <TableCell component="th" scope="row">
+              {row.machine_id}
+              </TableCell>
+              <TableCell>{row.job}</TableCell>
+              <TableCell>{row.amount + "$"}</TableCell>
+              <TableCell align="right">{row.inserted_at}</TableCell>
             </TableRow>
           ))}
         </TableBody>

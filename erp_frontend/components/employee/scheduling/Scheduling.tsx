@@ -124,6 +124,16 @@ export default function Scheduling() {
   //Force stops the machine
   function handleForceStop(machine){
     alert("You have forced stopped machine: " + machine["machine_id"]+ ".")
+    
+    const amount = calculateMachineExpenseAmount(machine);
+
+    axios({
+      method: 'post',
+      url: `${url}/api/v1/scheduling/expense/create/machine/${machine["machine_id"]}/amount/${amount}/job/${machine["job"]}`,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).catch(err => {
+        console.error(err);
+    });
 
     //TO DO:
     //Update machine in the backing to force stop
@@ -137,6 +147,21 @@ export default function Scheduling() {
     .catch(err => {
         console.error(err);
     });
+
+  }
+
+  // Function to calculate the machine expense amount from the start time, end time and cost per hour of running the machine
+  function calculateMachineExpenseAmount(machine){
+
+    const today = new Date();
+    const end_time =  (today.getHours() + 3)%24 + today.getMinutes()/60;
+    const start_time = parseInt(machine["start_time"].substring(0,1)) + parseInt(machine["start_time"].substring(3,4))/60;
+    let hour_diff = end_time - start_time;
+
+    if(hour_diff < 0)
+      hour_diff = 24 + hour_diff;
+    
+    return (hour_diff*machine["cost_per_hour"]).toFixed(2);
   }
 
   // Check the status of a machine depending on its start time, end time and if it has been forced stopped
@@ -186,16 +211,17 @@ export default function Scheduling() {
           <TableBody>
             {
               data.map((row, key)=>{
+                const status = determineMachineStatus(row["start_time"], row["end_time"], row["status"]);
                 return ( 
                 <TableRow key ={key}>
                   <TableCell align = "center">{row["machine_id"]}</TableCell>
                   <TableCell align = "center">{row["job"]}</TableCell>
-                  <TableCell align = "center">{determineMachineStatus(row["start_time"], row["end_time"], row["status"])}</TableCell>
+                  <TableCell align = "center">{status}</TableCell>
                   <TableCell align = "center">{row["start_time"]}</TableCell>
                   <TableCell align = "center">{row["end_time"]}</TableCell>
                   <TableCell align = "center">{row["cost_per_hour"].toFixed(2)}</TableCell>
                   <TableCell align = "center">
-                    <Button className = {classes.button} onClick={()=>handleForceStop(row)}>Force Stop</Button>
+                    <Button disabled = {status != "In use"} className = {classes.button} onClick={()=>handleForceStop(row)}>Force Stop</Button>
                   </TableCell>
                 </TableRow>)
               })

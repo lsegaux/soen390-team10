@@ -38,8 +38,8 @@ data = [
     "plantID" => 0,
     "job" => "Assembling Pedals",
     "status" => "Available",
-    "start_time" => ~T[00:00:00],
-    "end_time" => ~T[14:00:00],
+    "start_time" => ~T[16:00:00],
+    "end_time" => ~T[22:00:00],
     "cost_per_hour" => 10.50
   },%{
     "ID" => 4,
