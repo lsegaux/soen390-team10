@@ -69,12 +69,12 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/planning/createtask", TaskController, :new
 
     resources "/vendorclaim", VendorClaimController
-    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/api/v1", ErpWeb do
     pipe_through [:api, :jwt_authenticated]
 
+    get "/accounting/ledger", OrderController, :show_all_orders
     post "/sale", SaleController, :process_sale
     get "/client_test", UserController, :client_test
     get  "/my_user1", UserController, :show
