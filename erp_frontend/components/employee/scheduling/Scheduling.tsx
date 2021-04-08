@@ -4,21 +4,16 @@
 
 import React, {useState ,useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-
-const url = 'http://localhost:4000';
+import { getPlantScheduling, getPlants, stopScheduling } from "../../../utils/datafetcher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,55 +51,19 @@ export default function Scheduling() {
 
   useEffect(()=>{
       let isMounted = true;
-
       //When retrieve machines when plant is changes
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/scheduling/machines/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-            setData(res.data.data);
-          }
-      }).catch(err => {
-          console.error(err);
-      });
-
+      getPlantScheduling(selectPlantIndex, res => setData(res.data))
       return ()=>{isMounted = false}
 
 },[selectPlantIndex]);
 
     useEffect(() => {
       let isMounted = true;
-
-
-      axios({
-          method: 'get',
-          url: `${url}/api/v1/production/plants`,
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-              setAllPlants(res.data.data)
-          }
-      }).catch(err => {
-          console.error(err);
-      });
+      getPlants(res => setAllPlants(res.data))
 
       //Retrieve machines based off plants
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/scheduling/machines/plant_id/${selectPlantIndex}`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      }).then(res => {
-          if (isMounted && res.status === 200) {
-            setData(res.data.data);
-          }
-      }).catch(err => {
-          console.error(err);
-      });
-
+      getPlantScheduling(selectPlantIndex, res => setData(res.data))
       return ()=>{isMounted = false}
-   
     }, []);
     
 
@@ -125,18 +84,8 @@ export default function Scheduling() {
   function handleForceStop(machine){
     alert("You have forced stopped machine: " + machine["machine_id"]+ ".")
 
-    //TO DO:
     //Update machine in the backing to force stop
-    axios({
-      method: 'post',
-      url: `${url}/api/v1/scheduling/machines/machine_id/${machine["machine_id"]}/status/Stopped`,
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-    }).then(res => {
-      window.location.reload();
-    })
-    .catch(err => {
-        console.error(err);
-    });
+    stopScheduling(machine)
   }
 
   // Check the status of a machine depending on its start time, end time and if it has been forced stopped
@@ -151,7 +100,6 @@ export default function Scheduling() {
         return "In use";
       else
         return "Not in use";
-
   }
 
   return (

@@ -1,5 +1,14 @@
 Risk Management Log to be updated as needed as per Risk Management Document requirements
 
+7/04/21
+Risk of spending too much effort on coding and leaving no time to complete documentation
+
+6/04/21
+Risk of not completing Scheduling module on time
+
+5/04/21
+Risk of having too many bugs to possibly solve all of the issues
+
 17/03/21 
 Risk of running out of time before implementing the ability for a client to view client features, and employee viewing employee features
 

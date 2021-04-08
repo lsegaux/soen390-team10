@@ -1,21 +1,17 @@
 import React, {useState} from 'react';
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
-import axios from 'axios';
-
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
+import { createVendorClaim, createClientClaim } from '../../utils/datafetcher';
 
-const url = 'http://localhost:4000';
 
 const useStyles = makeStyles((theme) => ({
     popupCheckout:{
@@ -95,63 +91,22 @@ export default function DefectForm({open, closePopup, respectiveOrders, role, re
 
     //Add client defect to backend
     function addClientDefect(){
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/client_claim/newClaim`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                client_claim:{
-                    claim_id:respectiveClaimSize.length,
-                    comments: formComment,
-                    defecttype: formDefectType,
-                    description: formDescription,
-                    orderid: formOrderID,
-                    requeststatus: "N/A",
-                    status: "Pending review",
-                    clientrequest: formRequest
-                }
-            }
-          }).then((res)=>{
-              if (res.status == 200){
-                clearDefectVariables();
-                closePopup();
-                window.location.href ='/client';
-              }
-          }).catch(err => {
-              console.error(err);
-              alert("Defect was not added due to some error.");
-          });
+        createClientClaim(respectiveClaimSize, formComment, formDefectType, formDescription, formOrderID, formRequest,
+            () => {
+                    clearDefectVariables();
+                    closePopup();
+                    window.location.href ='/client';
+            })
     }
 
     //Add vendor defect to backend
     function addVendorDefect(){
-        axios({
-            method: 'post',
-            url: `${url}/api/v1/quality_management/vendor_claim/newClaim`,
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-            data:{
-                vendor_claim:{
-                    claim_id: respectiveClaimSize.length,
-                    name:"Wilson Inc.",
-                    comments: formComment,
-                    defecttype: formDefectType,
-                    description: formDescription,
-                    orderid: formOrderID,
-                    requeststatus: "N/A",
-                    status: "Pending review",
-                    vendorrequest: formRequest
-                }
-            }
-          }).then((res)=>{
-            if (res.status == 200){
-              clearDefectVariables();
-              closePopup();
-              window.location.href ='/employee';
-            }
-        }).catch(err => {
-              console.error(err);
-              alert("Defect was not added due to some error.");
-          });
+        createVendorClaim(respectiveClaimSize, formComment, formDefectType, formDescription, formOrderID, formRequest,
+            () => {
+                clearDefectVariables();
+                closePopup();
+                window.location.href ='/employee';
+            })
     }
 
     //Set orderID

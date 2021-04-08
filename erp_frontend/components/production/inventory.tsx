@@ -6,7 +6,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TypeQuantityTable from "./typeQuantityTable";
-import axios from 'axios';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

@@ -4,10 +4,7 @@
 
 import React, {useState ,useEffect} from "react";
 import { makeStyles} from "@material-ui/core/styles";
-import axios from "axios";
-
 import Button from '@material-ui/core/Button';
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -17,8 +14,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableFooter from '@material-ui/core/TableFooter';
 
 import DefectForm from './DefectForm';
-
-const url = 'http://localhost:4000';
+import { getClaims, getLedger } from "../../utils/datafetcher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,50 +59,20 @@ export default function QualityManagementClient() {
     useEffect(() => {
       let isMounted = true;
 
-       //Fetch client claims
-       axios({
-        method: 'get',
-        url: `${url}/api/v1/quality_management/client_claim`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-    }).then(res => {
-        if (isMounted && res.status === 200) {
-          setCountAllQMData(res.data.data.length);
-        }
-    }).catch(err => {
-        console.error(err);
-    });
+      //Fetch client claims
+      getClaims('client_claim', res => setCountAllQMData(res.data.length))
 
-    //Fetch client claims
-    axios({
-      method: 'get',
-      url: `${url}/api/v1/quality_management/client_claim/client`,
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-  }).then(res => {
-      if (isMounted && res.status === 200) {
-        setClientQMData(res.data.data);
-      }
-  }).catch(err => {
-      console.error(err);
-  });
-    // 
+      //Fetch client claims
+      getClaims('client_claim/client', res => setClientQMData(res.data))
 
       //Fetching Customer Transactions
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/accounting/ledger`,
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-     }).then(res => {
-        if (res.status === 200 && isMounted) {
-          var rows = Array();
-          for(var i=0; i<res.data.data.length; i++){
-            rows.push({...res.data.data[i]});
-          }         
-          setRespectiveOrders(rows);
+      getLedger(res => {
+        var rows = Array();
+        for(var i=0; i<res.data.length; i++){
+          rows.push({...res.data[i]});
         }
-     }).catch(err => {
-        console.error(err);
-    });
-    
+        setRespectiveOrders(rows);
+      })
     return ()=>{isMounted = false}
   }, []);
  

@@ -9,7 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import axios from "axios";
+import { getLedger } from '../../utils/datafetcher';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -54,27 +54,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function ShippingAndTransportation() {
 
     const [orderArr, setOrderArr] = useState(Array());
-    const url = 'http://localhost:4000';
 
     useEffect(() => {
-        axios({
-            method: 'get',
-            url: `${url}/api/v1/accounting/ledger`,
-            headers: { "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("jwt") },
-        }).then(res => {
-            if (res.status === 200) {
-                console.log(res.data.data)
-                var rows = Array();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    rows.push(res.data.data[i]);
-                }
-                setOrderArr(rows);
+        getLedger(res => {
+            var rows = Array();
+            for (var i = 0; i < res.data.length; i++) {
+                rows.push(res.data[i]);
             }
-        }).catch(err => {
-            console.error(err);
-        });
-
+            setOrderArr(rows);
+        })
     }, []);
 
     const classes = useStyles();

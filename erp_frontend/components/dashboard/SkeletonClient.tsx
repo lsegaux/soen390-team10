@@ -3,7 +3,6 @@
  */
 
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -28,6 +27,7 @@ import Dashboard from "./Dashboard";
 import QualityManagementClient from "../qualitymanagement/quality_management_client"
 import Sales from "../client/sales/Sales"
 import ShippingAndTransportationClient from "../client/ShippingAndTransportationClient";
+import { getUser } from "../../utils/datafetcher";
 
 function Copyright() {
   return (
@@ -138,28 +138,13 @@ const useStyles = makeStyles((theme) => ({
   */
 const pages = [<Dashboard userType="Client" key={0} />, <Sales key={1} />, <QualityManagementClient key={2} />, <ShippingAndTransportationClient key={3} />];
 
-const url = "http://localhost:4000";
-
 export default function SkeletonClient() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(()=>{
-      axios({
-        method: 'get',
-        url: `${url}/api/v1/my_user1`,
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-      },
-    }).then(res => {
-        if (res.status === 200) {
-        }
-    }).catch(err => {
-        console.error(err);
-    });
-
+    getUser(()=> {})
   }, [])
   
 

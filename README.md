@@ -63,12 +63,12 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
 
 - [Archived Sprint 1 Documents](https://drive.google.com/drive/u/0/folders/1PYLe4AInMEFgJ4qN0cyOelUjCYGQu3Zq)
 - [Archived Sprint 2 Documents](https://drive.google.com/drive/folders/1_UYQV3Wgerz2gDL7s9Q_Hzbu__w_OZe5?usp=sharing)
-- [Sprint 3 Documents](https://drive.google.com/drive/folders/1B6jLjwRVpNGaXUyqIHjrhuUsk8yG5dlL?usp=sharing)
-  - [Defects Tracking Report](https://docs.google.com/document/d/1BcYrnfd4Y4iT6bJVwd17okzYh-a8vdtIOCb-UB6DALU/edit?usp=sharing)
-  - [Functional and Non-Functional Requirements by Sprint](https://docs.google.com/document/d/1Xa1G2cgjGcb52q1HJ05BqpITo3Nu8N6lh9V74oW9NGo/edit?usp=sharing)
-  - [Software Architecture Document](https://docs.google.com/document/d/1CULgub9wpv8Vj4_SjcoRbXKTclCF5k4S2K-lXWwttLo/edit?usp=sharing)
-  - [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
-  - [Risk Management and Assessment](https://drive.google.com/file/d/1c46r5HwLpe5F80OuuRah0Vh5t9PFg51i/view?usp=sharing)
+- [Archived Sprint 3 Documents](https://drive.google.com/drive/folders/1sL3-K02DejM-9btZ6wOhdOBM3AuiVuSn)
+- [Sprint 4 Documents](https://drive.google.com/drive/folders/153e6PfOgdsG60jTNcYihBsS9oi7OymQE?usp=sharing)
+  - [Defects Tracking Report](https://docs.google.com/document/d/1FibHTtkQDGktG1p-40c_oIVrbjTqZuFTpsGr1rOTkfs/edit?usp=sharing)
+  - [Software Architecture Document](https://docs.google.com/document/d/1DygnyLZ3quXJxfKDcE8rJowTrgndBHpDG5mB0Bly4zE/edit?usp=sharing)
+  - [Testing Plan](https://docs.google.com/document/d/1Vl59DCKibHDG8qfXTiec_GBnYHlUoAMhFKLu5Qk_CL4/edit?usp=sharing)
+  - [Risk Management and Assessment](https://drive.google.com/file/d/1pHEhs5PbWUEEeXiR84owgbOdhvITNRME/view?usp=sharing)
 
 ## Design Patterns
 
@@ -81,7 +81,7 @@ Also, **make sure** to run `git update-index --skip-worktree config/dev.secret.e
   - [Explanation](https://github.com/elixir-ecto/ecto)
 
 ## Testing
-* [Testing Plan](https://docs.google.com/document/d/13DhI4AxX7JT8-5F-fWVhLI-BLDLOXj27-mrw3pmfESo/edit?usp=sharing)
+* [Testing Plan](https://docs.google.com/document/d/1Vl59DCKibHDG8qfXTiec_GBnYHlUoAMhFKLu5Qk_CL4/edit?usp=sharing)
 ---
 * [Backend Testing System](https://github.com/lsegaux/soen390-team10/tree/main/erp_backend/test)
 ---

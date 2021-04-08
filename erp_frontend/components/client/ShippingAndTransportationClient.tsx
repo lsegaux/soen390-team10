@@ -3,11 +3,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import {getPackagingInfo} from '../../utils/datafetcher'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -57,9 +57,7 @@ export default function ShippingAndTransportationClient() {
 
     const [orderId, setOrderId] = useState('');
     const [openOrder, setOpenOrder] = useState(false);
-    const [orderArr, setOrderArr] = useState(Array());
     const [orderDetail, setOrderDetail] = useState(Object());
-    const url = 'http://localhost:4000';
 
     const handleOpen = () => {
         setOpenOrder(true);
@@ -70,22 +68,10 @@ export default function ShippingAndTransportationClient() {
     };
 
     const handleRequest = () => {
-        axios({
-            method: 'get',
-            url: `${url}/api/v1/accounting/order/${orderId}`,
-            headers: { "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("jwt") },
-        }).then(res => {
-            if (res.status === 200) {
-                setOrderDetail(res.data.data);
-                handleOpen()
-            } else {
-                alert('Package details not found for current user.');
-            }
-        }).catch(err => {
-            console.error(err);
-            alert('Package details not found for current user.');
-        });
+        getPackagingInfo(orderId, 
+            res => {
+            setOrderDetail(res.data)
+            handleOpen()})
     }
 
     const classes = useStyles();
