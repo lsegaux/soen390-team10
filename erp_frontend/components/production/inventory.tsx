@@ -92,8 +92,8 @@ export default function Inventory(this: any) {
                 }
             }
             setInventoryObj(inv)
-        }, []);
-    });
+        });
+    }, []);
 
     const classes = useStyles();
 
