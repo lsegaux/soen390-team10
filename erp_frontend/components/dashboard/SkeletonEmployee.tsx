@@ -45,7 +45,7 @@ function Copyright() {
       </div>
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
-        <Link color="inherit" href="https://localhost:4000/">
+        <Link color="inherit" href="/">
           Adrenaline
     </Link>{" "}
         {new Date().getFullYear()}
@@ -149,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
   8          -> Planning
   */
 
-const pages = [<Dashboard key={0} />, <Vendor key={1} />, <Accounting key={2} />, 
+const pages = [<Dashboard userType="Employee" key={0} />, <Vendor key={1} />, <Accounting key={2} />, 
                <QualityManagementEmployee key={3} />, <Inventory key={4} />, <Packaging key={5}/>, 
                <ShippingAndTransportation key={6} />, <Scheduling key = {7}></Scheduling>, <Planning key ={8}></Planning>];
 
