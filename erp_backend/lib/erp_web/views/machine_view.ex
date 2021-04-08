@@ -14,7 +14,8 @@ defmodule ErpWeb.MachineView do
       status: machine.status,
       start_time: machine.start_time,
       end_time: machine.end_time,
-      cost_per_hour: machine.cost_per_hour}
+      cost_per_hour: machine.cost_per_hour,
+      production_per_hour: machine.production_per_hour}
   end
 
   def render("show.json", %{machine: machine}) do

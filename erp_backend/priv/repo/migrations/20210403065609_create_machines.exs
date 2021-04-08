@@ -10,6 +10,7 @@ defmodule Erp.Repo.Migrations.CreateMachines do
       add :start_time, :time
       add :end_time, :time
       add :cost_per_hour, :float
+      add :production_per_hour, :integer
 
       timestamps()
     end

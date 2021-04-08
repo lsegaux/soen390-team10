@@ -53,9 +53,12 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/vendor_claim/newClaim", VendorClaimController, :create
     post "/quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
 
-    get "/scheduling/machines", MachineController, :show_all_machines
-    get "/scheduling/machines/plant_id/:id", MachineController, :get_machines_by_plant_id
+    get  "/scheduling/machines", MachineController, :show_all_machines
+    get  "/scheduling/machines/plant_id/:id", MachineController, :get_machines_by_plant_id
     post "/scheduling/machines/machine_id/:id/status/:status", MachineController, :update_status
+    get  "/scheduling/expenses", MachineExpenseController, :show_all_machineexpenses
+    post "/scheduling/expense/create/machine/:id/amount/:amount/job/:job/produced/:produced", MachineExpenseController, :create
+    post "/scheduling/expense/process/:id", MachineExpenseController, :process_expense
 
     get "/sendemail", EmailController, :send_email
 

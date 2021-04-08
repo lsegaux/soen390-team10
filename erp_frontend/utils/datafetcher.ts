@@ -261,6 +261,20 @@ export function getVendorTransactions(callback){
     });
 }
 
+export function getMachineExpenses(callback){
+    axios({
+        method: 'get',
+        url: `${domain}/api/v1/scheduling/expenses`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+        if (res.status === 200) {
+            callback(res.data);
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
 export function updateDefectStatusClient(index, option, callback){
     axios({
         method: 'post',
@@ -398,6 +412,16 @@ export function stopScheduling(machine){
         window.location.reload();
       })
       .catch(err => {
+          console.error(err);
+      });
+}
+
+export function createMachineExpense(machine, amount, production){
+    axios({
+        method: 'post',
+        url: `${domain}/api/v1/scheduling/expense/create/machine/${machine["machine_id"]}/amount/${amount}/job/${machine["job"]}/produced/${production}`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+      }).catch(err => {
           console.error(err);
       });
 }
