@@ -68,7 +68,7 @@ export default function BasicTable() {
                 {row.userEmail}
               </TableCell>
               <TableCell>{row.bikesAmount}</TableCell>
-              <TableCell>{row.price + "$"}</TableCell>
+              <TableCell>{row.price * row.bikesAmount + "$"}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}

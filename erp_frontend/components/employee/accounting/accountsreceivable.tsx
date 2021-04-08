@@ -18,7 +18,6 @@ const useStyles = makeStyles({
 export default function BasicTable() {
   const classes = useStyles();
 
-  const url = 'http://localhost:4000';
   const [data, setData] = useState(Array());
 
   useEffect(() => {
