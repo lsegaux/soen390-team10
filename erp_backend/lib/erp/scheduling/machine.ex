@@ -1,12 +1,12 @@
-defmodule Erp.Machine do
+defmodule Erp.Scheduling.Machine do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
 
   alias Erp.Repo
-  alias Erp.Machine
+  alias Erp.Scheduling.Machine
 
-  @derive {Jason.Encoder, only: [:machine_id, :plant_id, :job, :status, :start_time, :end_time, :cost_per_hour]}
+  @derive {Jason.Encoder, only: [:machine_id, :plant_id, :job, :status, :start_time, :end_time, :cost_per_hour, :production_per_hour]}
   @primary_key {:machine_id, :integer, []}
   @derive {Phoenix.Param, key: :machine_id}
   schema "machines" do
@@ -16,6 +16,7 @@ defmodule Erp.Machine do
     field :start_time, :time
     field :end_time, :time
     field :cost_per_hour, :float
+    field :production_per_hour, :integer
 
     timestamps()
   end
@@ -23,8 +24,8 @@ defmodule Erp.Machine do
   @doc false
   def changeset(machine, attrs) do
     machine
-    |> cast(attrs, [:job, :status, :start_time, :end_time, :cost_per_hour])
-    |> validate_required([:job, :status, :start_time, :end_time, :cost_per_hour])
+    |> cast(attrs, [:job, :status, :start_time, :end_time, :cost_per_hour, :production_per_hour])
+    |> validate_required([:job, :status, :start_time, :end_time, :cost_per_hour, :production_per_hour])
     |> unique_constraint(:machine_id)
     |> foreign_key_constraint(:plant_id)
   end
@@ -60,7 +61,7 @@ defmodule Erp.Machine do
       ** (Ecto.NoResultsError)
   """
   def get_machines_by_plant_id(id) do
-    query = from(m in Machine, where: m.plant_id == ^id, select: [:machine_id, :plant_id, :cost_per_hour, :end_time, :job, :start_time, :status])
+    query = from(m in Machine, where: m.plant_id == ^id, select: [:machine_id, :plant_id, :cost_per_hour, :end_time, :job, :start_time, :status, :production_per_hour])
     Repo.all(query)
   end
 

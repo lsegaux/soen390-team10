@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getLedger, getVendorTransactions } from '../../../utils/datafetcher';
+import { getLedger, getVendorTransactions, getMachineExpenses } from '../../../utils/datafetcher';
 
 const useStyles = makeStyles({
   table: {
@@ -21,7 +21,8 @@ export default function BasicTable() {
 
   const [customerData, setCustomerData] = useState(Array());
   const [vendorData, setVendorData] = useState(Array());
-
+  const [machineData, setMachineData] = useState(Array());
+  
   useEffect(() => {
 
       //Fetching Customer Transactions
@@ -41,6 +42,15 @@ export default function BasicTable() {
         }
         setVendorData(rows);
     })
+
+    //Fetching Machine Transactions
+      getMachineExpenses(res => {
+        var rows = Array();
+          for(var i=0; i<res.data.length; i++){
+            rows.push(res.data[i]);
+          }
+          setMachineData(rows);
+      })
 
   }, []);
 
@@ -97,6 +107,39 @@ export default function BasicTable() {
               {row.company}
               </TableCell>
               <TableCell>{row.amount + "$"}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <TableContainer component={Paper}>
+        <br></br>
+        <br></br>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Machine Expenses
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Machine Id</TableCell>
+            <TableCell>Job</TableCell>
+            <TableCell>Produced</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell align="right">Time</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {machineData.map((row, key) => (
+            <TableRow key={key}>
+              <TableCell component="th" scope="row">
+              {row.machine_id}
+              </TableCell>
+              <TableCell>{row.job}</TableCell>
+              <TableCell>{row.produced}</TableCell>
+              <TableCell>{row.amount + "$"}</TableCell>
+              <TableCell align="right">{row.inserted_at}</TableCell>
             </TableRow>
           ))}
         </TableBody>
