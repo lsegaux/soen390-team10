@@ -15,12 +15,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import { RadioGroup, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@material-ui/core';
-import axios from 'axios';
+import { RadioGroup, Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
+import { postSale } from '../../../utils/datafetcher';
 
 var bikeAssembled = {};
 
-// TODO: query backend to get real info
 var plants = [
     {
         plantName: "Montreal",
@@ -336,7 +335,6 @@ export default function Sales() {
         let qty = bikeParts[index]["types"][value]["quantity"]
         let price = bikeParts[index]["types"][value]["price"];
         if (qty < bikeQty) {
-            // alert(`This part is out of stock (only ${qty} left).`);
             let temp : string[] = partsMissing
             temp.push(partName + ": " + qty)
             setPartsMissing(temp)
@@ -349,32 +347,6 @@ export default function Sales() {
         }
     }
 
-    function parseAfter() {
-        axios({
-            method: 'post',
-            url: "http://localhost:4000/api/v1/sale",
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('jwt')
-             },
-            data: {
-                "sale": {
-                    price: parseFloat(totalPrice.toFixed(2)),
-                    email: cardPerson,
-                    quantity: bikeQty
-                }
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                console.log("success");
-                alert("Thanks for purchasing bikes!");
-                location.reload();
-            }
-        }).catch(err => {
-            console.error(err);
-        });
-    }
-
     function validateBikeAmt() {
         if (Number.isNaN(bikeQty) || bikeQty < 15) return false;
         return true;
@@ -385,7 +357,7 @@ export default function Sales() {
     };
 
     const handleClose = () => {
-        parseAfter();
+        postSale(totalPrice, cardPerson, bikeQty);
         setOpenPayment(false);
     };
 

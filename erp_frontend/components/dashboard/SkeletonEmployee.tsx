@@ -3,7 +3,6 @@
  */
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -34,6 +33,7 @@ import Packaging from "../packaging/Packaging"
 import Scheduling from "../employee/scheduling/Scheduling"
 import Planning from "../employee/planning/Planning"
 import QualityManagementEmployee from "../qualitymanagement/quality_management_employee";
+import { getUser } from "../../utils/datafetcher";
 
 function Copyright() {
   return (
@@ -159,20 +159,7 @@ export default function SkeletonEmployee() {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-
-    axios({
-      method: 'get',
-      url: `http://localhost:4000/api/v1/my_user1`,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
-      },
-    }).then(res2 => {
-      if (res2.status === 200) {
-      }
-    }).catch(err2 => {
-      console.error(err2);
-    });
+    getUser(() => {})
   }, [])
 
 

@@ -27,6 +27,7 @@ import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
 //@ts-ignore
 import TimeLine from "react-gantt-timeline";
+import { getTasks, postTask, editTask, deleteTask } from "../../../utils/datafetcher";
 
 const css = `
 .horizontalSpace {
@@ -163,72 +164,35 @@ export default function Planning() {
     //fetching tasks
     useEffect(() => {
         let isMounted = true;
-        axios({
-            method: 'get',
-            url: "http://localhost:4000/api/v1/planning",
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-        }).then(res => {
-
-            if (isMounted && res.status === 200) {
-                var rows = Array();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    //Formatting time returned by server to function with Gantt Chart
-                    var formattedStartTime = new Date(res.data.data[i].start_time);
-                    var formattedEndTime = new Date(res.data.data[i].end_time);
-                    res.data.data[i].start_time = formattedStartTime;
-                    res.data.data[i].end_time = formattedEndTime;
-                    //Pushing the data to the rows variable.
-                    rows.push(res.data.data[i]);
-                }
-                //Setting the state and populating Gantt Chart.
-                setTasks(rows);
-                populateGantt(rows);
+        getTasks(res => {
+            var rows = Array();
+            for(var i=0; i<res.data.length; i++){
+                //Formatting time returned by server to function with Gantt Chart
+                var formattedStartTime = new Date(res.data[i].start_time);
+                var formattedEndTime = new Date(res.data[i].end_time);
+                res.data[i].start_time = formattedStartTime;
+                res.data[i].end_time = formattedEndTime;
+                //Pushing the data to the rows variable.
+                rows.push(res.data[i]);
             }
-        }).catch(err => {
-            console.error(err);
-        });
-        return () => { isMounted = false }
-    }, []);
+            //Setting the state and populating Gantt Chart.
+            setTasks(rows);
+            populateGantt(rows);
+        })
+        return ()=>{isMounted = false}
+      }, []);
 
     const handleAdd = () => {
         if (taskName == '' || taskDescription == '' || taskType == '' || startDate == '' || endDate == '') {
             return alert("Please make sure all fields are complete before saving.");
         }
         setOpenTaskForm(false);
-        axios({
-            method: 'post',
-            //missing url
-            url: "http://localhost:4000/api/v1/planning/createtask",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('jwt')
-            },
-            data: {
-                "task": {
-                    description: taskDescription,
-                    endTime: formatEndDate(endDate),
-                    startTime: formatStartDate(startDate),
-                    status: false,
-                    taskName: taskName,
-                    taskType: taskType,
-                }
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                alert("Your task has been added!");
-                var rows = Array();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    var formattedStartTime = new Date(res.data.data[i].start_time);
-                    var formattedEndTime = new Date(res.data.data[i].end_time);
-                    res.data.data[i].start_time = formattedStartTime;
-                    res.data.data[i].end_time = formattedEndTime;
-                    rows.push(res.data.data[i]);
-                }
-                setTasks(rows);
-                populateGantt(rows);
-            }
-        }).catch(err => {
-            console.error(err);
+        const end = formatEndDate(endDate)
+        const start = formatStartDate(startDate)
+
+        postTask(taskDescription, end, start, taskName, taskType, res => {
+            alert("Your task has been added!");
+            updatePlanningInfo(res)
         });
 
         setTaskName("");
@@ -288,43 +252,14 @@ export default function Planning() {
             return alert("Please make sure all fields are complete before saving.");
         }
         setOpenTaskEdit(false);
-        axios({
-            method: 'post',
-            url: "http://localhost:4000/api/v1/planning/edittask",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('jwt')
-            },
-            data: {
-                "task": {
-                    description: taskDescription,
-                    endTime: formatEndDate(endDate),
-                    startTime: formatStartDate(startDate),
-                    status: checked,
-                    taskName: taskName,
-                    taskType: taskType,
-                    id: currentTask.id
-                }
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                alert("Your task has been modified!");
-                var rows = Array();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    //Formatting time returned by server to function with Gantt Chart
-                    var formattedStartTime = new Date(res.data.data[i].start_time);
-                    var formattedEndTime = new Date(res.data.data[i].end_time);
-                    res.data.data[i].start_time = formattedStartTime;
-                    res.data.data[i].end_time = formattedEndTime;
-                    rows.push(res.data.data[i]);
-                }
-                setTasks(rows);
-                populateGantt(rows);
-            }
-        }).catch(err => {
-            console.error(err);
-        });
+        const end = formatEndDate(endDate)
+        const start = formatStartDate(startDate)
 
+        editTask(taskDescription, end, start, checked, taskName, taskType, currentTask, res => {
+            alert("Your task has been modified!");
+            updatePlanningInfo(res)
+        })
+        
         setTaskName("");
         setTaskDescription("");
         setTaskType("");
@@ -335,34 +270,25 @@ export default function Planning() {
 
     const handleDelete = () => {
         setOpenTaskDelete(false);
-        axios({
-            method: 'post',
-            url: "http://localhost:4000/api/v1/planning/deletetask",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('jwt')
-            },
-            data: {
-                "taskID": currentTask.id
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                alert("Your task has been modified!");
-                var rows = Array();
-                for (var i = 0; i < res.data.data.length; i++) {
-                    //Formatting time returned by server to function with Gantt Chart
-                    var formattedStartTime = new Date(res.data.data[i].start_time);
-                    var formattedEndTime = new Date(res.data.data[i].end_time);
-                    res.data.data[i].start_time = formattedStartTime;
-                    res.data.data[i].end_time = formattedEndTime;
-                    rows.push(res.data.data[i]);
-                }
-                setTasks(rows);
-                populateGantt(rows);
-            }
-        }).catch(err => {
-            console.error(err);
-        });
+
+        deleteTask(currentTask, res =>{
+            alert("Your task has been modified!");
+            updatePlanningInfo(res)
+        })
+    }
+
+    function updatePlanningInfo(res){
+        var rows = Array();
+        for(var i=0; i<res.data.length; i++){
+            //Formatting time returned by server to function with Gantt Chart
+            var formattedStartTime = new Date(res.data[i].start_time);
+            var formattedEndTime = new Date(res.data[i].end_time);
+            res.data[i].start_time = formattedStartTime;
+            res.data[i].end_time = formattedEndTime;
+            rows.push(res.data[i]);
+        }
+        setTasks(rows);
+        populateGantt(rows);
     }
 
     function setDefaultDate(d) {

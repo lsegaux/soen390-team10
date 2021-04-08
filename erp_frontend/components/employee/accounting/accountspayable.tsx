@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import axios from "axios";
 
 const useStyles = makeStyles({
   table: {
@@ -25,27 +24,7 @@ const rows = [
 
 export default function BasicTable() {
   const classes = useStyles();
-
-
-  /*
-  const url = 'http://localhost:4000';
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-       axios({
-          method: 'post',
-          url: `${url}/api/v1/EndpointHere`,
-          headers: { "Content-Type": "application/json" },
-       }).then(res => {
-          if (res.status === 200) {
-              setData(res.data["accountsReceivable"])
-          }
-       }).catch(err => {
-          console.error(err);
-      });
-  });
-  */
-
+  
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
