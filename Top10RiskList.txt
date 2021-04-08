@@ -1,7 +1,39 @@
-
 Keeping track of the top 10 risks throughout our sprints
 
 See README for a more detailed
+
+Sprint 4:
+1.
+    PROBLEM: ReactJS warnings for column keys in console
+    SOL: Assign keys to rows
+
+2.  PROBLEM: No TLS between server-client
+    SOL: Implement HTTPS
+
+3.  PROBLEM: Improper seed data for tasks
+    SOL: Change seeds and send to main
+
+4.  PROBLEM: Error 500 on Packaging page
+    SOL: Find error and correct bug
+
+5.  PROBLEM: Infinite loop of warnings in console for scheduling
+    SOL: Troubleshoot webpack for issues
+
+6.  PROBLEM: Testing needed for new features
+    SOL: Auto-generate tests using ecto cmds
+
+7.  PROBLEM: front-end JWT management not secure
+    SOL: Refactor needed
+
+8.  PROBLEM: typo's found in tasks backend
+    SOL: Fix and review
+
+9.  PROBLEM: Planning/Tasls duplicating methods
+    SOL: Refactor and re-define code layout for that module
+
+10. PROBLEM: Various warnings client-side from props
+    SOL: delay unless breaking page
+
 
 Sprint 3:
 1.
