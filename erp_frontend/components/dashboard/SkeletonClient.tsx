@@ -39,7 +39,7 @@ function Copyright() {
       </div>
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
-        <Link color="inherit" href="https://localhost:4000/">
+        <Link color="inherit" href="/">
           Adrenaline
       </Link>{" "}
         {new Date().getFullYear()}
@@ -136,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   1          -> Sales
   2          -> QualityManagement 
   */
-const pages = [<Dashboard key={0} />, <Sales key={1} />, <QualityManagementClient key={2} />, <ShippingAndTransportationClient key={3} />];
+const pages = [<Dashboard userType="Client" key={0} />, <Sales key={1} />, <QualityManagementClient key={2} />, <ShippingAndTransportationClient key={3} />];
 
 export default function SkeletonClient() {
   const classes = useStyles();

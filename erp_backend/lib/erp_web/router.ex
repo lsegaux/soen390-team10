@@ -74,6 +74,7 @@ A module for managing endpoints and routing requests to the appropriate controll
   scope "/api/v1", ErpWeb do
     pipe_through [:api, :jwt_authenticated]
 
+    get "/accounting/ledger", OrderController, :show_all_orders
     post "/sale", SaleController, :process_sale
     get "/client_test", UserController, :client_test
     get  "/my_user1", UserController, :show
@@ -86,7 +87,6 @@ A module for managing endpoints and routing requests to the appropriate controll
     resources "/clientclaim", ClientClaimController
 
     get "/accounting/order/:id", OrderController, :show
-    get "/accounting/ledger", OrderController, :show_all_orders
 
   end
 
