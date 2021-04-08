@@ -73,7 +73,8 @@ export default function ShippingAndTransportationClient() {
         axios({
             method: 'get',
             url: `${url}/api/v1/accounting/order/${orderId}`,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("jwt") },
         }).then(res => {
             if (res.status === 200) {
                 setOrderDetail(res.data.data);

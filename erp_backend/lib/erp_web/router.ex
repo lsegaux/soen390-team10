@@ -66,6 +66,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/planning/createtask", TaskController, :new
 
     resources "/vendorclaim", VendorClaimController
+    get "/accounting/ledger", OrderController, :show_all_orders
   end
 
   scope "/api/v1", ErpWeb do
@@ -83,7 +84,6 @@ A module for managing endpoints and routing requests to the appropriate controll
     resources "/clientclaim", ClientClaimController
 
     get "/accounting/order/:id", OrderController, :show
-    get "/accounting/ledger", OrderController, :show_all_orders
 
   end
 
