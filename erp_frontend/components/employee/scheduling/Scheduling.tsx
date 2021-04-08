@@ -120,7 +120,7 @@ export default function Scheduling() {
       if(start < time && time < end)
         return "In use";
       else
-        return "In use";
+        return "Not in use";
   }
 
   return (
