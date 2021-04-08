@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
                 margin: theme.spacing(1),
                 width: '80ch',
             },
+            width: '50%',
+            margin: 'auto'
         },
         titleShippingClient: {
             flexGrow: 1,
