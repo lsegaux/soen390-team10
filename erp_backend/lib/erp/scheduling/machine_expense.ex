@@ -11,6 +11,7 @@ defmodule Erp.Scheduling.MachineExpense do
     field :amount, :float
     field :job, :string
     field :processed, :boolean, default: false
+    field :produced, :integer
 
     timestamps()
   end
@@ -18,8 +19,8 @@ defmodule Erp.Scheduling.MachineExpense do
   @doc false
   def changeset(machine_expense, attrs) do
     machine_expense
-    |> cast(attrs, [:amount, :processed, :job])
-    |> validate_required([:amount, :processed, :job])
+    |> cast(attrs, [:amount, :processed, :job, :produced])
+    |> validate_required([:amount, :processed, :job, :produced])
     |> foreign_key_constraint(:machine_id)
   end
 
@@ -31,9 +32,9 @@ defmodule Erp.Scheduling.MachineExpense do
       iex> create_expense(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def create_expense(machine_id, amount, job) do
+  def create_expense(machine_id, amount, job, produced) do
     float = Float.parse(amount) |> elem(0)
-    Repo.insert %MachineExpense{machine_id: machine_id, amount: float, job: job, processed: false}
+    Repo.insert %MachineExpense{machine_id: machine_id, amount: float, job: job, processed: false, produced: produced}
   end
 
   @doc """

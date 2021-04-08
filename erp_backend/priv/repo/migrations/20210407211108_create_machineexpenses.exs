@@ -7,6 +7,7 @@ defmodule Erp.Repo.Migrations.CreateMachineexpenses do
       add :amount, :float
       add :processed, :boolean, default: false, null: false
       add :job, :string
+      add :produced, :integer
 
       timestamps()
     end

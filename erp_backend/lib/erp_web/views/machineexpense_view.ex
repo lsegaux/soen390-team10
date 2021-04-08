@@ -12,7 +12,8 @@ defmodule ErpWeb.MachineExpenseView do
       amount: machineexpense.amount,
       processed: machineexpense.processed,
       job: machineexpense.job,
-      inserted_at: machineexpense.inserted_at}
+      inserted_at: machineexpense.inserted_at,
+      produced: machineexpense.produced}
   end
 
   def render("show.json", %{machineexpense: machineexpense}) do

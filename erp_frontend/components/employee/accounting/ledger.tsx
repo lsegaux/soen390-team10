@@ -72,7 +72,6 @@ export default function BasicTable() {
             rows.push(res.data.data[i]);
           }
           setMachineData(rows);
-          console.log('rows ', rows);
         }
     }).catch(err => {
         console.error(err);
@@ -151,6 +150,7 @@ export default function BasicTable() {
           <TableRow>
             <TableCell>Machine Id</TableCell>
             <TableCell>Job</TableCell>
+            <TableCell>Produced</TableCell>
             <TableCell>Amount</TableCell>
             <TableCell align="right">Time</TableCell>
           </TableRow>
@@ -162,6 +162,7 @@ export default function BasicTable() {
               {row.machine_id}
               </TableCell>
               <TableCell>{row.job}</TableCell>
+              <TableCell>{row.produced}</TableCell>
               <TableCell>{row.amount + "$"}</TableCell>
               <TableCell align="right">{row.inserted_at}</TableCell>
             </TableRow>

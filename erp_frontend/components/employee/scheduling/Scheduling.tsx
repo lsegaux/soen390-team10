@@ -125,11 +125,11 @@ export default function Scheduling() {
   function handleForceStop(machine){
     alert("You have forced stopped machine: " + machine["machine_id"]+ ".")
     
-    const amount = calculateMachineExpenseAmount(machine);
+    const amountAndProduction = calculateMachineExpenseAmount(machine);
 
     axios({
       method: 'post',
-      url: `${url}/api/v1/scheduling/expense/create/machine/${machine["machine_id"]}/amount/${amount}/job/${machine["job"]}`,
+      url: `${url}/api/v1/scheduling/expense/create/machine/${machine["machine_id"]}/amount/${amountAndProduction["amount"]}/job/${machine["job"]}/produced/${amountAndProduction["production"]}`,
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
     }).catch(err => {
         console.error(err);
@@ -161,7 +161,10 @@ export default function Scheduling() {
     if(hour_diff < 0)
       hour_diff = 24 + hour_diff;
     
-    return (hour_diff*machine["cost_per_hour"]).toFixed(2);
+    return {
+      "amount" : (hour_diff*machine["cost_per_hour"]).toFixed(2),
+      "production" : hour_diff*machine["production_per_hour"]
+    };
   }
 
   // Check the status of a machine depending on its start time, end time and if it has been forced stopped

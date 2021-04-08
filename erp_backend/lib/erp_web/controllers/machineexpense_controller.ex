@@ -9,10 +9,11 @@ alias Erp.Scheduling.MachineExpense
   @doc """
   Create a new machine expense.
   """
-  def create(conn, %{"id" => machine_id, "amount" => amount, "job" => job}) do
+  def create(conn, %{"id" => machine_id, "amount" => amount, "job" => job, "produced" => produced}) do
     # amount = Float.parse((Float.parse(end_time) - Float.parse(start_time))*Float.parse(cost_per_hour)) |> elem(0)
     id = Integer.parse(machine_id) |> elem(0)
-    with {:ok, %MachineExpense{} = machineexpense} <- MachineExpense.create_expense(id, amount, job) do
+    producedInt = Integer.parse(produced) |> elem(0)
+    with {:ok, %MachineExpense{} = machineexpense} <- MachineExpense.create_expense(id, amount, job, producedInt) do
       render(conn, "machineexpense.json", machineexpense: machineexpense)
     end
   end
