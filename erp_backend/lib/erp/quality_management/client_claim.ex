@@ -20,5 +20,6 @@ defmodule Erp.QualityManagement.ClientClaim do
     client_claim
     |> cast(attrs, [:name, :orderid, :defecttype, :description, :comments, :status, :clientrequest, :requeststatus])
     |> validate_required([:name, :orderid, :defecttype, :description, :comments, :status, :clientrequest, :requeststatus])
+    |> unique_constraint(:orderid)
   end
 end

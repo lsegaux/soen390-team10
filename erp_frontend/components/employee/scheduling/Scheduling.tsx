@@ -43,46 +43,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-//Temporary data
-const tempData = [
-    {"id": 0, 
-    "job":"Assembling wheels", 
-    "status":"In use", 
-    "start_time": "02:00", 
-    "end_time":"14:00", 
-    "cost": 4.00},
-    {"id": 1, 
-    "job":"Assembling seats", 
-    "status":"Not used", 
-    "start_time": "14:00", 
-    "end_time":"02:00", 
-    "cost": 4.50},
-    {"id": 2, 
-    "job":"N/A", 
-    "status":"Maintenance", 
-    "start_time": "--", 
-    "end_time":"--", 
-    "cost": 7.00},
-    {"id": 3, 
-    "job":"N/A", 
-    "status":"Maintenance", 
-    "start_time": "--", 
-    "end_time":"--", 
-    "cost": 13.00},
-    {"id": 4, 
-    "job":"Assembling pedals", 
-    "status":"In use", 
-    "start_time": "00:00", 
-    "end_time":"12:00", 
-    "cost": 6.50},
-    {"id": 5, 
-    "job":"Packaging", 
-    "status":"In use", 
-    "start_time": "06:00", 
-    "end_time":"23:00", 
-    "cost": 3.50}
-  ]
-
 //Table headers
 const tableHeaders = ["Machine ID", "Current Job", "Status", "Start Time", "End Time", "Cost per hour", "Stop"];
 
@@ -97,23 +57,19 @@ export default function Scheduling() {
   useEffect(()=>{
       let isMounted = true;
 
-      //To do:
       //When retrieve machines when plant is changes
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/scheduling/machines/plant_id/${selectPlantIndex}`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+            setData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
 
-      // axios({
-      //   method: 'get',
-      //   url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-      //   headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      // }).then(res => {
-      //     if (isMounted && res.status === 200) {
-      //       setData(res.data.data);
-      //     }
-      // }).catch(err => {
-      //     console.error(err);
-      // });
-
-      //Remove when backend is integrated, and uncomment ^^^
-      setData(tempData);
       return ()=>{isMounted = false}
 
 },[selectPlantIndex]);
@@ -134,23 +90,19 @@ export default function Scheduling() {
           console.error(err);
       });
 
-      //TO DO:
       //Retrieve machines based off plants
+      axios({
+        method: 'get',
+        url: `${url}/api/v1/scheduling/machines/plant_id/${selectPlantIndex}`,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+      }).then(res => {
+          if (isMounted && res.status === 200) {
+            setData(res.data.data);
+          }
+      }).catch(err => {
+          console.error(err);
+      });
 
-      // axios({
-      //   method: 'get',
-      //   url: `${url}/api/v1/production/material/plant_id/${selectPlantIndex}`,
-      //   headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
-      // }).then(res => {
-      //     if (isMounted && res.status === 200) {
-      //       setData(res.data.data);
-      //     }
-      // }).catch(err => {
-      //     console.error(err);
-      // });
-
-      //Remove when backend is integrated, and uncomment ^^^
-      setData(tempData);
       return ()=>{isMounted = false}
    
     }, []);
@@ -171,10 +123,35 @@ export default function Scheduling() {
 
   //Force stops the machine
   function handleForceStop(machine){
-    alert("You have forced stopped machine: " + machine["id"]+ ".")
+    alert("You have forced stopped machine: " + machine["machine_id"]+ ".")
 
     //TO DO:
     //Update machine in the backing to force stop
+    axios({
+      method: 'post',
+      url: `${url}/api/v1/scheduling/machines/machine_id/${machine["machine_id"]}/status/Stopped`,
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
+    }).then(res => {
+      window.location.reload();
+    })
+    .catch(err => {
+        console.error(err);
+    });
+  }
+
+  // Check the status of a machine depending on its start time, end time and if it has been forced stopped
+  function determineMachineStatus(start, end, currentStatus){
+    const today = new Date();
+    const time = (today.getHours() + 3)%24 + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    if(currentStatus == "Stopped")
+      return "Stopped";
+    else
+      if(start < time && time < end)
+        return "In use";
+      else
+        return "Not in use";
+
   }
 
   return (
@@ -211,12 +188,12 @@ export default function Scheduling() {
               data.map((row, key)=>{
                 return ( 
                 <TableRow key ={key}>
-                  <TableCell align = "center">{row["id"]}</TableCell>
+                  <TableCell align = "center">{row["machine_id"]}</TableCell>
                   <TableCell align = "center">{row["job"]}</TableCell>
-                  <TableCell align = "center">{row["status"]}</TableCell>
+                  <TableCell align = "center">{determineMachineStatus(row["start_time"], row["end_time"], row["status"])}</TableCell>
                   <TableCell align = "center">{row["start_time"]}</TableCell>
                   <TableCell align = "center">{row["end_time"]}</TableCell>
-                  <TableCell align = "center">{row["cost"].toFixed(2)}</TableCell>
+                  <TableCell align = "center">{row["cost_per_hour"].toFixed(2)}</TableCell>
                   <TableCell align = "center">
                     <Button className = {classes.button} onClick={()=>handleForceStop(row)}>Force Stop</Button>
                   </TableCell>

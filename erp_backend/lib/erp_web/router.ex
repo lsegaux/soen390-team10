@@ -36,7 +36,7 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/packaging/order_boxes", BoxController, :order_boxes
     post "/packaging/create_package", PackagingController, :create_package
     post "/packaging/reduce_quantity", BoxController, :reduce_quantity
-    
+
 
     get  "/production", ProductionController, :get_production_info
     get  "/production/plants", PlantController, :show_all_plants
@@ -53,7 +53,17 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/vendor_claim/newClaim", VendorClaimController, :create
     post "/quality_management/vendor_claim/updateDefectStatus/id/:id", VendorClaimController, :update
 
+    get "/scheduling/machines", MachineController, :show_all_machines
+    get "/scheduling/machines/plant_id/:id", MachineController, :get_machines_by_plant_id
+    post "/scheduling/machines/machine_id/:id/status/:status", MachineController, :update_status
+
     get "/sendemail", EmailController, :send_email
+
+    resources "/tasks", TaskController
+    get "/planning", TaskController, :show_all_tasks
+    post "/planning/edittask", TaskController, :update_task
+    post "/planning/deletetask", TaskController, :delete
+    post "/planning/createtask", TaskController, :new
 
     resources "/vendorclaim", VendorClaimController
   end
@@ -71,9 +81,10 @@ A module for managing endpoints and routing requests to the appropriate controll
     post "/quality_management/client_claim/updateDefectStatus/id/:id", ClientClaimController, :update
 
     resources "/clientclaim", ClientClaimController
-    
+
     get "/accounting/order/:id", OrderController, :show
     get "/accounting/ledger", OrderController, :show_all_orders
+
   end
 
   scope "/api/v1", ErpWeb do
