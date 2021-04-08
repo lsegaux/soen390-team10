@@ -68,7 +68,7 @@ export default function ShippingAndTransportationClient() {
     const handleRequest = () => {
         getPackagingInfo(orderId, 
             res => {
-            setOrderDetail(res.data.data)
+            setOrderDetail(res.data)
             handleOpen()})
     }
 

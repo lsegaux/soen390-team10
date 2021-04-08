@@ -154,7 +154,7 @@ export function getPackagingInfo(orderId, callback) {
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("jwt") },
     }).then(res => {
         if (res.status === 200) {
-            callback(res.data.data)
+            callback(res.data)
         } else {
             alert('Package details not found for current user.');
         }
